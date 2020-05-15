@@ -103,7 +103,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginActivity_materialButton_login"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:backgroundTint="@color/colorGreen"
         android:fontFamily="@font/sen_regular"
         android:text="@string/login"
@@ -114,10 +114,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
+    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+        android:id="@+id/loginActivity_dilatingDotsProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:color="@color/colorGreen"
+        android:radius="3.5sp"
+        app:dd_animationDuration="500"
+        app:dd_horizontalSpacing="10dp"
+        app:dd_numDots="3"
+        app:dd_scaleMultiplier="1.5"
+        app:layout_constraintBottom_toBottomOf="@+id/loginActivity_materialButton_login"
+        app:layout_constraintEnd_toEndOf="@+id/loginActivity_materialButton_login"
+        app:layout_constraintStart_toStartOf="@+id/loginActivity_materialButton_login"
+        app:layout_constraintTop_toTopOf="@+id/loginActivity_materialButton_login" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginActivity_materialButton_signUp"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:fontFamily="@font/sen_regular"
         android:text="@string/create_account"
         android:textAllCaps="false"
