@@ -1,5 +1,6 @@
 package com.sayhitoiot.coronanews
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
@@ -51,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                 edtPassword?.text.toString()
             )
         }
+        btnSignUp?.setOnClickListener { startActivity(Intent(this, SignUpActivity::class.java)) }
     }
 
     override fun onStart() {
