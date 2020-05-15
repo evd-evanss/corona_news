@@ -5,4 +5,10 @@
     <string name="e_mail">E-mail</string>
     <string name="presentation">Acompanhe as notícias sobre a pandemia em tempo real</string>
     <string name="login">Entrar</string>
+    <string name="day">Dia</string>
+    <string name="month">Mês</string>
+    <string name="year">Ano</string>
+    <string name="name">Nome</string>
+    <string name="signup">Cadastrar</string>
+    <string name="confirm_password">Confirme a Senha</string>
 </resources>
