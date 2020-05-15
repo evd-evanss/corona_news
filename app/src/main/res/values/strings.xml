@@ -10,4 +10,5 @@
     <string name="year">Ano</string>
     <string name="name">Nome</string>
     <string name="signup">Cadastrar</string>
+    <string name="confirm_password">Confirme a Senha</string>
 </resources>

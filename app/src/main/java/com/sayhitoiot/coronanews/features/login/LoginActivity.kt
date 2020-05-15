@@ -1,5 +1,6 @@
-package com.sayhitoiot.coronanews
+package com.sayhitoiot.coronanews.features.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.features.signup.view.SignUpActivity
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -18,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "login-activity"
+        const val REQUEST_CODE = 100
     }
 
     private var edtEmail: EditText? = null
@@ -52,7 +56,28 @@ class LoginActivity : AppCompatActivity() {
                 edtPassword?.text.toString()
             )
         }
-        btnSignUp?.setOnClickListener { startActivity(Intent(this, SignUpActivity::class.java)) }
+        btnSignUp?.setOnClickListener {
+            progressBar?.show()
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            btnLogin?.visibility = INVISIBLE
+            val message = data?.getStringArrayListExtra("MESSAGE")
+            if (message != null) {
+                signWithUserAndPassword(
+                    email = message[0],
+                    password = message[1]
+                )
+            }
+        } else {
+            progressBar?.hide()
+            btnLogin?.visibility = VISIBLE
+        }
     }
 
     override fun onStart() {
