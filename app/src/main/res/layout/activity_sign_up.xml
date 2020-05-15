@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGray"
-    tools:context=".features.signup.view.SignUpActivity">
+    tools:context=".features.sign.view.SignUpActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout7"

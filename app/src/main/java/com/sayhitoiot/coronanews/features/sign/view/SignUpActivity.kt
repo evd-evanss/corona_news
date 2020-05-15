@@ -1,21 +1,18 @@
-package com.sayhitoiot.coronanews.features.signup.view
+package com.sayhitoiot.coronanews.features.sign.view
 
-import android.R.id.message
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.entity.Account
-import com.sayhitoiot.coronanews.features.signup.contract.SignUpPresenterToView
-import com.sayhitoiot.coronanews.features.signup.contract.SignUpViewToPresenter
-import com.sayhitoiot.coronanews.features.signup.presenter.SignUpPresenter
+import com.sayhitoiot.coronanews.features.sign.contract.SignUpPresenterToView
+import com.sayhitoiot.coronanews.features.sign.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
