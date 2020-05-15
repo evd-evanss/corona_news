@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.signup.contract
+package com.sayhitoiot.coronanews.features.sign.contract
 
 import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth

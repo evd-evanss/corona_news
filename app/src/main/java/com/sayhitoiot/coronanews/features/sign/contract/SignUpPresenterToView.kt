@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.signup.contract
+package com.sayhitoiot.coronanews.features.sign.contract
 
 interface SignUpPresenterToView {
     fun onCreate()

@@ -1,10 +1,10 @@
-package com.sayhitoiot.coronanews.features.signup.presenter
+package com.sayhitoiot.coronanews.features.sign.presenter
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.sayhitoiot.coronanews.entity.Account
-import com.sayhitoiot.coronanews.features.signup.contract.SignUpPresenterToView
-import com.sayhitoiot.coronanews.features.signup.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.contract.SignUpPresenterToView
+import com.sayhitoiot.coronanews.features.sign.contract.SignUpViewToPresenter
 
 class SignUpPresenter(private val view: SignUpViewToPresenter) : SignUpPresenterToView {
 
