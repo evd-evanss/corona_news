@@ -17,7 +17,6 @@ interface LoginViewToPresenter {
     fun loginSuccess()
     fun loginFail(messageError: String)
     fun renderViewForLogin()
-    fun startActivityForResult()
-    fun loginWithCurrentUser()
+    fun startSignUpActivity()
 
 }

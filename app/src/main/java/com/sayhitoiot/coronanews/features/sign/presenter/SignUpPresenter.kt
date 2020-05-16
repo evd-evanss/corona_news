@@ -1,12 +1,18 @@
 package com.sayhitoiot.coronanews.features.sign.presenter
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseUser
-import com.sayhitoiot.coronanews.entity.Account
-import com.sayhitoiot.coronanews.features.sign.contract.SignUpPresenterToView
-import com.sayhitoiot.coronanews.features.sign.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.interact.SignUpInteract
+import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpInteractToPresenter
+import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpPresenterToInteract
+import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpPresenterToView
+import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpViewToPresenter
 
-class SignUpPresenter(private val view: SignUpViewToPresenter) : SignUpPresenterToView {
+class SignUpPresenter(private val view: SignUpViewToPresenter)
+    : SignUpPresenterToView, SignUpPresenterToInteract {
+
+    private val interact: SignUpInteractToPresenter by lazy {
+        SignUpInteract(this)
+    }
 
     companion object {
         const val TAG = "sign-presenter"
@@ -25,18 +31,13 @@ class SignUpPresenter(private val view: SignUpViewToPresenter) : SignUpPresenter
         if(checkNameValidity() && checkDayValidity() &&
             checkMonthValidity() && checkYearValidity() && checkEmailValidity() &&
             checkPasswordValidity() && checkConfirmPasswordValidity()) {
-            val account = Account(
-                name = view.name,
-                email = view.email,
-                nascimento = "${view.day}/${view.month}/${view.year}",
-                token = null
+            val birthdate = "${view.day}/${view.month}/${view.year}"
+            interact.requestCreateUserOnFirebase(
+                view.name!!,
+                view.email!!,
+                view.password!!,
+                birthdate
             )
-
-            account.email?.let {
-                        email -> view.confirmPassword?.let {
-                        password -> createAccount(email, password)
-                }
-            }
         }
 
     }
@@ -176,33 +177,13 @@ class SignUpPresenter(private val view: SignUpViewToPresenter) : SignUpPresenter
         return s.replace(regex = "[^0-9]".toRegex(), replacement = "")
     }
 
-    private fun createAccount(email: String, password: String) {
-
-        Log.d(TAG, "email: $email senha: $password")
-
-        view.mAuth?.createUserWithEmailAndPassword(email,password)
-            ?.addOnCompleteListener() { task ->
-            run {
-                if (task.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user: FirebaseUser? = view.mAuth?.currentUser
-
-                    val data = ArrayList<String>()
-                    data.add(email)
-                    data.add(password)
-                    //user?.uid
-                    view.sendDataForActivityResult(data)
-                } else {
-                    Log.d(TAG, "createUserWithEmail:failure", task.exception?.cause)
-                    if(task.exception.toString().contains("The email address is already in use") ){
-                        view.showMessageOnFail("Este email está sendo usado por outra conta")
-                    } else {
-                        view.showMessageOnFail("Tentar novamente mais tarde")
-                    }
-                }
-            }
-        }
+    // respostas do interact
+    override fun didCreateUserOnFirebaseSuccess(messageSuccess: String) {
+        view.showMessageOnSuccess(messageSuccess)
     }
 
+    override fun didCreateUserOnFirebaseFail(messageError: String) {
+        view.showMessageOnFail(messageError)
+    }
 
 }

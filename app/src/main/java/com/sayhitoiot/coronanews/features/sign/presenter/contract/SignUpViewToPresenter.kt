@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.sign.contract
+package com.sayhitoiot.coronanews.features.sign.presenter.contract
 
 import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +22,6 @@ interface SignUpViewToPresenter {
     fun showErrorInYear(messageError: String)
     fun showErrorInConfirmPassword(messageError: String)
     fun showErrorInPassword(messageError: String)
-    fun sendDataForActivityResult(data: ArrayList<String>)
+    fun showMessageOnSuccess(messageSuccess: String)
     fun showMessageOnFail(messageError: String)
 }

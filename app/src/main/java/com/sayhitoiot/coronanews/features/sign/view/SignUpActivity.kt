@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.sign.contract.SignUpPresenterToView
-import com.sayhitoiot.coronanews.features.sign.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpPresenterToView
+import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpViewToPresenter
 import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -72,8 +72,8 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        supportActionBar?.hide()
         presenter.onCreate()
-        initializeViews()
     }
 
     override fun initializeViews() {
@@ -134,12 +134,17 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
         }
     }
 
-    override fun sendDataForActivityResult(data: ArrayList<String>) {
+    override fun showMessageOnSuccess(messageSuccess: String) {
         activity?.runOnUiThread {
-            val intent = Intent()
-            intent.putExtra("MESSAGE", data)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Sua conta foi criada com sucesso")
+            builder.setMessage(messageSuccess)
+            builder.setPositiveButton(
+                "Voltar e fazer login"
+            ) { _, _ ->
+                finish()
+            }
+            builder.show()
         }
     }
 
@@ -149,7 +154,7 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
             builder.setTitle("Falha ao criar conta")
             builder.setMessage(messageError)
             builder.setPositiveButton(
-                "Sair"
+                "Voltar"
             ) { _, _ ->
                 finish()
             }

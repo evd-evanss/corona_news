@@ -20,11 +20,6 @@ class LoginPresenter(private val view: LoginViewToPresenter) : LoginPresenterToV
         view.initializeViews()
     }
 
-    override fun onStart() {
-        view.currentUser ?: return
-        view.loginWithCurrentUser()
-    }
-
     override fun btnLoginTapped() {
         if(checkEmailValidity() && checkPasswordValidity()) {
             view.renderViewForLogin()
@@ -37,7 +32,7 @@ class LoginPresenter(private val view: LoginViewToPresenter) : LoginPresenterToV
     }
 
     override fun btnSignUpTapped() {
-        view.startActivityForResult()
+        view.startSignUpActivity()
     }
 
     private fun checkEmailValidity() : Boolean {
@@ -72,14 +67,6 @@ class LoginPresenter(private val view: LoginViewToPresenter) : LoginPresenterToV
             }
         }
 
-    }
-
-    override fun loginByActivityResult(emailByActivityResult: String?, passwordByActivityResult: String?) {
-        emailByActivityResult?.let {email ->
-            passwordByActivityResult?.let { password ->
-                this.loginWithUserAndPassword(email, password)
-            }
-        }
     }
 
     private fun loginWithUserAndPassword(email: String, password: String) {

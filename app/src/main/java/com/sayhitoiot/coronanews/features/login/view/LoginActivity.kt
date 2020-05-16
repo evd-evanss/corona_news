@@ -12,6 +12,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.commom.RealmDB
+import com.sayhitoiot.coronanews.features.home.HomeActivity
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
 import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
 import com.sayhitoiot.coronanews.features.login.presenter.LoginPresenter
@@ -56,13 +58,9 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.hide()
         presenter.onCreate()
         mAuth = FirebaseAuth.getInstance()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.onStart()
     }
 
     override fun initializeViews() {
@@ -84,13 +82,10 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         }
     }
 
-    override fun startActivityForResult() {
+    override fun startSignUpActivity() {
         activity?.runOnUiThread {
-            progressBar?.show()
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivityForResult(intent,
-                REQUEST_CODE
-            )
+            startActivity(intent)
         }
     }
 
@@ -113,6 +108,8 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
                 this@LoginActivity, "Login realizado com sucesso",
                 Toast.LENGTH_SHORT
             ).show()
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 
@@ -122,32 +119,6 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
             btnLogin?.visibility = VISIBLE
             Toast.makeText(
                 this@LoginActivity, messageError,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            btnLogin?.visibility = INVISIBLE
-            val message = data?.getStringArrayListExtra("MESSAGE")
-            if (message != null) {
-                presenter.loginByActivityResult(
-                    emailByActivityResult = message[0],
-                    passwordByActivityResult = message[1]
-                )
-            }
-        } else {
-            progressBar?.hide()
-            btnLogin?.visibility = VISIBLE
-        }
-    }
-
-    override fun loginWithCurrentUser() {
-        activity?.runOnUiThread {
-            Toast.makeText(
-                this@LoginActivity, "Olá ${currentUser?.email}",
                 Toast.LENGTH_SHORT
             ).show()
         }
