@@ -9,7 +9,7 @@
         android:id="@+id/first_fragment"
         android:name="com.sayhitoiot.coronanews.features.home.feed.FeedFragment"
         android:label="First Fragment"
-        tools:layout="@layout/fragment_first" >
+        tools:layout="@layout/fragment_feed" >
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/second_fragment"

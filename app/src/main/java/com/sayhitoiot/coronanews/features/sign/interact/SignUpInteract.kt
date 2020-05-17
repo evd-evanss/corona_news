@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
-import com.sayhitoiot.coronanews.commom.RealmDB
-import com.sayhitoiot.coronanews.commom.entity.UserEntity
+import com.sayhitoiot.coronanews.commom.realm.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpInteractToPresenter
 import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpPresenterToInteract
 import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter

@@ -5,10 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.commom.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.features.home.HomeActivity
 import com.sayhitoiot.coronanews.features.login.view.LoginActivity
 import com.sayhitoiot.coronanews.features.splash.contract.SplashPresenterToView

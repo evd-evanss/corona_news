@@ -1,8 +1,7 @@
 package com.sayhitoiot.coronanews.features.home.profile.presenter
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import com.sayhitoiot.coronanews.commom.entity.UserEntity
+import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import com.sayhitoiot.coronanews.features.home.profile.interact.ProfileInteract
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfileInteractToPresenter
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfilePresenterToInteract

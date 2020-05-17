@@ -1,6 +1,6 @@
-package com.sayhitoiot.coronanews.commom.model
+package com.sayhitoiot.coronanews.commom.firebase.model
 
-import com.sayhitoiot.coronanews.commom.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.RealmDB
 
 class UserFirebaseModel {
     var id: Int = RealmDB.DEFAULT_INTEGER

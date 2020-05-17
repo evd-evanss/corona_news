@@ -1,7 +1,6 @@
-package com.sayhitoiot.coronanews.commom.entity
+package com.sayhitoiot.coronanews.commom.realm.entity
 
-import android.util.Log
-import com.sayhitoiot.coronanews.commom.model.UserRealm
+import com.sayhitoiot.coronanews.commom.realm.model.UserRealm
 import io.realm.Realm
 
 class UserEntity (

@@ -1,8 +1,8 @@
-package com.sayhitoiot.coronanews.commom
+package com.sayhitoiot.coronanews.commom.realm
 
 import android.content.Context
-import com.sayhitoiot.coronanews.commom.entity.UserEntity
-import com.sayhitoiot.coronanews.commom.migration.RealmDatabaseMigration
+import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
+import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -10,6 +10,8 @@ import io.realm.RealmConfiguration
 object RealmDB {
 
     const val DEFAULT_INTEGER = 0
+    const val DEFAULT_STRING = ""
+    const val DEFAULT_BOOLEAN = false
 
     fun configureRealm(context: Context) {
         Realm.init(context)
@@ -26,6 +28,7 @@ object RealmDB {
 
     fun clearDatabase() {
         UserEntity.delete()
+        FeedEntity.delete()
     }
 
 }

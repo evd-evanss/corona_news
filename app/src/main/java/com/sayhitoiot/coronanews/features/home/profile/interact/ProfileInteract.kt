@@ -6,9 +6,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.sayhitoiot.coronanews.commom.RealmDB
-import com.sayhitoiot.coronanews.commom.entity.UserEntity
-import com.sayhitoiot.coronanews.commom.model.UserFirebaseModel
+import com.sayhitoiot.coronanews.commom.realm.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
+import com.sayhitoiot.coronanews.commom.firebase.model.UserFirebaseModel
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfileInteractToPresenter
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfilePresenterToInteract
 
@@ -36,7 +36,8 @@ class ProfileInteract(private val presenter: ProfilePresenterToInteract) : Profi
 
         userReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val firebaseUser: UserFirebaseModel? = dataSnapshot.getValue(UserFirebaseModel::class.java)
+                val firebaseUser: UserFirebaseModel? = dataSnapshot.getValue(
+                    UserFirebaseModel::class.java)
                 firebaseUser ?: return
                 UserEntity.create(
                     id = RealmDB.DEFAULT_INTEGER,
