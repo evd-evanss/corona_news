@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.commom.migration
+package com.sayhitoiot.coronanews.commom.realm.migration
 
 import android.util.Log
 import io.realm.DynamicRealm

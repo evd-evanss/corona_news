@@ -40,6 +40,9 @@ class FeedPresenter(private val view: FeedViewToPresenter)
     }
 
     override fun didFetchDataForFeed(feed: MutableList<FeedEntity>) {
+        if(feed.size == 0) {
+            interact.fetchDataInApiCovid()
+        }
         view.postValueInAdapter(feed)
     }
 }

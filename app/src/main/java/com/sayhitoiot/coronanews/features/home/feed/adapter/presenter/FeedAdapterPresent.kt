@@ -1,6 +1,5 @@
 package com.sayhitoiot.coronanews.features.home.feed.adapter.presenter
 
-import android.util.Log
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.home.feed.adapter.interact.FeedAdapterInteract
@@ -38,9 +37,9 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         handleFavorite = !handleFavorite
 
         if(handleFavorite) {
-            view.country?.let { interact.requestFavoriteFeedByCountry(it, handleFavorite) }
+            view.country?.let { interact.requestFavoriteFeedByCountryOnDB(it, handleFavorite) }
         } else {
-            view.country?.let { interact.requestFavoriteFeedByCountry(it, handleFavorite) }
+            view.country?.let { interact.requestFavoriteFeedByCountryOnDB(it, handleFavorite) }
         }
     }
 

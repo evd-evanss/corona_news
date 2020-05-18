@@ -13,18 +13,16 @@ class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     var firebaseDatabase = FirebaseDatabase.getInstance()
 
-    override fun requestFavoriteFeedByCountry(country: String, handleFavorite: Boolean) {
+    override fun requestFavoriteFeedByCountryOnDB(country: String, handleFavorite: Boolean) {
         FeedEntity.favoriteFeed(country, handleFavorite)
         presenter.didFavoriteFeedByCountry(handleFavorite)
         updateFeedOnFirebase()
-        FeedEntity.favoriteFeed(country, handleFavorite)
     }
 
     private fun updateFeedOnFirebase() {
         val feedList = FeedEntity.getAll()
         val uid = mAuth.uid ?: return
-        val userReference =
-            firebaseDatabase.reference.child(uid).child("Feeds")
+        val userReference = firebaseDatabase.reference.child(uid).child("Feeds")
         userReference.setValue(feedList)
     }
 

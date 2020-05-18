@@ -14,6 +14,7 @@ class SplashInteract(private val presenter: SplashPresenterToInteract)
     }
 
     override fun initializeSyncService() {
+        //App.runSyncService()
         presenter.didFinishInitializeSyncService()
     }
 
@@ -24,6 +25,7 @@ class SplashInteract(private val presenter: SplashPresenterToInteract)
     private fun fetchUserOnDB()  {
         val user = UserEntity.getUser()
         if(user != null) {
+            //Se usuário existe entra na tela home
             presenter.didFinishFetchUserOnDB()
             Log.d(TAG,"Usuário ${user.name} online")
         } else {
