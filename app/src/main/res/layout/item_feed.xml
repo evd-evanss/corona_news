@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:backgroundTint="#252424"
+        android:elevation="6dp"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/itemFeed_textView_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="data"
+                android:textSize="12sp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/itemFeed_textView_Country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/sen_regular"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                card_view:layout_constraintBottom_toBottomOf="@+id/itemFeed_imageView_favorite"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="Brazil" />
+
+            <ImageView
+                android:id="@+id/itemFeed_imageView_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_star"
+                android:tint="@color/colorFineGray"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/itemFeed_textView_newCases"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="50"
+                android:textColor="@color/colorRed"
+                android:textSize="12sp"
+                card_view:layout_constraintBottom_toBottomOf="@+id/textView6"
+                card_view:layout_constraintStart_toStartOf="@+id/itemFeed_linearLayout_graph"
+                card_view:layout_constraintTop_toTopOf="@+id/textView6" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="5dp"
+                android:rotation="180"
+                android:tint="@color/colorRed"
+                card_view:layout_constraintBottom_toBottomOf="@+id/textView6"
+                card_view:layout_constraintStart_toEndOf="@+id/itemFeed_textView_newCases"
+                card_view:layout_constraintTop_toTopOf="@+id/itemFeed_textView_newCases"
+                card_view:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/sen_regular"
+                android:isScrollContainer="true"
+                android:text="Novos Casos"
+                android:textColor="@color/colorRed"
+                android:textSize="12sp"
+                card_view:layout_constraintBottom_toTopOf="@+id/itemFeed_linearLayout_graph"
+                card_view:layout_constraintStart_toEndOf="@+id/imageView"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_textView_Country" />
+
+            <LinearLayout
+                android:id="@+id/itemFeed_linearLayout_graph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_textView_Country">
+
+                <View
+                    android:id="@+id/itemFeed_view_total"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorRed" />
+
+                <View
+                    android:id="@+id/itemFeed_view_recovered"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorGreen" />
+
+                <View
+                    android:id="@+id/itemFeed_view_deaths"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/silver" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/itemFeed_textView_Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="1000"
+                android:textColor="@color/colorRed"
+                android:textSize="18sp"
+                card_view:layout_constraintBottom_toTopOf="@+id/textView3"
+                card_view:layout_constraintEnd_toStartOf="@+id/itemFeed_textView_recovered"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_linearLayout_graph" />
+
+            <TextView
+                android:id="@+id/itemFeed_textView_recovered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="13"
+                android:textColor="@color/colorGreen"
+                android:textSize="18sp"
+                card_view:layout_constraintBottom_toTopOf="@+id/textView4"
+                card_view:layout_constraintEnd_toStartOf="@+id/itemFeed_textView_Deaths"
+                card_view:layout_constraintStart_toEndOf="@+id/itemFeed_textView_Total"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_linearLayout_graph"
+                card_view:layout_constraintVertical_bias="0.50" />
+
+            <TextView
+                android:id="@+id/itemFeed_textView_Deaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="7"
+                android:textColor="@color/silver"
+                android:textSize="18sp"
+                card_view:layout_constraintBottom_toTopOf="@+id/textView5"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/itemFeed_textView_recovered"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_linearLayout_graph" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="Total"
+                android:textColor="@color/colorRed"
+                android:textSize="16sp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="@+id/itemFeed_textView_Total"
+                card_view:layout_constraintStart_toStartOf="@+id/itemFeed_textView_Total"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_textView_Total" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="Recuperados"
+                android:textColor="@color/colorGreen"
+                android:textSize="16sp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="@+id/itemFeed_textView_recovered"
+                card_view:layout_constraintStart_toStartOf="@+id/itemFeed_textView_recovered"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_textView_recovered" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="Mortos"
+                android:textColor="@color/silver"
+                android:textSize="16sp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="@+id/itemFeed_textView_Deaths"
+                card_view:layout_constraintStart_toStartOf="@+id/itemFeed_textView_Deaths"
+                card_view:layout_constraintTop_toBottomOf="@+id/itemFeed_textView_Deaths" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

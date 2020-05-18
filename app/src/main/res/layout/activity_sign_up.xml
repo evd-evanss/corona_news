@@ -33,14 +33,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
+        android:layout_width="317dp"
+        android:layout_height="233dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_login" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
@@ -72,7 +72,8 @@
         android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout4"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".30">
 
         <EditText
             android:id="@+id/activitySignUp_editText_day"
@@ -80,9 +81,9 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/day"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:maxLength="2"
-            android:imeOptions="actionNext"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -96,7 +97,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".30">
 
         <EditText
             android:id="@+id/activitySignUp_editText_month"
@@ -104,9 +106,9 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/month"
-            android:maxLength="2"
-            android:inputType="numberDecimal"
             android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:maxLength="2"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +120,8 @@
         android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout4"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.30">
 
         <EditText
             android:id="@+id/activitySignUp_editText_year"
@@ -126,9 +129,9 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/year"
-            android:maxLength="4"
-            android:inputType="numberDecimal"
             android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:maxLength="4"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>

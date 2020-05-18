@@ -11,4 +11,15 @@
     <string name="name">Nome</string>
     <string name="signup">Cadastrar</string>
     <string name="confirm_password">Confirme a Senha</string>
+    <string name="menu_feed">Feed</string>
+    <string name="menu_fav">Favoritos</string>
+    <string name="menu_news">Notícias</string>
+    <string name="menu_profile">Meu Perfil</string>
+    <string name="search_country">Procurar País</string>
+    <string name="birthdate">Data de nascimento</string>
+    <string name="date_fake">20/03/1985</string>
+    <string name="logout">Encerrar Seção</string>
+    <string name="message_on_load">Lave sempre as mãos e se puder fique em casa 😉</string>
+    <string name="message_onload_fav">Evite tocar o rosto com as mãos</string>
+    <item name="faqID" type="id"/>
 </resources>

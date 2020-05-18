@@ -9,9 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.features.home.HomeActivity
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
 import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
 import com.sayhitoiot.coronanews.features.login.presenter.LoginPresenter
@@ -24,28 +23,15 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
 
     companion object {
         const val TAG = "login-activity"
-        const val REQUEST_CODE = 100
     }
 
     private val presenter: LoginPresenterToView by lazy {
         LoginPresenter(this)
     }
 
-    override val activity: Activity?
-        get() = this
-
-    override var mAuth: FirebaseAuth?
-        get() = FirebaseAuth.getInstance()
-        set(value) {}
-
-    override val currentUser: FirebaseUser?
-        get() = mAuth?.currentUser
-
-    override val email: String?
-        get() = edtEmail?.text.toString()
-
-    override val password: String?
-        get() = edtPassword?.text.toString()
+    override val activity: Activity? get() = this
+    override val email: String? get() = edtEmail?.text.toString()
+    override val password: String? get() = edtPassword?.text.toString()
 
     private var edtEmail: EditText? = null
     private var edtPassword: EditText? = null
@@ -56,13 +42,8 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.hide()
         presenter.onCreate()
-        mAuth = FirebaseAuth.getInstance()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.onStart()
     }
 
     override fun initializeViews() {
@@ -84,13 +65,10 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         }
     }
 
-    override fun startActivityForResult() {
+    override fun startSignUpActivity() {
         activity?.runOnUiThread {
-            progressBar?.show()
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivityForResult(intent,
-                REQUEST_CODE
-            )
+            startActivity(intent)
         }
     }
 
@@ -109,10 +87,8 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
     override fun loginSuccess() {
         activity?.runOnUiThread {
             progressBar?.hide()
-            Toast.makeText(
-                this@LoginActivity, "Login realizado com sucesso",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 
@@ -122,32 +98,6 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
             btnLogin?.visibility = VISIBLE
             Toast.makeText(
                 this@LoginActivity, messageError,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            btnLogin?.visibility = INVISIBLE
-            val message = data?.getStringArrayListExtra("MESSAGE")
-            if (message != null) {
-                presenter.loginByActivityResult(
-                    emailByActivityResult = message[0],
-                    passwordByActivityResult = message[1]
-                )
-            }
-        } else {
-            progressBar?.hide()
-            btnLogin?.visibility = VISIBLE
-        }
-    }
-
-    override fun loginWithCurrentUser() {
-        activity?.runOnUiThread {
-            Toast.makeText(
-                this@LoginActivity, "Olá ${currentUser?.email}",
                 Toast.LENGTH_SHORT
             ).show()
         }

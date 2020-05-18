@@ -1,43 +1,44 @@
 package com.sayhitoiot.coronanews.features.login.presenter
 
-import android.util.Log
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
 import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
+import com.sayhitoiot.coronanews.features.login.interact.LoginInteract
+import com.sayhitoiot.coronanews.features.login.interact.contract.LoginInteractToPresenter
+import com.sayhitoiot.coronanews.features.login.interact.contract.LoginPresenterToInteract
 
-class LoginPresenter(private val view: LoginViewToPresenter) : LoginPresenterToView {
+class LoginPresenter(private val view: LoginViewToPresenter)
+    : LoginPresenterToView, LoginPresenterToInteract {
+
+    private val interact: LoginInteractToPresenter by lazy {
+        LoginInteract(this)
+    }
 
     companion object {
+
         const val TAG = "login-presenter"
-        const val PASSWORD_EXCEPTION = "The password is invalid or the user does not have a password"
-        const val USER_EXCEPTION = "There is no user record corresponding to this identifier. The user may have been deleted"
-        const val PASSWORD_FAIL = "A senha é inválida ou o usuário não tem uma senha"
-        const val USER_FAIL = "Usuário não corresponde a nenhum registro, este usuário pode ter sido excluído"
-        const val NETWORK_EXCEPTION = "A network error (such as timeout, interrupted connection or unreachable host) has occurred."
-        const val NETWORK_FAIL = "Ocorreu um erro de rede (como tempo limite, conexão interrompida ou host inacessível)"
+
     }
 
     override fun onCreate() {
         view.initializeViews()
     }
 
-    override fun onStart() {
-        view.currentUser ?: return
-        view.loginWithCurrentUser()
-    }
-
     override fun btnLoginTapped() {
         if(checkEmailValidity() && checkPasswordValidity()) {
             view.renderViewForLogin()
-            view.email?.let { email ->
-                view.password?.let { password ->
-                    loginWithUserAndPassword(email, password)
+            view.email?.let { email->
+                view.password?.let { password->
+                    interact.requestLoginOnFirebase(
+                        email,
+                        password
+                    )
                 }
             }
         }
     }
 
     override fun btnSignUpTapped() {
-        view.startActivityForResult()
+        view.startSignUpActivity()
     }
 
     private fun checkEmailValidity() : Boolean {
@@ -74,31 +75,12 @@ class LoginPresenter(private val view: LoginViewToPresenter) : LoginPresenterToV
 
     }
 
-    override fun loginByActivityResult(emailByActivityResult: String?, passwordByActivityResult: String?) {
-        emailByActivityResult?.let {email ->
-            passwordByActivityResult?.let { password ->
-                this.loginWithUserAndPassword(email, password)
-            }
-        }
+    override fun didFinishLoginWithSuccess() {
+        view.loginSuccess()
     }
 
-    private fun loginWithUserAndPassword(email: String, password: String) {
-        view.mAuth?.signInWithEmailAndPassword(email, password)
-            ?.addOnCompleteListener() { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithEmail:success")
-                    view.loginSuccess()
-                } else {
-                    val exception = task.exception.toString()
-                    when {
-                        exception.contains(PASSWORD_EXCEPTION) -> view.loginFail(PASSWORD_FAIL)
-                        exception.contains(USER_EXCEPTION) -> view.loginFail(USER_FAIL)
-                        exception.contains(NETWORK_EXCEPTION) -> view.loginFail(NETWORK_FAIL)
-                        else -> view.loginFail(exception)
-                    }
-
-                }
-            }
+    override fun didFinishLoginWithFail(passwordFail: String) {
+        view.loginFail(passwordFail)
     }
 
 }
