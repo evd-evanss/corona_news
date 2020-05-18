@@ -9,8 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.features.home.HomeActivity
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
@@ -25,28 +23,15 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
 
     companion object {
         const val TAG = "login-activity"
-        const val REQUEST_CODE = 100
     }
 
     private val presenter: LoginPresenterToView by lazy {
         LoginPresenter(this)
     }
 
-    override val activity: Activity?
-        get() = this
-
-    override var mAuth: FirebaseAuth?
-        get() = FirebaseAuth.getInstance()
-        set(value) {}
-
-    override val currentUser: FirebaseUser?
-        get() = mAuth?.currentUser
-
-    override val email: String?
-        get() = edtEmail?.text.toString()
-
-    override val password: String?
-        get() = edtPassword?.text.toString()
+    override val activity: Activity? get() = this
+    override val email: String? get() = edtEmail?.text.toString()
+    override val password: String? get() = edtPassword?.text.toString()
 
     private var edtEmail: EditText? = null
     private var edtPassword: EditText? = null
@@ -59,7 +44,6 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
         presenter.onCreate()
-        mAuth = FirebaseAuth.getInstance()
     }
 
     override fun initializeViews() {
@@ -103,10 +87,6 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
     override fun loginSuccess() {
         activity?.runOnUiThread {
             progressBar?.hide()
-            Toast.makeText(
-                this@LoginActivity, "Login realizado com sucesso",
-                Toast.LENGTH_SHORT
-            ).show()
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }

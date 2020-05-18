@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.splash
+package com.sayhitoiot.coronanews.features.splash.view
 
 import android.app.Activity
 import android.content.Intent
@@ -27,12 +27,6 @@ class SplashActivity : AppCompatActivity(), SplashViewToPresenter {
         setContentView(R.layout.activity_splash)
         supportActionBar?.hide()
         presenter.onCreate()
-    }
-
-    override fun configureDataBase() {
-        activity?.runOnUiThread {
-            RealmDB.configureRealm(applicationContext)
-        }
     }
 
     override fun loginWithUserActive() {

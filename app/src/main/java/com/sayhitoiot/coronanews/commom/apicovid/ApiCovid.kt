@@ -1,13 +1,9 @@
-package com.sayhitoiot.coronanews.api
+package com.sayhitoiot.coronanews.commom.apicovid
 
-import com.sayhitoiot.coronanews.api.model.ResultData
+import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
-
-/*
-   https://rapidapi.com/api-sports/api/covid-193
-*/
 
 interface ApiCovid{
 

@@ -54,6 +54,30 @@ class FeedEntity (
             realm.close()
         }
 
+        fun update(
+            country: String,
+            day: String,
+            cases: Int?,
+            recoveries: Int?,
+            deaths: Int?,
+            newCases: String?
+        ) {
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+
+            val feedModel = realm.createObject(FeedRealm::class.java)
+
+            feedModel.country = country
+            feedModel.day = day
+            feedModel.cases = cases ?: RealmDB.DEFAULT_INTEGER
+            feedModel.recoveries = recoveries ?: RealmDB.DEFAULT_INTEGER
+            feedModel.deaths = deaths ?: RealmDB.DEFAULT_INTEGER
+            feedModel.newCases = newCases ?: RealmDB.DEFAULT_STRING
+
+            realm.commitTransaction()
+            realm.close()
+        }
+
         fun delete() {
             val realm = Realm.getDefaultInstance()
 
@@ -69,25 +93,27 @@ class FeedEntity (
             val realm = Realm.getDefaultInstance()
 
             val feedList = realm.where(FeedRealm::class.java)
-                .findAll()
-                .map { FeedEntity(it) }
+                .findAllAsync()
+                .map {
+                    FeedEntity(it)
+                }
 
             realm.close()
 
             return feedList.toMutableList()
         }
 
-        fun getAllFavorites() : List<FeedEntity> {
+        fun getAllFavorites() : MutableList<FeedEntity> {
             val realm = Realm.getDefaultInstance()
 
             val feedList = realm.where(FeedRealm::class.java)
-                .equalTo("favorites", true)
+                .equalTo("favorite", true)
                 .findAll()
                 .mapNotNull { FeedEntity(it) }
 
             realm.close()
 
-            return feedList
+            return feedList.toMutableList()
 
         }
 
@@ -101,12 +127,16 @@ class FeedEntity (
 
             val feedModel = realm.where(FeedRealm::class.java)
                 .equalTo("country", country)
-                .findFirst()
+                .findFirstAsync()
 
             feedModel?.favorite = favorite
 
             realm.commitTransaction()
             realm.close()
+
+
+
+
         }
 
     }

@@ -1,5 +1,6 @@
 package com.sayhitoiot.coronanews.commom.realm.entity
 
+import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.model.UserRealm
 import io.realm.Realm
 
@@ -68,6 +69,22 @@ class UserEntity (
             realm.beginTransaction()
 
             realm.delete(UserRealm::class.java)
+
+            realm.commitTransaction()
+            realm.close()
+        }
+
+        fun update(name: String, birthdate: String) {
+            val realm = Realm.getDefaultInstance()
+
+            realm.beginTransaction()
+
+            val userModel = realm.where(UserRealm::class.java)
+                .equalTo("id", RealmDB.DEFAULT_INTEGER)
+                .findFirst()
+
+            userModel?.name = name
+            userModel?.birthdate = birthdate
 
             realm.commitTransaction()
             realm.close()

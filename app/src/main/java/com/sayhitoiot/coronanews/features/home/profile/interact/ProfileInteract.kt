@@ -8,7 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.commom.firebase.model.UserFirebaseModel
+import com.sayhitoiot.coronanews.commom.firebase.model.User
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfileInteractToPresenter
 import com.sayhitoiot.coronanews.features.home.profile.interact.contract.ProfilePresenterToInteract
 
@@ -20,7 +20,7 @@ class ProfileInteract(private val presenter: ProfilePresenterToInteract) : Profi
     }
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    var firebaseDatabase = FirebaseDatabase.getInstance()
+    private var firebaseDatabase = FirebaseDatabase.getInstance()
 
     override fun fetchUser() {
         if(UserEntity.getUser() == null) {
@@ -36,8 +36,8 @@ class ProfileInteract(private val presenter: ProfilePresenterToInteract) : Profi
 
         userReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val firebaseUser: UserFirebaseModel? = dataSnapshot.getValue(
-                    UserFirebaseModel::class.java)
+                val firebaseUser: User? = dataSnapshot.getValue(
+                    User::class.java)
                 firebaseUser ?: return
                 UserEntity.create(
                     id = RealmDB.DEFAULT_INTEGER,
@@ -72,6 +72,28 @@ class ProfileInteract(private val presenter: ProfilePresenterToInteract) : Profi
             Log.d(TAG, "Não há usuário")
         }
 
+    }
+
+    override fun requestUpdateUserOnFirebase(
+        name: String?,
+        day: String?,
+        month: String?,
+        year: String?
+    ) {
+        val user =
+            User()
+        user.name = "$name"
+        user.birth = "${day}/${month}/${year}"
+        //
+        updateUserOnDB(user)
+    }
+
+    private fun updateUserOnDB(user: User) {
+        UserEntity.update(
+            name = user.name,
+            birthdate = user.birth
+        )
+        fetchUserOnDB()
     }
 
     override fun requestLogout() {

@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="1"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,9 +61,6 @@
             android:id="@+id/profile_constraintButton_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:paddingHorizontal="20dp"
             android:paddingTop="30dp"
             android:paddingBottom="10dp">
@@ -117,7 +114,8 @@
             android:focusable="true"
             android:paddingHorizontal="20dp"
             android:paddingTop="30dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/profile_textView_email_hint"
@@ -163,9 +161,6 @@
             android:id="@+id/profile_constraintButton_birthdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:paddingHorizontal="20dp"
             android:paddingTop="30dp"
             android:paddingBottom="10dp">
@@ -250,6 +245,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableLayout" />
+
+    <LinearLayout
+        android:id="@+id/container_edit"
+        android:layout_width="404dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout">
+
+        <include layout="@layout/edit_user" />
+    </LinearLayout>
 
 
 

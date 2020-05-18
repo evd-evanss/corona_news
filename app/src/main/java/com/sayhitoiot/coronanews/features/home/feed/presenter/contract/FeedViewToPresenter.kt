@@ -7,4 +7,6 @@ interface FeedViewToPresenter {
     var activity: Activity?
     fun postValueInAdapter(feed: MutableList<FeedEntity>)
     fun initializeViews()
+    fun renderViewForSearch()
+    fun renderViewDefault()
 }

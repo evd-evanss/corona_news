@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.support.App
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        App.runSyncService()
         navController = findNavController(R.id.main_fragment)
         setupActionBarWithNavController(navController)
         supportActionBar?.hide()

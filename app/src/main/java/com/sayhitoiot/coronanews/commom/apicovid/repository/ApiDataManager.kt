@@ -1,10 +1,13 @@
-package com.sayhitoiot.coronanews.features.home.feed.interact.repository
+package com.sayhitoiot.coronanews.commom.apicovid.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.sayhitoiot.coronanews.api.ApiCovid
-import com.sayhitoiot.coronanews.api.OnGetStatisticsCoronaCallback
-import com.sayhitoiot.coronanews.api.model.ResultData
+import com.sayhitoiot.coronanews.commom.apicovid.ApiCovid
+import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
+import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
+import com.sayhitoiot.coronanews.commom.util.Constants.Companion.HOST
+import com.sayhitoiot.coronanews.commom.util.Constants.Companion.KEY
+import com.sayhitoiot.coronanews.commom.util.Constants.Companion.URL_BASE
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,19 +16,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class ApiDataManager : InteractToApi {
+
     private var service: ApiCovid
     private var statistic: MutableLiveData<ResultData> = MutableLiveData()
-
-    companion object {
-        const val BASE_URL = "https://covid-193.p.rapidapi.com/"
-        const val host = "covid-193.p.rapidapi.com"
-        const val key = "544555cc06msh818811d07ad8f96p1195d4jsn6cdd83152382"
-    }
 
     init {
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(URL_BASE)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         service = retrofit.create(ApiCovid::class.java)
@@ -34,7 +32,7 @@ class ApiDataManager : InteractToApi {
 
     override fun getStatistics(callbackStatistics: OnGetStatisticsCoronaCallback) {
 
-        service.getStatistics(host, key)
+        service.getStatistics(HOST, KEY)
             .enqueue(object : Callback<ResultData> {
                 override fun onResponse(call: Call<ResultData>, response: Response<ResultData>) {
                     if (response.isSuccessful) {

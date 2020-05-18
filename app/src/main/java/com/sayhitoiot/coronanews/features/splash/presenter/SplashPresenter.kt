@@ -14,7 +14,10 @@ class SplashPresenter(private var view: SplashViewToPresenter)
     }
 
     override fun onCreate() {
-        view.configureDataBase()
+        interact.initializeSyncService()
+    }
+
+    override fun didFinishInitializeSyncService() {
         interact.fetchUser()
     }
 

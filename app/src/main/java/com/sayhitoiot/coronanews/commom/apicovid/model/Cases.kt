@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.api.model
+package com.sayhitoiot.coronanews.commom.apicovid.model
 
 data class Cases(
     val active: Int,

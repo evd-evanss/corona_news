@@ -6,17 +6,37 @@ import com.sayhitoiot.coronanews.features.home.feed.interact.contract.FeedIntera
 import com.sayhitoiot.coronanews.features.home.feed.interact.contract.FeedPresenterToInteract
 import com.sayhitoiot.coronanews.features.home.feed.presenter.contract.FeedPresenterToView
 import com.sayhitoiot.coronanews.features.home.feed.presenter.contract.FeedViewToPresenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 class FeedPresenter(private val view: FeedViewToPresenter)
-    : FeedPresenterToView, FeedPresenterToInteract {
+    : FeedPresenterToView, FeedPresenterToInteract, CoroutineScope {
 
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
     private val interact: FeedInteractToPresenter by lazy {
         FeedInteract(this)
     }
 
     override fun onViewCreated() {
-        interact.fetchDataForFeed()
         view.initializeViews()
+    }
+
+    override fun onResume() {
+        interact.fetchDataForFeed()
+    }
+
+    override fun didFinishInitializeViews() {
+        interact.fetchDataForFeed()
+    }
+
+    override fun buttonSearchTapped() {
+        view.renderViewForSearch()
+    }
+
+    override fun buttonBackTapped() {
+        view.renderViewDefault()
     }
 
     override fun didFetchDataForFeed(feed: MutableList<FeedEntity>) {
