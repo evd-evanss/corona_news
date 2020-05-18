@@ -60,7 +60,6 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
 
             override fun onError() {
                 Log.e(TAG, "Error on fetch data")
-                updateDayOnFeedFirebase()
             }
         })
 
