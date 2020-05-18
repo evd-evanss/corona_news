@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "134417151436",
+    "firebase_url": "https://livestracking.firebaseio.com",
+    "project_id": "livestracking",
+    "storage_bucket": "livestracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134417151436:android:e887f2fbba94c196bb5969",
+        "android_client_info": {
+          "package_name": "com.example.livestracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134417151436-urt6valpke4vq4gtsdihfk4fb3p00m3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.livestracking",
+            "certificate_hash": "86c94954bfd53255641fa46152a153cb69626161"
+          }
+        },
+        {
+          "client_id": "134417151436-p07ejova0g01na4ent0psk1i4623kcq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_j0aSUeWWgSZlpdjZP_fMpghLHIcLox8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134417151436-p07ejova0g01na4ent0psk1i4623kcq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134417151436:android:78c701bab068ca28bb5969",
+        "android_client_info": {
+          "package_name": "com.sayhitoiot.coronanews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134417151436-luatf06qjifvu9uvdb5ni8g5emo9mjf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sayhitoiot.coronanews",
+            "certificate_hash": "86c94954bfd53255641fa46152a153cb69626161"
+          }
+        },
+        {
+          "client_id": "134417151436-p07ejova0g01na4ent0psk1i4623kcq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_j0aSUeWWgSZlpdjZP_fMpghLHIcLox8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134417151436-p07ejova0g01na4ent0psk1i4623kcq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
