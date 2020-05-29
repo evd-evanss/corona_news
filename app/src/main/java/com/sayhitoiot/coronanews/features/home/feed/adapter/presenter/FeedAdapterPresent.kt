@@ -32,25 +32,8 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         )
     }
 
-
-    override fun buttonFavoriteTapped() {
-        handleFavorite = !handleFavorite
-
-        if(handleFavorite) {
-            view.country?.let { interact.requestFavoriteFeedByCountryOnDB(it, handleFavorite) }
-        } else {
-            view.country?.let { interact.requestFavoriteFeedByCountryOnDB(it, handleFavorite) }
-        }
-    }
-
-    override fun didFavoriteFeedByCountry(handleFavorite: Boolean) {
-
-        view.renderViewFavorite(getColor(handleFavorite))
-
-    }
-
-    override fun didFetchFavorites(feedUpdated: MutableList<FeedEntity>) {
-        view.updateAdapterWithFavorites(feedUpdated)
+    override fun didFetchDataForFeed(feedList: MutableList<FeedEntity>) {
+        view.updateAdapter(feedList)
     }
 
     private fun getColor(handleFavorite: Boolean) : Int {

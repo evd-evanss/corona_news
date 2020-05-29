@@ -19,43 +19,29 @@ import com.sayhitoiot.coronanews.features.home.feed.adapter.presenter.contract.F
 import com.sayhitoiot.coronanews.features.home.feed.adapter.presenter.contract.FeedAdapterViewToPresenter
 import kotlinx.android.synthetic.main.item_feed.view.*
 
-class FeedAdapter(private val context: Context, private var statistics: MutableList<FeedEntity>):
+class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEntity>):
     RecyclerView.Adapter<FeedAdapter.ViewHolder>(){
 
     companion object{
         const val TAG = "feed-adapter"
     }
 
-    private var cloneStatistics = statistics
-
+    private var cloneFeed = feedList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_feed))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(statistics, position)
+        holder.bind(feedList, position)
     }
 
-    override fun getItemCount() = statistics.size
+    override fun getItemCount() = feedList.size
 
-    fun updateList(properties: MutableList<FeedEntity>){
-        this.statistics.clear()
-        this.statistics.addAll(properties)
-        cloneStatistics = properties
-        notifyDataSetChanged()
-    }
-
-    fun filter(charText: String) {
-        statistics.clear()
-        if (charText.isEmpty()) {
-            statistics.addAll(cloneStatistics)
-        } else {
-            val clone = cloneStatistics.filter {
-                it.country.contains(charText)
-            }
-            statistics.addAll(clone)
-        }
+    fun updateList(properties: MutableList<FeedEntity>) {
+        this.feedList.clear()
+        this.feedList.addAll(properties)
+        cloneFeed = properties
         notifyDataSetChanged()
     }
 
@@ -85,8 +71,9 @@ class FeedAdapter(private val context: Context, private var statistics: MutableL
             get() = textCountry.text.toString()
             set(value) {}
 
+
         fun bind(feed: MutableList<FeedEntity>, position: Int){
-            val dataFormat = feed[position].day.split("-")
+            val dataFormat: MutableList<String> = feed[position].day.split("-").toMutableList()
 
             textCountry.text = feed[position].country
             textNewCases.text = feed[position].newCases
@@ -94,17 +81,12 @@ class FeedAdapter(private val context: Context, private var statistics: MutableL
             textTotal.text = feed[position].cases.toString()
             textDeaths.text = feed[position].deaths.toString()
             textUpdateTime.text = "Atualizado em: ${dataFormat[2]}/${dataFormat[1]}/${dataFormat[0]}"
-            favoriteButton.setOnClickListener { presenter.buttonFavoriteTapped() }
             presenter.requestUpdateGraph()
 
-            if(feed[position].favorite){
+            if(feed[position].favorite) {
                 favoriteButton.imageTintList =
                     ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorYellow))
             }
-
-            Log.d("estatisticas", "r = $totalRecovered c= $totalConfirmed d=$totalDeaths")
-            favoriteButton.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorGreen))
         }
 
         override fun updateGraph(recoveries: Float, total: Float, deaths: Float) {
@@ -135,7 +117,13 @@ class FeedAdapter(private val context: Context, private var statistics: MutableL
         }
 
         override fun updateAdapterWithFavorites(feedUpdated: MutableList<FeedEntity>) {
-            statistics = feedUpdated
+            feedList = feedUpdated
+            notifyDataSetChanged()
+        }
+
+        override fun updateAdapter(feedUpdated: MutableList<FeedEntity>) {
+            feedList.clear()
+            feedList.addAll(feedUpdated)
             notifyDataSetChanged()
         }
     }

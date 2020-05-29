@@ -6,19 +6,30 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
+import com.sayhitoiot.coronanews.commom.apicovid.model.Response
+import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
+import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
+import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
 import com.sayhitoiot.coronanews.commom.firebase.model.User
-import com.sayhitoiot.coronanews.commom.firebase.model.Feed
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
+import com.sayhitoiot.coronanews.features.home.feed.interact.FeedInteract
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
 import kotlin.coroutines.CoroutineContext
 
 class SyncService : CoroutineScope{
 
+    override val coroutineContext: CoroutineContext
+        get() = IO + Job()
+
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var firebaseDatabase = FirebaseDatabase.getInstance()
+    private val repository: InteractToApi = ApiDataManager()
+    private val response: MutableList<Response> = mutableListOf()
+
 
     companion object {
 
@@ -30,17 +41,10 @@ class SyncService : CoroutineScope{
 
     init {
         this.syncUser()
-        //this.syncFeed()
     }
 
     private fun syncUser() {
         fetchUser()
-    }
-
-    private fun syncFeed() {
-        GlobalScope.launch {
-            fetchFeedOnFirebase()
-        }
     }
 
     private fun fetchUser() {
@@ -58,55 +62,24 @@ class SyncService : CoroutineScope{
                 val firebaseUser: User? = dataSnapshot.getValue(
                     User::class.java)
                 firebaseUser ?: return
-                UserEntity.create(
-                    id = RealmDB.DEFAULT_INTEGER,
-                    name = firebaseUser.name,
-                    email = firebaseUser.email,
-                    birth = firebaseUser.birth,
-                    token = firebaseUser.token
-                )
-                Log.d(
-                    TAG,
-                    "Success to sync user:\n" +
-                            "id:${firebaseUser.id}\n"+
-                            "name:${firebaseUser.name}\n"+
-                            "email:${firebaseUser.email}\n"+
-                            "birthdate:${firebaseUser.birth}\n"+
-                            "token:${firebaseUser.token}"
-                )
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "Failed to sync user.", error.toException())
-            }
-        })
-
-    }
-
-    private fun fetchFeedOnFirebase() {
-
-        val uid = mAuth.uid
-        val userReference = uid?.let { firebaseDatabase.getReference(it).child(FEEDS) }
-        userReference?.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val response =
-                    dataSnapshot.children
-
-                response.forEach {
-                    val feed : Feed? = it.getValue(Feed::class.java)
-
-                    if(feed != null) {
-                        FeedEntity.create(
-                            feed.country,
-                            feed.day,
-                            feed.cases,
-                            feed.recovereds,
-                            feed.deaths,
-                            feed.newCases,
-                            feed.favorite
-                        )
-                    }
-                    Log.d(TAG, "Sync $feed success")
+                launch {
+                    UserEntity.create(
+                        id = RealmDB.DEFAULT_INTEGER,
+                        name = firebaseUser.name,
+                        email = firebaseUser.email,
+                        birth = firebaseUser.birth,
+                        token = firebaseUser.token
+                    )
+                    Log.d(
+                        TAG,
+                        "Success to sync user:\n" +
+                                "id:${firebaseUser.id}\n"+
+                                "name:${firebaseUser.name}\n"+
+                                "email:${firebaseUser.email}\n"+
+                                "birthdate:${firebaseUser.birth}\n"+
+                                "token:${firebaseUser.token}"
+                    )
                 }
 
             }
@@ -118,8 +91,6 @@ class SyncService : CoroutineScope{
 
     }
 
-    override val coroutineContext: CoroutineContext
-        get() = Default + Job()
 
 }
 

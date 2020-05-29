@@ -9,4 +9,5 @@ interface FeedViewToPresenter {
     fun initializeViews()
     fun renderViewForSearch()
     fun renderViewDefault()
+    fun renderViewWithFail(fail: String)
 }

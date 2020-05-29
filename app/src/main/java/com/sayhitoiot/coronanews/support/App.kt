@@ -6,15 +6,10 @@ import com.sayhitoiot.coronanews.services.SyncService
 
 class App: Application() {
 
-    companion object {
-        fun runSyncService() {
-            SyncService()
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
         configureDataBase()
+        SyncService()
     }
 
     private fun configureDataBase() {

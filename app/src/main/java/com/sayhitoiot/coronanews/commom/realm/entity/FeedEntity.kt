@@ -38,7 +38,10 @@ class FeedEntity (
             favorite: Boolean?
         ) {
             val realm = Realm.getDefaultInstance()
-            realm.beginTransaction()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val feedModel = realm.createObject(FeedRealm::class.java)
 
@@ -55,24 +58,21 @@ class FeedEntity (
         }
 
         fun update(
-            country: String,
-            day: String,
-            cases: Int?,
-            recoveries: Int?,
-            deaths: Int?,
-            newCases: String?
+            country: String?,
+            day: String?
         ) {
             val realm = Realm.getDefaultInstance()
-            realm.beginTransaction()
 
-            val feedModel = realm.createObject(FeedRealm::class.java)
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
-            feedModel.country = country
-            feedModel.day = day
-            feedModel.cases = cases ?: RealmDB.DEFAULT_INTEGER
-            feedModel.recoveries = recoveries ?: RealmDB.DEFAULT_INTEGER
-            feedModel.deaths = deaths ?: RealmDB.DEFAULT_INTEGER
-            feedModel.newCases = newCases ?: RealmDB.DEFAULT_STRING
+            val feedModel = realm.where(FeedRealm::class.java)
+                .equalTo("country", country)
+                .findFirst()
+
+            feedModel?.country = country ?: RealmDB.DEFAULT_STRING
+            feedModel?.day = day ?: RealmDB.DEFAULT_STRING
 
             realm.commitTransaction()
             realm.close()
@@ -81,7 +81,9 @@ class FeedEntity (
         fun delete() {
             val realm = Realm.getDefaultInstance()
 
-            realm.beginTransaction()
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             realm.delete(FeedRealm::class.java)
 
@@ -92,8 +94,12 @@ class FeedEntity (
         fun getAll() : MutableList<FeedEntity> {
             val realm = Realm.getDefaultInstance()
 
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
             val feedList = realm.where(FeedRealm::class.java)
-                .findAllAsync()
+                .findAll()
                 .map {
                     FeedEntity(it)
                 }
@@ -106,6 +112,9 @@ class FeedEntity (
         fun getAllFavorites() : MutableList<FeedEntity> {
             val realm = Realm.getDefaultInstance()
 
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
             val feedList = realm.where(FeedRealm::class.java)
                 .equalTo("favorite", true)
                 .findAll()
@@ -123,7 +132,9 @@ class FeedEntity (
         ) {
             val realm = Realm.getDefaultInstance()
 
-            realm.beginTransaction()
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val feedModel = realm.where(FeedRealm::class.java)
                 .equalTo("country", country)
@@ -137,6 +148,24 @@ class FeedEntity (
 
 
 
+        }
+
+        fun findByFilter(text: String) : MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+
+            val feedList = realm.where(FeedRealm::class.java)
+                .contains("country", text)
+                .findAll()
+                .mapNotNull { FeedEntity(it) }
+
+            realm.close()
+
+            return feedList.toMutableList()
         }
 
     }
