@@ -31,6 +31,10 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         interact.fetchDataForFeed()
     }
 
+    override fun filterData(text: String) {
+        interact.fetDataByFilter(text)
+    }
+
     override fun buttonSearchTapped() {
         view.renderViewForSearch()
     }
@@ -41,5 +45,13 @@ class FeedPresenter(private val view: FeedViewToPresenter)
 
     override fun didFetchDataForFeed(feed: MutableList<FeedEntity>) {
         view.postValueInAdapter(feed)
+    }
+
+    override fun didFetchDataByFilter(feedFilter: MutableList<FeedEntity>) {
+        view.postValueInAdapter(feedFilter)
+    }
+
+    override fun didFetchDataFail(fail: String) {
+        view.renderViewWithFail(fail)
     }
 }

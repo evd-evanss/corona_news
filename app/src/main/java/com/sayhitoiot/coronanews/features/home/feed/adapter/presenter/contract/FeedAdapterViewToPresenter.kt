@@ -6,6 +6,7 @@ interface FeedAdapterViewToPresenter {
     fun updateGraph(recoveries: Float, total: Float, deaths: Float)
     fun renderViewFavorite(color: Int)
     fun updateAdapterWithFavorites(feedUpdated: MutableList<FeedEntity>)
+    fun updateAdapter(feedUpdated: MutableList<FeedEntity>)
 
     var totalRecovered : Int?
     var totalConfirmed : Int?

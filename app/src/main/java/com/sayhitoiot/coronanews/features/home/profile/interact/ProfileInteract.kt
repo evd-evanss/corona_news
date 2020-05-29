@@ -80,11 +80,9 @@ class ProfileInteract(private val presenter: ProfilePresenterToInteract) : Profi
         month: String?,
         year: String?
     ) {
-        val user =
-            User()
+        val user = User()
         user.name = "$name"
         user.birth = "${day}/${month}/${year}"
-        //
         updateUserOnDB(user)
     }
 

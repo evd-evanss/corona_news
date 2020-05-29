@@ -6,4 +6,5 @@ interface FeedPresenterToView{
     fun buttonBackTapped()
     fun onResume()
     fun didFinishInitializeViews()
+    fun filterData(text: String)
 }

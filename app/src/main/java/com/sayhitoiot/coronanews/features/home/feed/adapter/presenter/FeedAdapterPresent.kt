@@ -1,6 +1,5 @@
 package com.sayhitoiot.coronanews.features.home.feed.adapter.presenter
 
-import android.util.Log
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.home.feed.adapter.interact.FeedAdapterInteract
@@ -33,25 +32,8 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         )
     }
 
-
-    override fun buttonFavoriteTapped() {
-        handleFavorite = !handleFavorite
-
-        if(handleFavorite) {
-            view.country?.let { interact.requestFavoriteFeedByCountry(it, handleFavorite) }
-        } else {
-            view.country?.let { interact.requestFavoriteFeedByCountry(it, handleFavorite) }
-        }
-    }
-
-    override fun didFavoriteFeedByCountry(handleFavorite: Boolean) {
-
-        view.renderViewFavorite(getColor(handleFavorite))
-
-    }
-
-    override fun didFetchFavorites(feedUpdated: MutableList<FeedEntity>) {
-        view.updateAdapterWithFavorites(feedUpdated)
+    override fun didFetchDataForFeed(feedList: MutableList<FeedEntity>) {
+        view.updateAdapter(feedList)
     }
 
     private fun getColor(handleFavorite: Boolean) : Int {

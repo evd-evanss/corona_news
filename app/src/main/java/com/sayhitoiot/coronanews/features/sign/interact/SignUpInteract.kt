@@ -5,13 +5,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpInteractToPresenter
 import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpPresenterToInteract
 import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
+import com.sayhitoiot.coronanews.services.SyncService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpInteractToPresenter {
+class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpInteractToPresenter,
+    CoroutineScope {
 
+    override val coroutineContext: CoroutineContext
+        get() = IO + Job()
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     var firebaseDatabase = FirebaseDatabase.getInstance()
 
@@ -33,7 +43,6 @@ class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpI
                         data.add(password)
                         val token = user?.uid
                         createUserOnDB(name, email, birthdate, token)
-                        presenter.didCreateUserOnFirebaseSuccess("Volte a tela de login e insira suas credenciais")
                     } else {
                         Log.d(SignUpPresenter.TAG, "createUserWithEmail:failure", task.exception?.cause)
                         if(task.exception.toString().contains("The email address is already in use") ){
@@ -50,7 +59,9 @@ class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpI
         val user = UserEntity.getUser() ?: return
         val uid = mAuth.uid ?: return
         val userReference = firebaseDatabase.reference.child(uid).child("User")
-        userReference.setValue(user)
+        userReference.setValue(user).addOnSuccessListener {
+            createFeedOnFirebase()
+        }
     }
 
     private fun createUserOnDB(
@@ -59,7 +70,7 @@ class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpI
         birthdate: String,
         token: String?
     ) {
-        UserEntity.create(
+        UserEntity.create (
             id = RealmDB.DEFAULT_INTEGER,
             name = name,
             email = email,
@@ -67,6 +78,22 @@ class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpI
             token = token ?: ""
         )
         createUserOnFirebase()
+    }
+
+    private fun createFeedOnFirebase() {
+        val feedList = FeedEntity.getAll()
+        val uid = mAuth.uid ?: return
+        val feedReference = firebaseDatabase.reference.child(uid).child(SyncService.FEEDS)
+
+        launch {
+            feedList.forEach {
+                feedReference.child(it.country).setValue(it).addOnSuccessListener {
+                    presenter.didCreateUserOnFirebaseSuccess("Volte a tela de login e insira suas credenciais")
+                }
+            }
+        }
+
+
     }
 
 }

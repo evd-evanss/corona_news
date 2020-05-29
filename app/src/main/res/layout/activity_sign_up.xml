@@ -7,30 +7,6 @@
     android:background="@color/colorGray"
     tools:context=".features.sign.view.SignUpActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/activitySignUp_editText_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_padlock"
-            android:drawablePadding="30dp"
-            android:fontFamily="@font/sen_regular"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="317dp"
@@ -43,13 +19,13 @@
         app:srcCompat="@drawable/ic_login" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout6"
+        android:id="@+id/textInputLayout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout3">
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2">
 
         <EditText
             android:id="@+id/activitySignUp_editText_name"
@@ -59,19 +35,19 @@
             android:drawablePadding="30dp"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/name"
-            android:inputType="textEmailAddress"
             android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/textInputLayout2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textInputLayout4"
+        app:layout_constraintEnd_toStartOf="@+id/textInputLayout3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".30">
 
@@ -89,13 +65,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
+        android:id="@+id/textInputLayout3"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".30">
@@ -114,12 +90,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout5"
+        android:id="@+id/textInputLayout4"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout4"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.30">
 
@@ -137,13 +113,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <EditText
             android:id="@+id/activitySignUp_editText_email"
@@ -160,13 +136,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/textInputLayout6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
         app:passwordToggleEnabled="true">
 
         <EditText
@@ -179,6 +155,30 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:imeOptions="actionNext"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/activitySignUp_editText_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_padlock"
+            android:drawablePadding="30dp"
+            android:fontFamily="@font/sen_regular"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
 
@@ -210,6 +210,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

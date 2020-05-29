@@ -10,10 +10,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sayhitoiot.coronanews.R
@@ -40,6 +37,7 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             mutableListOf()
         )
     }
+
     private var recyclerView: RecyclerView? = null
     private var edtSearch: EditText? = null
     private var buttonSearch: ImageView? = null
@@ -92,7 +90,7 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             edtSearch?.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     val text = edtSearch?.text.toString()
-                    feedAdapter.filter(text)
+                    presenter.filterData(text)
                 }
 
                 override fun beforeTextChanged(
@@ -117,6 +115,14 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             edtSearch?.setText("")
             buttonBack?.visibility = GONE
             textTitle?.visibility = VISIBLE
+        }
+    }
+
+    override fun renderViewWithFail(fail: String) {
+        activity?.runOnUiThread {
+            firstContainer?.visibility = GONE
+            progress?.hide()
+            Toast.makeText(activity, fail, Toast.LENGTH_LONG).show()
         }
     }
 

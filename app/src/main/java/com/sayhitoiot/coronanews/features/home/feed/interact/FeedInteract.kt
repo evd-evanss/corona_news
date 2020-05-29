@@ -1,7 +1,6 @@
 package com.sayhitoiot.coronanews.features.home.feed.interact
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,107 +25,129 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
 
     override val coroutineContext: CoroutineContext
         get() = Default + Job()
-
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var firebaseDatabase = FirebaseDatabase.getInstance()
     private val repository: InteractToApi = ApiDataManager()
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    var firebaseDatabase = FirebaseDatabase.getInstance()
-    var livedata: MutableLiveData<Feed> = MutableLiveData()
+    private val response: MutableList<Response> = mutableListOf()
 
     companion object{
         const val TAG = "feed-interact"
         const val FEEDS = "Feeds"
+        const val FAIL = "Tente novamente mais tarde"
     }
-
-    private val response: MutableList<Response> = mutableListOf()
 
     override fun fetchDataForFeed() {
         val feedList = FeedEntity.getAll()
-        if(feedList.isEmpty()){
-            fetchFeedOnApiCovid()
-        } else {
-            presenter.didFetchDataForFeed(feedList)
+
+        when {
+            feedList.isEmpty() -> syncApiFirebase()
+            feedList.isNotEmpty() -> presenter.didFetchDataForFeed(feedList)
         }
+
     }
 
-    private fun fetchFeedOnApiCovid() {
+    private fun syncApiFirebase() {
+        val uid = mAuth.uid!!
+        firebaseDatabase.reference.child(uid).child(FEEDS)
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+                    snapshot.children.forEach {
+                        val feed = it.getValue(Feed::class.java)
+                        feed?.let { it1 -> feedFirebaseModel.add(it1) }
+                    }
+                    if(feedFirebaseModel.isNotEmpty()) {
+                        saveFeedOnDB(feedFirebaseModel)
+                    } else {
+                        syncApiCovid()
+                    }
+                }
+
+            })
+    }
+
+    private fun syncApiCovid() {
+
         repository.getStatistics(object : OnGetStatisticsCoronaCallback {
 
             override fun onSuccess(coronaResult: ResultData) {
                 Log.d(TAG, coronaResult.results.toString())
                 response.addAll(coronaResult.response)
-                saveFeedOnDB(response)
-                Log.d(TAG, "${response.size}")
+                saveFeedOnFirebase(response)
             }
 
             override fun onError() {
                 Log.e(TAG, "Error on fetch data")
+                presenter.didFetchDataForFeed(FeedEntity.getAll())
             }
         })
 
     }
 
-    private fun updateDayOnFeedFirebase() {
-        val feedList = FeedEntity.getAll()
-        repeat(feedList.size) {
-            firebaseDatabase
-                .reference
-                .child(mAuth.uid!!)
-                .child("Feeds")
-                .child("${it})")
-                .child("day")
-                .setValue(feedList[it].day)
-        }
-        //fetchFeedOnFirebase()
-    }
+    private fun saveFeedOnFirebase(response: MutableList<Response>) {
+        val uid = mAuth.uid!!
 
-    private fun saveFeedOnDB(results: MutableList<Response>) {
+        val feedFirebaseModel: MutableList<Feed> = mutableListOf()
 
-        for(feed in results) {
-            FeedEntity.update(
-                country = feed.country,
-                day = feed.day,
-                cases = feed.cases.total,
-                recoveries = feed.cases.recovered,
-                deaths = feed.deaths.total,
-                newCases = feed.cases.new
+        response.forEach {
+            feedFirebaseModel.add(
+                Feed (
+                    cases = it.cases.total,
+                    country = it.country,
+                    day = it.day,
+                    deaths = it.deaths.total,
+                    newCases = it.cases.new,
+                    recoveries = it.cases.recovered,
+                    favorite = false
+                )
             )
         }
 
-        updateDayOnFeedFirebase()
+        feedFirebaseModel.forEach {
+            firebaseDatabase.reference.child(uid).child(FEEDS).child(it.country)
+                .setValue(it)
+        }
+
+        saveFeedOnDB(feedFirebaseModel)
+
 
     }
 
-    private fun fetchFeedOnFirebase() {
-        val uid = mAuth.uid ?: return
-        val userReference = firebaseDatabase.getReference(uid).child(FEEDS)
+    private fun saveFeedOnDB(results: MutableList<Feed>) {
 
-        userReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val response =
-                    dataSnapshot.children
-                response.mapNotNull {
-                    userReference.removeEventListener(this)
+        if(FeedEntity.getAll().isEmpty()) {
+            for(feed in results) {
 
-                    val feed : Feed? = it.getValue(Feed::class.java)
-                    livedata.postValue(feed)
-                    if(feed != null) {
-                        FeedEntity.favoriteFeed(
-                            feed.country,
-                            feed.favorite
-                        )
-                    }
-
-                    val feedList = FeedEntity.getAll()
-                    presenter.didFetchDataForFeed(feedList)
-                    Log.d(TAG, "Sync $feed success")
-                }
+                FeedEntity.create (
+                    country = feed.country,
+                    day = feed.day ?: "",
+                    cases = feed.cases,
+                    recoveries = feed.recoveries,
+                    deaths = feed.deaths,
+                    newCases = feed.newCases,
+                    favorite = false
+                )
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "Failed to sync user.", error.toException())
+        } else {
+            for(feed in results) {
+                FeedEntity.update(
+                    country = feed.country,
+                    day = feed.day
+                )
             }
-        })
+        }
+
+        presenter.didFetchDataForFeed(FeedEntity.getAll())
+
     }
 
+    override fun fetDataByFilter(text: String) {
+        val feedFilter = FeedEntity.findByFilter(text)
+        presenter.didFetchDataByFilter(feedFilter)
+    }
 
 }
