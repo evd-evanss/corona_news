@@ -59,6 +59,27 @@ class FeedEntity (
 
         fun update(
             country: String?,
+            favorite: Boolean
+        ) {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val feedModel = realm.where(FeedRealm::class.java)
+                .equalTo("country", country)
+                .findFirst()
+
+            feedModel?.country = country ?: RealmDB.DEFAULT_STRING
+            feedModel?.favorite = favorite
+
+            realm.commitTransaction()
+            realm.close()
+        }
+
+        fun update(
+            country: String?,
             day: String?
         ) {
             val realm = Realm.getDefaultInstance()

@@ -19,8 +19,6 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         FeedAdapterInteract(this)
     }
 
-    private var handleFavorite: Boolean =  false
-
     override fun requestUpdateGraph() {
         val recoveries = view.totalRecovered?.toFloat() ?: 0f
         val total = view.totalConfirmed?.toFloat() ?: 0f
@@ -32,8 +30,21 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         )
     }
 
+    override fun favoriteButtonTapped() {
+
+        interact.requestFavoriteItem(view.country, handleFavoriteCountry())
+    }
+
     override fun didFetchDataForFeed(feedList: MutableList<FeedEntity>) {
         view.updateAdapter(feedList)
+    }
+
+    override fun requestMessageToast(message: String) {
+        view.showMessage(message)
+    }
+
+    private fun handleFavoriteCountry() : Boolean {
+        return !view.countryFavorite
     }
 
     private fun getColor(handleFavorite: Boolean) : Int {

@@ -3,16 +3,19 @@ package com.sayhitoiot.coronanews.features.home.feed.adapter
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.commom.extensions.toLocale
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.home.feed.adapter.presenter.FeedAdapterPresent
 import com.sayhitoiot.coronanews.features.home.feed.adapter.presenter.contract.FeedAdapterPresenterToView
@@ -70,23 +73,28 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         override var country: String?
             get() = textCountry.text.toString()
             set(value) {}
-
+        override var countryFavorite: Boolean
+            get() = feedList[adapterPosition].favorite
+            set(value) {}
 
         fun bind(feed: MutableList<FeedEntity>, position: Int){
-            val dataFormat: MutableList<String> = feed[position].day.split("-").toMutableList()
 
             textCountry.text = feed[position].country
             textNewCases.text = feed[position].newCases
             textRecoveries.text = feed[position].recovereds.toString()
             textTotal.text = feed[position].cases.toString()
             textDeaths.text = feed[position].deaths.toString()
-            textUpdateTime.text = "Atualizado em: ${dataFormat[2]}/${dataFormat[1]}/${dataFormat[0]}"
-            presenter.requestUpdateGraph()
-
+            textUpdateTime.text = feed[position].day
             if(feed[position].favorite) {
-                favoriteButton.imageTintList =
-                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorYellow))
+                favoriteButton.imageTintList = ColorStateList
+                    .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
+            } else {
+                favoriteButton.imageTintList = ColorStateList
+                    .valueOf(ContextCompat.getColor(context, R.color.colorFineGray))
             }
+            presenter.requestUpdateGraph()
+            favoriteButton.setOnClickListener { presenter.favoriteButtonTapped() }
+
         }
 
         override fun updateGraph(recoveries: Float, total: Float, deaths: Float) {
@@ -110,12 +118,6 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             )
         }
 
-        override fun renderViewFavorite(color: Int) {
-            Log.d(TAG, "color: $color")
-            favoriteButton.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(context, color))
-        }
-
         override fun updateAdapterWithFavorites(feedUpdated: MutableList<FeedEntity>) {
             feedList = feedUpdated
             notifyDataSetChanged()
@@ -125,6 +127,11 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             feedList.clear()
             feedList.addAll(feedUpdated)
             notifyDataSetChanged()
+        }
+
+        override fun showMessage(message: String) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

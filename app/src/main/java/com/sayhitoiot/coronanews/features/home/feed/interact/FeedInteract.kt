@@ -11,6 +11,7 @@ import com.sayhitoiot.coronanews.commom.apicovid.model.Response
 import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
 import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
 import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
+import com.sayhitoiot.coronanews.commom.extensions.toLocale
 import com.sayhitoiot.coronanews.commom.firebase.model.Feed
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.home.feed.interact.contract.FeedInteractToPresenter
@@ -58,7 +59,9 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
                     val feedFirebaseModel: MutableList<Feed> = mutableListOf()
                     snapshot.children.forEach {
                         val feed = it.getValue(Feed::class.java)
-                        feed?.let { it1 -> feedFirebaseModel.add(it1) }
+                        feed?.let { it1 ->
+                            feedFirebaseModel.add(it1)
+                        }
                     }
                     if(feedFirebaseModel.isNotEmpty()) {
                         saveFeedOnDB(feedFirebaseModel)
@@ -98,7 +101,7 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
                 Feed (
                     cases = it.cases.total,
                     country = it.country,
-                    day = it.day,
+                    day = it.day.toLocale(),
                     deaths = it.deaths.total,
                     newCases = it.cases.new,
                     recoveries = it.cases.recovered,
@@ -129,7 +132,7 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
                     recoveries = feed.recoveries,
                     deaths = feed.deaths,
                     newCases = feed.newCases,
-                    favorite = false
+                    favorite = feed.favorite
                 )
             }
         } else {
