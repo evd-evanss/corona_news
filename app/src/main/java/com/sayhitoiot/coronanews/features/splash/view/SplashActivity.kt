@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.commom.realm.RealmDB
-import com.sayhitoiot.coronanews.features.home.HomeActivity
+import com.sayhitoiot.coronanews.features.feed.HomeActivity
 import com.sayhitoiot.coronanews.features.login.view.LoginActivity
 import com.sayhitoiot.coronanews.features.splash.contract.SplashPresenterToView
 import com.sayhitoiot.coronanews.features.splash.contract.SplashViewToPresenter
