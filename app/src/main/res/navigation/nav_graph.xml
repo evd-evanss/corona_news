@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/first_fragment"
-        android:name="com.sayhitoiot.coronanews.features.home.feed.view.FeedFragment"
+        android:name="com.sayhitoiot.coronanews.features.feed.feed.view.FeedFragment"
         android:label="First Fragment"
         tools:layout="@layout/fragment_feed" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/second_fragment"
-        android:name="com.sayhitoiot.coronanews.features.home.favorites.FavoritesFragment"
+        android:name="com.sayhitoiot.coronanews.features.favorites.FavoritesFragment"
         android:label="Second Fragment"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/third_fragment"
-        android:name="com.sayhitoiot.coronanews.features.home.news.NewsFragment"
+        android:name="com.sayhitoiot.coronanews.features.feed.news.NewsFragment"
         android:label="Third Fragment"
         tools:layout="@layout/fragment_news" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/fourth_fragment"
-        android:name="com.sayhitoiot.coronanews.features.home.profile.view.ProfileFragment"
+        android:name="com.sayhitoiot.coronanews.features.feed.profile.view.ProfileFragment"
         android:label="Fourth Fragment"
         tools:layout="@layout/fragment_profile" />
 </navigation>

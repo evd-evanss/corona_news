@@ -6,16 +6,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.model.Response
-import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
 import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
 import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
 import com.sayhitoiot.coronanews.commom.firebase.model.User
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
-import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.features.home.feed.interact.FeedInteract
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlin.coroutines.CoroutineContext
