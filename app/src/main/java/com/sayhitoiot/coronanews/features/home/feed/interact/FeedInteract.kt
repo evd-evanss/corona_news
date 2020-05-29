@@ -15,11 +15,9 @@ import com.sayhitoiot.coronanews.commom.firebase.model.Feed
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.home.feed.interact.contract.FeedInteractToPresenter
 import com.sayhitoiot.coronanews.features.home.feed.interact.contract.FeedPresenterToInteract
-import com.sayhitoiot.coronanews.services.SyncService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInteractToPresenter,
@@ -42,10 +40,34 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
         val feedList = FeedEntity.getAll()
 
         when {
-            feedList.isEmpty() -> syncApiCovid()
+            feedList.isEmpty() -> syncApiFirebase()
             feedList.isNotEmpty() -> presenter.didFetchDataForFeed(feedList)
         }
 
+    }
+
+    private fun syncApiFirebase() {
+        val uid = mAuth.uid!!
+        firebaseDatabase.reference.child(uid).child(FEEDS)
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+                    snapshot.children.forEach {
+                        val feed = it.getValue(Feed::class.java)
+                        feed?.let { it1 -> feedFirebaseModel.add(it1) }
+                    }
+                    if(feedFirebaseModel.isNotEmpty()) {
+                        saveFeedOnDB(feedFirebaseModel)
+                    } else {
+                        syncApiCovid()
+                    }
+                }
+
+            })
     }
 
     private fun syncApiCovid() {
@@ -55,7 +77,6 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
             override fun onSuccess(coronaResult: ResultData) {
                 Log.d(TAG, coronaResult.results.toString())
                 response.addAll(coronaResult.response)
-                saveFeedOnDB(response)
                 saveFeedOnFirebase(response)
             }
 
@@ -70,26 +91,44 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
     private fun saveFeedOnFirebase(response: MutableList<Response>) {
         val uid = mAuth.uid!!
 
+        val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+
         response.forEach {
+            feedFirebaseModel.add(
+                Feed (
+                    cases = it.cases.total,
+                    country = it.country,
+                    day = it.day,
+                    deaths = it.deaths.total,
+                    newCases = it.cases.new,
+                    recoveries = it.cases.recovered,
+                    favorite = false
+                )
+            )
+        }
+
+        feedFirebaseModel.forEach {
             firebaseDatabase.reference.child(uid).child(FEEDS).child(it.country)
                 .setValue(it)
         }
 
+        saveFeedOnDB(feedFirebaseModel)
+
 
     }
 
-    private fun saveFeedOnDB(results: MutableList<Response>) {
+    private fun saveFeedOnDB(results: MutableList<Feed>) {
 
         if(FeedEntity.getAll().isEmpty()) {
             for(feed in results) {
 
                 FeedEntity.create (
                     country = feed.country,
-                    day = feed.day,
-                    cases = feed.cases.total,
-                    recoveries = feed.cases.recovered,
-                    deaths = feed.deaths.total,
-                    newCases = feed.cases.new,
+                    day = feed.day ?: "",
+                    cases = feed.cases,
+                    recoveries = feed.recoveries,
+                    deaths = feed.deaths,
+                    newCases = feed.newCases,
                     favorite = false
                 )
             }
