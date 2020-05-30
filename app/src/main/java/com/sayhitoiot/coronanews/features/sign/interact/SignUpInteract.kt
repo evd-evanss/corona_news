@@ -87,11 +87,11 @@ class SignUpInteract(private var presenter: SignUpPresenterToInteract) : SignUpI
 
         launch {
             feedList.forEach {
-                feedReference.child(it.country).setValue(it).addOnSuccessListener {
-                    presenter.didCreateUserOnFirebaseSuccess("Volte a tela de login e insira suas credenciais")
-                }
+                feedReference.child(it.country).setValue(it)
             }
         }
+
+        presenter.didCreateUserOnFirebaseSuccess("Volte a tela de login e insira suas credenciais")
 
 
     }

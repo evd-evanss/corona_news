@@ -12,6 +12,8 @@ class UserEntity (
     var token: String
 ) {
 
+    var terms: Boolean = false
+
     constructor(userRealm: UserRealm) : this(
         id = userRealm.id,
         name = userRealm.name,

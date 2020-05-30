@@ -4,15 +4,20 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.sayhitoiot.coronanews.R
+import com.sayhitoiot.coronanews.features.policy.ActivityReader
+import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
 import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpPresenterToView
 import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpViewToPresenter
-import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
@@ -20,6 +25,8 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
 
     companion object {
         const val TAG = "sign-activity"
+        const val REQUEST_CODE = 100
+        var ACCEPT: Boolean = false
     }
 
     private val presenter: SignUpPresenterToView by lazy {
@@ -35,6 +42,8 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
     private var edtConfirm: EditText? = null
     private var buttonBack: ImageView? = null
     private var buttonSign: MaterialButton? = null
+    private var buttonTerms: MaterialButton? = null
+    private var progress: DilatingDotsProgressBar? = null
 
     override val activity: Activity?
         get() = this
@@ -78,6 +87,7 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
 
     override fun initializeViews() {
         this.runOnUiThread {
+            progress = activitySignUp_dilatingDotsProgressBar
             edtNome = activitySignUp_editText_name
             edtDay = activitySignUp_editText_day
             edtMonth = activitySignUp_editText_month
@@ -89,7 +99,46 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
             buttonBack?.setOnClickListener { presenter.buttonBackTapped() }
             buttonSign = activitySignUp_materialButton_signUp
             buttonSign?.setOnClickListener { presenter.buttonSignTapped() }
+            buttonTerms = activitySignUp_materialButton_terms
+            buttonTerms?.setOnClickListener { presenter.buttonTermsTapped() }
         }
+    }
+
+    override fun showAlertInTermsAnConditions() {
+        buttonTerms?.requestFocus()
+        Toast.makeText(
+            activity,
+            "Para se cadastrar e usar o aplicativo você precisa aceitar os termos",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    override fun startActivityTerms() {
+        startActivityForResult(Intent(this, ActivityReader::class.java), REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+            if(data != null) {
+                ACCEPT = data.getBooleanExtra("accept", false)
+                Toast.makeText(
+                    activity,
+                    "Usuario aceitou os termos $ACCEPT",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    override fun renderViewsForProgress() {
+        progress?.show()
+        buttonSign?.visibility = INVISIBLE
+    }
+
+    override fun renderViewsForProgressDefault() {
+        progress?.hide()
+        buttonSign?.visibility = VISIBLE
     }
 
     override fun showErrorInName(messageError: String) {
@@ -135,6 +184,8 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
     }
 
     override fun showMessageOnSuccess(messageSuccess: String) {
+        progress?.hide()
+        buttonSign?.visibility = VISIBLE
         activity?.runOnUiThread {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Sua conta foi criada com sucesso")

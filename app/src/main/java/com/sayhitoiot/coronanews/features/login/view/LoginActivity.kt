@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -14,6 +15,7 @@ import com.sayhitoiot.coronanews.features.feed.HomeActivity
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
 import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
 import com.sayhitoiot.coronanews.features.login.presenter.LoginPresenter
+import com.sayhitoiot.coronanews.features.reset.ResetPasswordActivity
 import com.sayhitoiot.coronanews.features.sign.view.SignUpActivity
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_login.*
@@ -38,6 +40,7 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
     private var btnLogin: MaterialButton? = null
     private var btnSignUp: MaterialButton? = null
     private var progressBar: DilatingDotsProgressBar? = null
+    private var textForgetPassword: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,10 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
             btnLogin = loginActivity_materialButton_login
             btnSignUp = loginActivity_materialButton_signUp
             progressBar = loginActivity_dilatingDotsProgressBar
+            textForgetPassword = loginActivity_textView_resetPassword
             btnLogin?.setOnClickListener { presenter.btnLoginTapped() }
             btnSignUp?.setOnClickListener { presenter.btnSignUpTapped() }
+            textForgetPassword?.setOnClickListener { presenter.forgetPasswordTapped() }
         }
     }
 
@@ -63,6 +68,10 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
             progressBar?.show()
             btnLogin?.visibility = INVISIBLE
         }
+    }
+
+    override fun renderViewForResetPassword() {
+        startActivity(Intent(this, ResetPasswordActivity::class.java))
     }
 
     override fun startSignUpActivity() {

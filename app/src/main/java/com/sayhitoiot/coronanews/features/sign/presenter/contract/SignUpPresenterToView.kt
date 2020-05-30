@@ -4,4 +4,5 @@ interface SignUpPresenterToView {
     fun onCreate()
     fun buttonBackTapped()
     fun buttonSignTapped()
+    fun buttonTermsTapped()
 }

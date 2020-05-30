@@ -16,5 +16,6 @@ interface LoginViewToPresenter {
     fun loginFail(messageError: String)
     fun renderViewForLogin()
     fun startSignUpActivity()
+    fun renderViewForResetPassword()
 
 }

@@ -1,16 +1,19 @@
 package com.sayhitoiot.coronanews.features.policy
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.util.Constants
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import kotlinx.android.synthetic.main.activity_reader.*
+
 
 class ActivityReader : AppCompatActivity() {
 
@@ -89,12 +92,19 @@ class ActivityReader : AppCompatActivity() {
         nextButton?.text = "OK"
         nextButton?.backgroundTintList =  ColorStateList
             .valueOf(ContextCompat.getColor(this, R.color.colorGreen))
+        nextButton?.setOnClickListener {
+            val result = Intent()
+            result.putExtra("accept", true)
+            setResult(Activity.RESULT_OK, result)
+            finish()
+        }
     }
 
     private fun renderButtonNext() {
         nextButton?.text = "Seguinte"
         nextButton?.backgroundTintList =  ColorStateList
             .valueOf(ContextCompat.getColor(this, R.color.colorRed))
+        nextButton?.setOnClickListener { nextPage() }
     }
 
 }

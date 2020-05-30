@@ -21,5 +21,7 @@
     <string name="logout">Encerrar Seção</string>
     <string name="message_on_load">Lave sempre as mãos e se puder fique em casa 😉</string>
     <string name="message_onload_fav">Evite tocar o rosto com as mãos</string>
+    <string name="forget">Resetar Senha</string>
+    <string name="forget_my_password">Esqueci minha Senha</string>
     <item name="faqID" type="id" />
 </resources>

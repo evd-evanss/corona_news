@@ -24,4 +24,8 @@ interface SignUpViewToPresenter {
     fun showErrorInPassword(messageError: String)
     fun showMessageOnSuccess(messageSuccess: String)
     fun showMessageOnFail(messageError: String)
+    fun startActivityTerms()
+    fun showAlertInTermsAnConditions()
+    fun renderViewsForProgress()
+    fun renderViewsForProgressDefault()
 }

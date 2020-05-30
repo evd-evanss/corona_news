@@ -7,36 +7,64 @@
     android:background="@color/colorGray"
     tools:context=".features.sign.view.SignUpActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="317dp"
-        android:layout_height="233dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="@drawable/header"
+        android:backgroundTint="@color/colorRed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_login" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/activitySignUp_imageView_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:tint="@color/colorWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        <TextView
+            android:id="@+id/activityStatistic_textView_country2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sen_regular"
+            android:text="Cadastro de Usuário"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2">
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline">
 
         <EditText
             android:id="@+id/activitySignUp_editText_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:drawableStart="@drawable/ic_info"
             android:drawablePadding="30dp"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/name"
             android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
+            android:inputType="textPersonName"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,16 +73,16 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textInputLayout3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".30">
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <EditText
             android:id="@+id/activitySignUp_editText_day"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/day"
             android:imeOptions="actionNext"
@@ -62,24 +90,26 @@
             android:maxLength="2"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/textInputLayout4"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".30">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <EditText
             android:id="@+id/activitySignUp_editText_month"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/month"
             android:imeOptions="actionNext"
@@ -87,22 +117,24 @@
             android:maxLength="2"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.30">
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <EditText
             android:id="@+id/activitySignUp_editText_year"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/year"
             android:imeOptions="actionNext"
@@ -116,21 +148,24 @@
         android:id="@+id/textInputLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <EditText
             android:id="@+id/activitySignUp_editText_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="30dp"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/e_mail"
-            android:inputType="textEmailAddress"
             android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -139,7 +174,7 @@
         android:id="@+id/textInputLayout6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
@@ -149,12 +184,13 @@
             android:id="@+id/activitySignUp_editText_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:drawableStart="@drawable/ic_padlock"
             android:drawablePadding="30dp"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/password"
-            android:inputType="textPassword"
             android:imeOptions="actionNext"
+            android:inputType="textPassword"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
 
@@ -164,7 +200,7 @@
         android:id="@+id/textInputLayout7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
@@ -174,6 +210,7 @@
             android:id="@+id/activitySignUp_editText_confirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:drawableStart="@drawable/ic_padlock"
             android:drawablePadding="30dp"
             android:fontFamily="@font/sen_regular"
@@ -185,30 +222,62 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/activitySignUp_materialButton_signUp"
+        android:id="@+id/activitySignUp_materialButton_terms"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/colorRed"
         android:fontFamily="@font/sen_bold"
-        android:text="@string/signup"
+        app:cornerRadius="0dp"
+        android:text="Termos e Condições \nPolítica de Privacidade"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/activitySignUp_materialButton_signUp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
 
-    <ImageView
-        android:id="@+id/activitySignUp_imageView_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:tint="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activitySignUp_materialButton_signUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorGreen"
+        android:fontFamily="@font/sen_bold"
+        android:text="@string/signup"
+        app:cornerRadius="0dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout7" />
+
+    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+        android:id="@+id/activitySignUp_dilatingDotsProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:color="@color/colorGreen"
+        android:radius="3.5sp"
+        app:dd_animationDuration="500"
+        app:dd_horizontalSpacing="10dp"
+        app:dd_numDots="3"
+        app:dd_scaleMultiplier="1.5"
+        app:layout_constraintBottom_toBottomOf="@+id/activitySignUp_materialButton_signUp"
+        app:layout_constraintEnd_toEndOf="@+id/activitySignUp_materialButton_signUp"
+        app:layout_constraintStart_toStartOf="@+id/activitySignUp_materialButton_signUp"
+        app:layout_constraintTop_toBottomOf="@+id/activitySignUp_materialButton_terms" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

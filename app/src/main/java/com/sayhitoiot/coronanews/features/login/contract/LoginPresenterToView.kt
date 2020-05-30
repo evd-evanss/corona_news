@@ -4,4 +4,5 @@ interface LoginPresenterToView {
     fun onCreate()
     fun btnLoginTapped()
     fun btnSignUpTapped()
+    fun forgetPasswordTapped()
 }

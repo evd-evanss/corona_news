@@ -6,6 +6,7 @@ import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpInteractT
 import com.sayhitoiot.coronanews.features.sign.interact.contract.SignUpPresenterToInteract
 import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpPresenterToView
 import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.view.SignUpActivity.Companion.ACCEPT
 
 class SignUpPresenter(private val view: SignUpViewToPresenter)
     : SignUpPresenterToView, SignUpPresenterToInteract {
@@ -26,11 +27,16 @@ class SignUpPresenter(private val view: SignUpViewToPresenter)
         view.callPreviousActivity()
     }
 
+    override fun buttonTermsTapped() {
+        view.startActivityTerms()
+    }
+
     override fun buttonSignTapped() {
 
         if(checkNameValidity() && checkDayValidity() &&
             checkMonthValidity() && checkYearValidity() && checkEmailValidity() &&
-            checkPasswordValidity() && checkConfirmPasswordValidity()) {
+            checkPasswordValidity() && checkConfirmPasswordValidity() && checkAcceptTerms()) {
+            view.renderViewsForProgress()
             val birthdate = "${view.day}/${view.month}/${view.year}"
             interact.requestCreateUserOnFirebase(
                 view.name!!,
@@ -38,8 +44,17 @@ class SignUpPresenter(private val view: SignUpViewToPresenter)
                 view.password!!,
                 birthdate
             )
+        } else {
+            view.renderViewsForProgressDefault()
         }
 
+    }
+
+    private fun checkAcceptTerms() : Boolean {
+        if(!ACCEPT) {
+            view.showAlertInTermsAnConditions()
+        }
+        return ACCEPT
     }
 
     private fun checkNameValidity() : Boolean {

@@ -41,6 +41,10 @@ class LoginPresenter(private val view: LoginViewToPresenter)
         view.startSignUpActivity()
     }
 
+    override fun forgetPasswordTapped() {
+        view.renderViewForResetPassword()
+    }
+
     private fun checkEmailValidity() : Boolean {
         val emailInput = view.email
 
