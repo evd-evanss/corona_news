@@ -6,141 +6,24 @@
     android:layout_height="wrap_content"
     android:padding="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/itemFavorite_materialButton_statistics"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:backgroundTint="#252424"
-        android:elevation="6dp"
-        card_view:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/colorRed"
+        android:fontFamily="@font/sen_regular"
+        android:text="Brazil"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        card_view:icon="@drawable/ic_multiline_chart_white_24dp"
+        card_view:iconGravity="textEnd"
+        card_view:iconTint="@color/colorWhite"
         card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent">
+        card_view:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="322dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <TextView
-                android:id="@+id/itemFavorite_textView_Country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/sen_regular"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.0"
-                card_view:layout_constraintStart_toStartOf="@+id/itemFavorite_materialButton_statistics"
-                card_view:layout_constraintTop_toTopOf="parent"
-                tools:text="Brazil" />
-
-            <TextView
-                android:id="@+id/itemFavorite_textView_Total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="1000"
-                android:textColor="@color/colorRed"
-                android:textSize="18sp"
-                card_view:layout_constraintEnd_toEndOf="@+id/textView3"
-                card_view:layout_constraintStart_toStartOf="@+id/textView3"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_materialButton_statistics" />
-
-            <TextView
-                android:id="@+id/itemFavorite_textView_recovered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="13"
-                android:textColor="@color/colorGreen"
-                android:textSize="18sp"
-                card_view:layout_constraintEnd_toEndOf="@+id/textView4"
-                card_view:layout_constraintStart_toStartOf="@+id/textView4"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_materialButton_statistics" />
-
-            <TextView
-                android:id="@+id/itemFavorite_textView_Deaths"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="7"
-                android:textColor="@color/silver"
-                android:textSize="18sp"
-                card_view:layout_constraintEnd_toEndOf="@+id/textView5"
-                card_view:layout_constraintStart_toStartOf="@+id/textView5"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_materialButton_statistics" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="Total"
-                android:textColor="@color/colorRed"
-                android:textSize="16sp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/textView4"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_textView_Total" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="Recuperados"
-                android:textColor="@color/colorGreen"
-                android:textSize="16sp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/textView5"
-                card_view:layout_constraintStart_toEndOf="@+id/textView3"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_textView_recovered" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="Mortos"
-                android:textColor="@color/silver"
-                android:textSize="16sp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/textView4"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_textView_Deaths" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/itemFavorite_materialButton_statistics"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/colorGreen"
-                android:fontFamily="@font/sen_regular"
-                android:text="Estatísticas"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                card_view:icon="@drawable/ic_multiline_chart_white_24dp"
-                card_view:iconGravity="textEnd"
-                card_view:iconTint="@color/colorWhite"
-                card_view:layout_constraintBottom_toTopOf="@+id/itemFavorite_textView_recovered"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemFavorite_textView_Country" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
