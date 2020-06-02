@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/third_fragment"
-        android:name="com.sayhitoiot.coronanews.features.feed.news.NewsFragment"
+        android:name="com.sayhitoiot.coronanews.features.news.NewsFragment"
         android:label="Third Fragment"
         tools:layout="@layout/fragment_news" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/fourth_fragment"
-        android:name="com.sayhitoiot.coronanews.features.feed.profile.view.ProfileFragment"
+        android:name="com.sayhitoiot.coronanews.features.profile.view.ProfileFragment"
         android:label="Fourth Fragment"
         tools:layout="@layout/fragment_profile" />
 </navigation>

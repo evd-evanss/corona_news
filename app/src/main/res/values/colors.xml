@@ -14,4 +14,6 @@
     <color name="colorFineGray">#7C7979</color>
     <color name="transparent">#D9000000</color>
     <color name="colorOrange">#E47C1A</color>
+    <color name="colorPurple">#FFA038CC</color>
+    <color name="colorBlue">#5964AE</color>
 </resources>

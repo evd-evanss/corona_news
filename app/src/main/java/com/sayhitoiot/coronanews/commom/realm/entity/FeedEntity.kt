@@ -120,6 +120,13 @@ class FeedEntity (
             }
 
             val feedList = realm.where(FeedRealm::class.java)
+                .notEqualTo("country", "All").and()
+                .notEqualTo("country", "North-America").and()
+                .notEqualTo("country", "Europe").and()
+                .notEqualTo("country", "Asia").and()
+                .notEqualTo("country", "South-America")
+                .notEqualTo("country", "Africa")
+                .notEqualTo("country", "Oceania")
                 .findAll()
                 .map {
                     FeedEntity(it)
@@ -128,6 +135,120 @@ class FeedEntity (
             realm.close()
 
             return feedList.toMutableList()
+        }
+
+        fun getNorthAmericaFeed()  : MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val northAmericaFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "North-America").and()
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return northAmericaFeed.toMutableList()
+        }
+
+        fun getSouthAmericaFeed(): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val southAmericaFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "South-America")
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return southAmericaFeed.toMutableList()
+        }
+
+        fun getEuropeFeed(): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val europeFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "Europe")
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return europeFeed.toMutableList()
+        }
+
+        fun getAsiaFeed(): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val asiaFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "Asia")
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return asiaFeed.toMutableList()
+        }
+
+        fun getOceaniaFeed(): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val asiaFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "Oceania")
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return asiaFeed.toMutableList()
+        }
+
+        fun getAfricaFeed(): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
+
+            val asiaFeed = realm.where(FeedRealm::class.java)
+                .equalTo("country", "Africa")
+                .findAll()
+                .map {
+                    FeedEntity(it)
+                }
+
+            realm.close()
+
+            return asiaFeed.toMutableList()
         }
 
         fun getAllFavorites() : MutableList<FeedEntity> {
@@ -188,6 +309,8 @@ class FeedEntity (
 
             return feedList.toMutableList()
         }
+
+
 
 
     }

@@ -31,7 +31,6 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
     }
 
     override fun favoriteButtonTapped() {
-
         interact.requestFavoriteItem(view.country, handleFavoriteCountry())
     }
 
@@ -47,12 +46,4 @@ class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
         return !view.countryFavorite
     }
 
-    private fun getColor(handleFavorite: Boolean) : Int {
-
-        return when(handleFavorite) {
-            true -> R.color.colorYellow
-            else -> R.color.colorFineGray
-        }
-
-    }
 }

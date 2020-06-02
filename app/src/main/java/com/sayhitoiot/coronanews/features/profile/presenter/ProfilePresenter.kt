@@ -1,12 +1,12 @@
-package com.sayhitoiot.coronanews.features.feed.profile.presenter
+package com.sayhitoiot.coronanews.features.profile.presenter
 
 import android.util.Log
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.features.feed.profile.interact.ProfileInteract
-import com.sayhitoiot.coronanews.features.feed.profile.interact.contract.ProfileInteractToPresenter
-import com.sayhitoiot.coronanews.features.feed.profile.interact.contract.ProfilePresenterToInteract
-import com.sayhitoiot.coronanews.features.feed.profile.presenter.contract.ProfilePresenterToView
-import com.sayhitoiot.coronanews.features.feed.profile.presenter.contract.ProfileViewToPresenter
+import com.sayhitoiot.coronanews.features.profile.interact.ProfileInteract
+import com.sayhitoiot.coronanews.features.profile.interact.contract.ProfileInteractToPresenter
+import com.sayhitoiot.coronanews.features.profile.interact.contract.ProfilePresenterToInteract
+import com.sayhitoiot.coronanews.features.profile.presenter.contract.ProfilePresenterToView
+import com.sayhitoiot.coronanews.features.profile.presenter.contract.ProfileViewToPresenter
 
 class ProfilePresenter(private val view: ProfileViewToPresenter)
     : ProfilePresenterToView, ProfilePresenterToInteract {

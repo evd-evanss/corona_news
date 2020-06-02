@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.profile.presenter.contract
+package com.sayhitoiot.coronanews.features.profile.presenter.contract
 
 import android.app.Activity
 

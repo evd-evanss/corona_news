@@ -26,8 +26,6 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         const val TAG = "feed-adapter"
     }
 
-    private var cloneFeed = feedList
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_feed))
     }
@@ -38,10 +36,9 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
 
     override fun getItemCount() = feedList.size
 
-    fun updateList(properties: MutableList<FeedEntity>) {
+    fun updateList(feeds: MutableList<FeedEntity>) {
         this.feedList.clear()
-        this.feedList.addAll(properties)
-        cloneFeed = properties
+        this.feedList.addAll(feeds)
         notifyDataSetChanged()
     }
 
@@ -55,7 +52,6 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         private var textRecoveries: TextView = itemView.itemFeed_textView_recovered
         private var textTotal: TextView = itemView.itemFeed_textView_Total
         private var textDeaths: TextView = itemView.itemFeed_textView_Deaths
-        private var textUpdateTime: TextView = itemView.itemFeed_textView_date
         private var favoriteButton: ImageView = itemView.itemFeed_imageView_favorite
         private var viewTotal: View = itemView.itemFeed_view_total
         private var viewRecoveries: View = itemView.itemFeed_view_recovered
@@ -81,10 +77,9 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             textRecoveries.text = feed[position].recovereds.toString()
             textTotal.text = feed[position].cases.toString()
             textDeaths.text = feed[position].deaths.toString()
-            textUpdateTime.text = feed[position].day
             if(feed[position].favorite) {
                 favoriteButton.imageTintList = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
+                    .valueOf(ContextCompat.getColor(context, R.color.colorAccent))
             } else {
                 favoriteButton.imageTintList = ColorStateList
                     .valueOf(ContextCompat.getColor(context, R.color.colorFineGray))
@@ -115,11 +110,6 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             )
         }
 
-        override fun updateAdapterWithFavorites(feedUpdated: MutableList<FeedEntity>) {
-            feedList = feedUpdated
-            notifyDataSetChanged()
-        }
-
         override fun updateAdapter(feedUpdated: MutableList<FeedEntity>) {
             feedList.clear()
             feedList.addAll(feedUpdated)
@@ -127,8 +117,8 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         }
 
         override fun showMessage(message: String) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(context, message, Toast.LENGTH_SHORT)
+//                .show()
         }
     }
 

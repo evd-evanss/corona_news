@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.profile.interact.contract
+package com.sayhitoiot.coronanews.features.profile.interact.contract
 
 interface ProfileInteractToPresenter {
     fun requestLogout()

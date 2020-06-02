@@ -10,4 +10,10 @@ interface FeedViewToPresenter {
     fun renderViewForSearch()
     fun renderViewDefault()
     fun renderViewWithFail(fail: String)
+    fun selectMoreFilterButton()
+    fun selectFewerFilterButton()
+    fun selectAllFilterButton()
+    fun selectContinentFilterButton()
+    fun openMenuFilters()
+    fun closeMenuFilters()
 }

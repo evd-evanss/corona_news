@@ -13,6 +13,15 @@ import kotlin.coroutines.CoroutineContext
 class FeedPresenter(private val view: FeedViewToPresenter)
     : FeedPresenterToView, FeedPresenterToInteract, CoroutineScope {
 
+    companion object {
+        const val MORE = 0
+        const val FEWER = 1
+        const val CONTINENTS = 2
+        const val ALL = 3
+    }
+
+    private var handleMenu = false
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
     private val interact: FeedInteractToPresenter by lazy {
@@ -35,6 +44,30 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         interact.fetDataByFilter(text)
     }
 
+    override fun moreCasesTapped() {
+        interact.setFilter(MORE)
+    }
+
+    override fun fewerCasesTapped() {
+        interact.setFilter(FEWER)
+    }
+
+    override fun continentCasesTapped() {
+        interact.setFilter(CONTINENTS)
+    }
+
+    override fun allCasesTapped() {
+        interact.setFilter(ALL)
+    }
+
+    override fun imageMenuTapped() {
+        handleMenu= !handleMenu
+        when(handleMenu) {
+            true -> view.openMenuFilters()
+            false -> view.closeMenuFilters()
+        }
+    }
+
     override fun buttonSearchTapped() {
         view.renderViewForSearch()
     }
@@ -43,12 +76,30 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         view.renderViewDefault()
     }
 
-    override fun didFetchDataForFeed(feed: MutableList<FeedEntity>) {
+    override fun didFetchDataForFeed(
+        feed: MutableList<FeedEntity>,
+        filter: Int
+    ) {
         view.postValueInAdapter(feed)
+        setFilter(filter)
     }
 
-    override fun didFetchDataByFilter(feedFilter: MutableList<FeedEntity>) {
+    private fun setFilter(filter: Int) {
+        when(filter) {
+            0 -> view.selectMoreFilterButton()
+            1 -> view.selectFewerFilterButton()
+            2 -> view.selectContinentFilterButton()
+            3 -> view.selectAllFilterButton()
+        }
+
+    }
+
+    override fun didFetchDataByFilter(
+        feedFilter: MutableList<FeedEntity>,
+        filter: Int
+    ) {
         view.postValueInAdapter(feedFilter)
+        setFilter(filter)
     }
 
     override fun didFetchDataFail(fail: String) {

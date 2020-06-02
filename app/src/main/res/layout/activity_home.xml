@@ -26,13 +26,13 @@
         app:backgroundColor="@color/colorPrimary"
         app:textColor="@color/colorWhite"
         app:textSize="14sp"
-        app:iconSize="24dp"
+        app:iconSize="30dp"
         app:indicatorColor="#2DFFFFFF"
         app:indicatorRadius="10dp"
         app:sideMargins="10dp"
         app:itemPadding="10dp"
         app:iconTint="@color/silver"
-        app:iconTintActive="@color/colorYellow"
+        app:iconTintActive="@color/colorAccent"
         app:menu="@menu/menu_bottom"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

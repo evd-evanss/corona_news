@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.profile.view
+package com.sayhitoiot.coronanews.features.profile.view
 
 import android.app.Activity
 import android.content.Intent
@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.feed.profile.presenter.ProfilePresenter
-import com.sayhitoiot.coronanews.features.feed.profile.presenter.contract.ProfilePresenterToView
-import com.sayhitoiot.coronanews.features.feed.profile.presenter.contract.ProfileViewToPresenter
+import com.sayhitoiot.coronanews.features.profile.presenter.ProfilePresenter
+import com.sayhitoiot.coronanews.features.profile.presenter.contract.ProfilePresenterToView
+import com.sayhitoiot.coronanews.features.profile.presenter.contract.ProfileViewToPresenter
 import com.sayhitoiot.coronanews.features.login.view.LoginActivity
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.edit_user.*

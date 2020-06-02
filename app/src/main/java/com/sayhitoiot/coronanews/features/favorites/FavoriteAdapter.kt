@@ -53,11 +53,8 @@ class FavoriteAdapter(private val context: Context, var feedList: MutableList<Fe
                 statisticsButton.backgroundTintList = ColorStateList
                     .valueOf(ContextCompat.getColor(context, R.color.colorRed))
             } else {
-                statisticsButton.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
-                statisticsButton.iconTint = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorBlack))
                 statisticsButton.backgroundTintList = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
+                    .valueOf(ContextCompat.getColor(context, R.color.colorAccent))
             }
             statisticsButton.setOnClickListener { startStatisticActivity(feed[position].country) }
 

@@ -34,7 +34,7 @@
                 card_view:layout_constraintBottom_toBottomOf="@+id/itemFeed_imageView_favorite"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                tools:text="Brazil" />
+                tools:text="São Paulo" />
 
             <ImageView
                 android:id="@+id/itemFeed_imageView_favorite"
@@ -45,7 +45,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_multiline_chart_white_24dp"
+                android:src="@drawable/ic_bookmark_black_24dp"
                 android:tint="#E1DFDF"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />

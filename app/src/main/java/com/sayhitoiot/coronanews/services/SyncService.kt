@@ -11,6 +11,7 @@ import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
 import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
 import com.sayhitoiot.coronanews.commom.firebase.model.User
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -41,12 +42,23 @@ class SyncService : CoroutineScope{
 
     private fun syncUser() {
         fetchUser()
+        fetchFilters()
     }
 
     private fun fetchUser() {
         if(UserEntity.getUser() == null) {
             fetchUserOnFirebase()
         }
+    }
+
+    private fun fetchFilters() {
+        if(FilterEntity.getFilter().isEmpty()) {
+            createFilterOnDB()
+        }
+    }
+
+    private fun createFilterOnDB() {
+        FilterEntity.create(0)
     }
 
     private fun fetchUserOnFirebase() {

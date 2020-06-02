@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.statistics.presenter.StatisticsPresenterToInteract
+import com.sayhitoiot.coronanews.features.statistics.presenter.StatisticsPresenter
 import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToPresenter
 import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToView
 import kotlinx.android.synthetic.main.activity_statistics.*
@@ -17,7 +17,7 @@ import kotlin.math.roundToInt
 class StatisticActivity : AppCompatActivity(), StatisticPresenterToView {
 
     private val presenter: StatisticPresenterToPresenter by lazy {
-        StatisticsPresenterToInteract(this)
+        StatisticsPresenter(this)
     }
 
     private var textCountry: TextView? = null

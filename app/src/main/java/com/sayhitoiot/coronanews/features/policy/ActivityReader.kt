@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ class ActivityReader : AppCompatActivity() {
     private var previousButton: MaterialButton? = null
     private var countPolicyPrivacy = 0
     private var textCount: TextView? = null
+    private var imageBack: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,8 @@ class ActivityReader : AppCompatActivity() {
         nextButton?.setOnClickListener { nextPage() }
         previousButton = activityReader_button_previous
         previousButton?.setOnClickListener { previousPage() }
+        imageBack = activityStatistic_imageView_back
+        imageBack?.setOnClickListener { onBackPressed() }
     }
 
     private fun setupPDFReader() {

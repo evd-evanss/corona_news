@@ -1,8 +1,9 @@
-package com.sayhitoiot.coronanews.features.feed.news
+package com.sayhitoiot.coronanews.features.news
 
 import android.annotation.SuppressLint
 import android.net.http.SslError
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,26 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadNews()
+        onBackPressed()
+    }
+
+    private fun onBackPressed() {
+        fragmentNews_webview.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                if (event?.action !=KeyEvent.ACTION_DOWN)
+                    return true;
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (fragmentNews_webview.canGoBack()) {
+                        fragmentNews_webview.goBack();
+                    } else {
+                        requireActivity().onBackPressed();
+                    }
+                    return true;
+            }
+                return false
+        }
+     })
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")

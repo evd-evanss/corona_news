@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.profile.interact
+package com.sayhitoiot.coronanews.features.profile.interact
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -9,8 +9,8 @@ import com.google.firebase.database.ValueEventListener
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
 import com.sayhitoiot.coronanews.commom.firebase.model.User
-import com.sayhitoiot.coronanews.features.feed.profile.interact.contract.ProfileInteractToPresenter
-import com.sayhitoiot.coronanews.features.feed.profile.interact.contract.ProfilePresenterToInteract
+import com.sayhitoiot.coronanews.features.profile.interact.contract.ProfileInteractToPresenter
+import com.sayhitoiot.coronanews.features.profile.interact.contract.ProfilePresenterToInteract
 
 
 class ProfileInteract(private val presenter: ProfilePresenterToInteract) : ProfileInteractToPresenter {

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
+import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
 import com.sayhitoiot.coronanews.features.feed.feed.adapter.interact.contract.FeedAdapterInteractToPresenter
 import com.sayhitoiot.coronanews.features.feed.feed.adapter.interact.contract.FeedAdapterPresenterToInteract
 
@@ -49,7 +50,44 @@ class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract
     }
 
     private fun fetchFeedUpdated() {
-        val feedUpdated = FeedEntity.getAll()
+        val filter = FilterEntity.getFilter()[0].filter
+        val feedUpdated = fetchDataWithFilter(filter)
         presenter.didFetchDataForFeed(feedUpdated)
     }
+
+    private fun fetchDataWithFilter(filter: Int) : MutableList<FeedEntity> {
+        return when(filter) {
+            0 -> fetchDataWithFilterMoreCases()
+            1 -> fetchDataWithFilterFewerCases()
+            2 -> fetchDataWithFilterContinentsCases()
+            3 -> fetchDataWithFilterAllCases()
+            else -> fetchDataWithFilterMoreCases()
+        }
+    }
+
+    private fun fetchDataWithFilterMoreCases() : MutableList<FeedEntity> {
+        val moreCases = FeedEntity.getAll()
+        moreCases.sortByDescending { it.cases }
+        return moreCases
+    }
+
+    private fun fetchDataWithFilterFewerCases() : MutableList<FeedEntity> {
+        val fewerCases = FeedEntity.getAll()
+        fewerCases.sortBy { it.cases }
+        return fewerCases
+    }
+
+    private fun fetchDataWithFilterContinentsCases() : MutableList<FeedEntity>{
+        val casesByContinents = mutableListOf<FeedEntity>()
+        casesByContinents.addAll(FeedEntity.getAsiaFeed())
+        casesByContinents.addAll(FeedEntity.getEuropeFeed())
+        casesByContinents.addAll(FeedEntity.getNorthAmericaFeed())
+        casesByContinents.addAll(FeedEntity.getSouthAmericaFeed())
+        return casesByContinents
+    }
+
+    private fun fetchDataWithFilterAllCases() : MutableList<FeedEntity>{
+        return FeedEntity.findByFilter("All")
+    }
+
 }

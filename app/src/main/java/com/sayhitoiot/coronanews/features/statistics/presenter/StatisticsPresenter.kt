@@ -7,7 +7,7 @@ import com.sayhitoiot.coronanews.features.statistics.interact.StatisticsInteract
 import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToPresenter
 import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToView
 
-class StatisticsPresenterToInteract(private val view: StatisticPresenterToView) : StatisticPresenterToPresenter,
+class StatisticsPresenter(private val view: StatisticPresenterToView) : StatisticPresenterToPresenter,
     StatisticPresenterToInteract{
 
     private val interact: StatisticInteractToInteract by lazy {
@@ -42,9 +42,9 @@ class StatisticsPresenterToInteract(private val view: StatisticPresenterToView) 
         "%.2f".format(rateMortality)
 
         view.updateGraph(
-            feedEntity.recovereds.toFloat()/5000,
-            feedEntity.cases.toFloat()/5000,
-            feedEntity.deaths.toFloat()/5000,
+            feedEntity.recovereds.toFloat()/2500,
+            feedEntity.cases.toFloat()/4000,
+            feedEntity.deaths.toFloat()/1000,
             rateRecoveries,
             rateMortality)
 

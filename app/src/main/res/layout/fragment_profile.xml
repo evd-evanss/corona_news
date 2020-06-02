@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/profile_imageView_logout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="40dp"
             android:tint="@color/colorWhite"

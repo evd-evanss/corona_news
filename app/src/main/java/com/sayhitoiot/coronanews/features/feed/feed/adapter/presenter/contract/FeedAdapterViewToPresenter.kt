@@ -4,7 +4,6 @@ import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 
 interface FeedAdapterViewToPresenter {
     fun updateGraph(recoveries: Float, total: Float, deaths: Float)
-    fun updateAdapterWithFavorites(feedUpdated: MutableList<FeedEntity>)
     fun updateAdapter(feedUpdated: MutableList<FeedEntity>)
     fun showMessage(message: String)
 

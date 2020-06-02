@@ -12,9 +12,9 @@
     <string name="signup">Cadastrar</string>
     <string name="confirm_password">Confirme a Senha</string>
     <string name="menu_feed">Feed</string>
-    <string name="menu_fav">Favoritos</string>
+    <string name="menu_fav">Monitor</string>
     <string name="menu_news">Notícias</string>
-    <string name="menu_profile">Meu Perfil</string>
+    <string name="menu_profile">Minha Conta</string>
     <string name="search_country">Procurar País</string>
     <string name="birthdate">Data de nascimento</string>
     <string name="date_fake">20/03/1985</string>
@@ -24,4 +24,240 @@
     <string name="forget">Resetar Senha</string>
     <string name="forget_my_password">Esqueci minha Senha</string>
     <item name="faqID" type="id" />
+
+
+    <string-array name="country_array">
+        <item>Afeganistão</item>
+        <item>Africa</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>All</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Anguilla</item>
+        <item>Antigua e Barbuda</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Aruba</item>
+        <item>Asia</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaijão</item>
+        <item>Bahamas</item>
+        <item>Barein</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belgica</item>
+        <item>Belize</item>
+        <item>Benin</item>
+        <item>Bermudas</item>
+        <item>Butão</item>
+        <item>Bolivia</item>
+        <item>Bósnia e Herzegovina</item>
+        <item>Botsuana</item>
+        <item>Brasil</item>
+        <item>Ilhas Virgens Britânicas</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>CAR</item>
+        <item>Cabo Verde</item>
+        <item>Cambodia</item>
+        <item>Camarões</item>
+        <item>Canada</item>
+        <item>Países Baixos Caribenhos</item>
+        <item>Ilhas Cayman</item>
+        <item>Chade</item>
+        <item>Ilhas do Canal</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>Comores</item>
+        <item>Congo</item>
+        <item>Costa Rica</item>
+        <item>Croacia</item>
+        <item>Cuba</item>
+        <item>Curaccedilao</item>
+        <item>Chipre</item>
+        <item>República Tcheca</item>
+        <item>República Democrática do Congo</item>
+        <item>Dinamarca</item>
+        <item>Diamond-Princess</item>
+        <item>Diamond-Princess-</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>República Dominicana</item>
+        <item>Equador</item>
+        <item>Egito</item>
+        <item>El-Salvador</item>
+        <item>Guinea Equatorial</item>
+        <item>Eritreia</item>
+        <item>Estonia</item>
+        <item>Suazilândia</item>
+        <item>Etiópia</item>
+        <item>Europa</item>
+        <item>Ilhas Faroé</item>
+        <item>Ilhas Falkland</item>
+        <item>Fiji</item>
+        <item>Finlandia</item>
+        <item>França</item>
+        <item>Guinea Francesa</item>
+        <item>Polinésia Francesa</item>
+        <item>Gabão</item>
+        <item>Gambia</item>
+        <item>Georgia</item>
+        <item>Alemanha</item>
+        <item>Ghana</item>
+        <item>Gibraltar</item>
+        <item>Grécia</item>
+        <item>Greenlandia</item>
+        <item>Granada</item>
+        <item>Guadalupe</item>
+        <item>Guam</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Guinea Bissau</item>
+        <item>Guiana</item>
+        <item>Haiti</item>
+        <item>Honduras</item>
+        <item>Hong Kong</item>
+        <item>Hungria</item>
+        <item>Ilha do Gelo</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraque</item>
+        <item>Irlanda</item>
+        <item>Ilha de Man</item>
+        <item>Israel</item>
+        <item>Italia</item>
+        <item>Costa do Marfim</item>
+        <item>Jamaica</item>
+        <item>Japão</item>
+        <item>Jordânia</item>
+        <item>Cazaquistão</item>
+        <item>Quênia</item>
+        <item>Kuwait</item>
+        <item>Quirguistão</item>
+        <item>Laos</item>
+        <item>Letônia</item>
+        <item>Libano</item>
+        <item>Lesoto</item>
+        <item>Liberia</item>
+        <item>Libia</item>
+        <item>Liechtenstein</item>
+        <item>Lituania</item>
+        <item>Luxemburgo</item>
+        <item>MS Zaandam</item>
+        <item>MS-Zaandam-</item>
+        <item>Macau</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Malásia</item>
+        <item>Maldivias</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Martinica</item>
+        <item>Mauritania</item>
+        <item>Ilhas Maurício</item>
+        <item>Mayotte</item>
+        <item>México</item>
+        <item>Moldávia</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montenegro</item>
+        <item>Montserrat</item>
+        <item>Marrocos</item>
+        <item>Moçambique</item>
+        <item>Myanmar</item>
+        <item>Namibia</item>
+        <item>Nepal</item>
+        <item>Holanda</item>
+        <item>Nova Caledônia</item>
+        <item>Nova Zelandiaa</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigéria</item>
+        <item>América do Norte</item>
+        <item>Macedonia</item>
+        <item>Noruega</item>
+        <item>Oceania</item>
+        <item>Oman</item>
+        <item>Paquistão</item>
+        <item>Palestina</item>
+        <item>Panamá</item>
+        <item>Papua Nova Guiné</item>
+        <item>Paraguai</item>
+        <item>Peru</item>
+        <item>Filipinas</item>
+        <item>Polonia</item>
+        <item>Portugal</item>
+        <item>Porto Rico</item>
+        <item>Qatar</item>
+        <item>União Africana</item>
+        <item>Romenia</item>
+        <item>Russia</item>
+        <item>Ruanda</item>
+        <item>Coreia do Sul</item>
+        <item>São Cristóvão e Névis</item>
+        <item>Santa Lucia</item>
+        <item>Ilha de São Martinho</item>
+        <item>Saint-Pierre e Miquelon</item>
+        <item>San Marino</item>
+        <item>São Tomé e Principe</item>
+        <item>Arábia Saudita</item>
+        <item>Senegal</item>
+        <item>Sérvia</item>
+        <item>Seychelles</item>
+        <item>Serra Leoa</item>
+        <item>Singapura</item>
+        <item>São Martinho</item>
+        <item>Eslováquia</item>
+        <item>Eslovenia</item>
+        <item>Somalia</item>
+        <item>Africa do Sul</item>
+        <item>América do Sul</item>
+        <item>Sudão do Sul</item>
+        <item>Espanha</item>
+        <item>Siri Lanka</item>
+        <item>São Bartolomeu</item>
+        <item>São Vicente e Granadinas</item>
+        <item>Sudão</item>
+        <item>Suriname</item>
+        <item>Suécia</item>
+        <item>Suiça</item>
+        <item>Siria</item>
+        <item>Taiwan</item>
+        <item>Tajiquistão</item>
+        <item>Tanzania</item>
+        <item>Tailandia</item>
+        <item>Timor Leste</item>
+        <item>Togo</item>
+        <item>Trinidad e Tobago</item>
+        <item>Tunisia</item>
+        <item>Turquia</item>
+        <item>Ilhas Turcas e Caicos</item>
+        <item>Emirados Árabes Unidos</item>
+        <item>Inglaterra</item>
+        <item>Ilhas Virgens Americanas</item>
+        <item>Estados Unidos</item>
+        <item>Uganda</item>
+        <item>Ucrania</item>
+        <item>Uruguai</item>
+        <item>Uzbequistão</item>
+        <item>Vaticano</item>
+        <item>Venezuela</item>
+        <item>Vietnan</item>
+        <item>Saara Ocidental</item>
+        <item>Yemen</item>
+        <item>Zambia</item>
+        <item>Zimbabwe</item>
+    </string-array>
+
+
+
+
+
 </resources>
