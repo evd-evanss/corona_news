@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.features.favorites.presenter.FavoritesPresenter
@@ -59,7 +60,7 @@ class FavoritesFragment : Fragment() , FavoritesToView {
             recyclerView?.visibility = View.GONE
             firstContainer = fragment_favorites_linearLayout
             recyclerView = recyclerView_favorites
-            recyclerView?.layoutManager = LinearLayoutManager(context)
+            recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerView?.setItemViewCacheSize(227)
             recyclerView?.adapter = favoriteAdapter
             presenter.didFinishInitializeViews()

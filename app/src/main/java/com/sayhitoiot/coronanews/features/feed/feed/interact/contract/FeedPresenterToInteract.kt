@@ -5,7 +5,8 @@ import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 interface FeedPresenterToInteract {
     fun didFetchDataForFeed(
         feed: MutableList<FeedEntity>,
-        filter: Int
+        filter: Int,
+        animation: Boolean
     )
     fun didFetchDataByFilter(
         feedFilter: MutableList<FeedEntity>,

@@ -6,14 +6,19 @@
     <color name="colorBlack">#050505</color>
     <color name="silver">#8A8882</color>
     <color name="colorRed">#F44336</color>
+    <color name="colorRedRate">#F4766D</color>
     <color name="colorRedBlack">#AA0C00</color>
     <color name="colorGreen">#4CAF50</color>
+    <color name="colorGreenRate">#B4F4B7</color>
     <color name="colorYellow">#FFEB3B</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#1F1F1F</color>
-    <color name="colorFineGray">#7C7979</color>
+    <color name="colorFineGray">#BCBABA</color>
+    <color name="bg_graph">#9F9D9D</color>
     <color name="transparent">#D9000000</color>
     <color name="colorOrange">#E47C1A</color>
     <color name="colorPurple">#FFA038CC</color>
-    <color name="colorBlue">#5964AE</color>
+    <color name="colorBlue">#909EF6</color>
+    <color name="yellowSepia">#FBC02D</color>
+    <color name="bg_gray">#252424</color>
 </resources>

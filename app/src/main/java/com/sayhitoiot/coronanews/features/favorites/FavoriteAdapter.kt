@@ -7,8 +7,6 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -49,13 +47,7 @@ class FavoriteAdapter(private val context: Context, var feedList: MutableList<Fe
         fun bind(feed: MutableList<FeedEntity>, position: Int){
 
             statisticsButton.text = feed[position].country
-            if((position % 2) == 0) {
-                statisticsButton.backgroundTintList = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorRed))
-            } else {
-                statisticsButton.backgroundTintList = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorAccent))
-            }
+
             statisticsButton.setOnClickListener { startStatisticActivity(feed[position].country) }
 
         }

@@ -20,8 +20,6 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         const val ALL = 3
     }
 
-    private var handleMenu = false
-
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
     private val interact: FeedInteractToPresenter by lazy {
@@ -33,10 +31,6 @@ class FeedPresenter(private val view: FeedViewToPresenter)
     }
 
     override fun onResume() {
-        interact.fetchDataForFeed()
-    }
-
-    override fun didFinishInitializeViews() {
         interact.fetchDataForFeed()
     }
 
@@ -60,14 +54,6 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         interact.setFilter(ALL)
     }
 
-    override fun imageMenuTapped() {
-        handleMenu= !handleMenu
-        when(handleMenu) {
-            true -> view.openMenuFilters()
-            false -> view.closeMenuFilters()
-        }
-    }
-
     override fun buttonSearchTapped() {
         view.renderViewForSearch()
     }
@@ -78,9 +64,10 @@ class FeedPresenter(private val view: FeedViewToPresenter)
 
     override fun didFetchDataForFeed(
         feed: MutableList<FeedEntity>,
-        filter: Int
+        filter: Int,
+        animation: Boolean
     ) {
-        view.postValueInAdapter(feed)
+        view.postValueInAdapter(feed, animation)
         setFilter(filter)
     }
 
@@ -98,7 +85,7 @@ class FeedPresenter(private val view: FeedViewToPresenter)
         feedFilter: MutableList<FeedEntity>,
         filter: Int
     ) {
-        view.postValueInAdapter(feedFilter)
+        view.postValueInAdapter(feedFilter, false)
         setFilter(filter)
     }
 

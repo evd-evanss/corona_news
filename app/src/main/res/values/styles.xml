@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorRed</item>
-        <item name="colorPrimaryDark">@color/colorRed</item>
-        <item name="colorAccent">#3BAC64</item>
+        <item name="colorPrimary">@color/bg_gray</item>
+        <item name="colorPrimaryDark">@color/bg_gray</item>
+        <item name="colorAccent">@color/colorRed</item>
     </style>
 
 </resources>

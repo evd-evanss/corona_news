@@ -4,26 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_margin="2dp"
+    android:background="@color/bg_gray">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/itemFavorite_materialButton_statistics"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/colorRed"
+        android:backgroundTint="@color/bg_gray"
         android:fontFamily="@font/sen_regular"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
         android:text="Brazil"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         card_view:icon="@drawable/ic_multiline_chart_white_24dp"
         card_view:iconGravity="textEnd"
-        card_view:iconTint="@color/colorWhite"
+        card_view:iconTint="@color/colorRed"
+        card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintStart_toStartOf="parent"
         card_view:layout_constraintTop_toTopOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

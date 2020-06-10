@@ -6,7 +6,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsByStatesCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.model.Response
@@ -42,17 +41,22 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
     }
 
     override fun fetchDataForFeed() {
-        val feedList = fetchDataWithFilter(FilterEntity.getFilter()[0].filter)
-        when {
-            feedList.isEmpty() -> syncApiFirebase()
-            feedList.isNotEmpty() -> presenter.didFetchDataForFeed(
-                feedList,
-                FilterEntity.getFilter()[0].filter
-            )
+        val feedList = fetchDataWithFilter(FilterEntity.getFilter()?.filter)
+        val filter = FilterEntity.getFilter()
+        if(filter != null) {
+            when {
+                feedList.isEmpty() -> syncApiFirebase()
+                feedList.isNotEmpty() -> presenter.didFetchDataForFeed(
+                    feedList,
+                    filter.filter,
+                    true
+                )
+            }
         }
+
     }
 
-    private fun fetchDataWithFilter(filter: Int) : MutableList<FeedEntity> {
+    private fun fetchDataWithFilter(filter: Int?) : MutableList<FeedEntity> {
         return when(filter) {
             0 -> fetchDataWithFilterMoreCases()
             1 -> fetchDataWithFilterFewerCases()
@@ -63,29 +67,31 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
     }
 
     private fun syncApiFirebase() {
-        val uid = mAuth.uid!!
-        firebaseDatabase.reference.child(uid).child(FEEDS)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(databaseError: DatabaseError) {
+        val uid = mAuth.uid
+        uid?.let {
+            firebaseDatabase.reference.child(it).child(FEEDS)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(databaseError: DatabaseError) {
 
-                }
+                    }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val feedFirebaseModel: MutableList<Feed> = mutableListOf()
-                    snapshot.children.forEach {
-                        val feed = it.getValue(Feed::class.java)
-                        feed?.let { it1 ->
-                            feedFirebaseModel.add(it1)
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+                        snapshot.children.forEach {
+                            val feed = it.getValue(Feed::class.java)
+                            feed?.let { it1 ->
+                                feedFirebaseModel.add(it1)
+                            }
+                        }
+                        if(feedFirebaseModel.isNotEmpty()) {
+                            saveFeedOnDB(feedFirebaseModel)
+                        } else {
+                            syncApiCovid()
                         }
                     }
-                    if(feedFirebaseModel.isNotEmpty()) {
-                        saveFeedOnDB(feedFirebaseModel)
-                    } else {
-                        syncApiCovid()
-                    }
-                }
 
-            })
+                })
+        }
     }
 
     private fun syncApiCovid() {
@@ -100,10 +106,13 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
 
             override fun onError() {
                 Log.e(TAG, "Error on fetch data")
-                presenter.didFetchDataForFeed(
-                    FeedEntity.getAll(),
-                    FilterEntity.getFilter()[0].filter
-                )
+                FilterEntity.getFilter()?.filter?.let {
+                    presenter.didFetchDataForFeed(
+                        FeedEntity.getAll(),
+                        it,
+                        true
+                    )
+                }
             }
         })
 
@@ -173,15 +182,15 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
             }
         }
 
-        val feed = fetchDataWithFilter(FilterEntity.getFilter()[0].filter)
-        presenter.didFetchDataForFeed(feed, FilterEntity.getFilter()[0].filter)
+        val feed = fetchDataWithFilter(FilterEntity.getFilter()?.filter)
+        FilterEntity.getFilter()?.filter?.let { presenter.didFetchDataForFeed(feed, it, true) }
 
     }
 
     override fun fetDataByFilter(text: String) {
         val feedFilter = FeedEntity.findByFilter(text)
-        val filter = FilterEntity.getFilter()[0].filter
-        presenter.didFetchDataByFilter(feedFilter, filter)
+        val filter = FilterEntity.getFilter()?.filter
+        filter?.let { presenter.didFetchDataByFilter(feedFilter, it) }
     }
 
     override fun setFilter(filter: Int) {
@@ -209,6 +218,7 @@ class FeedInteract(private val presenter: FeedPresenterToInteract) : FeedInterac
         casesByContinents.addAll(FeedEntity.getNorthAmericaFeed())
         casesByContinents.addAll(FeedEntity.getOceaniaFeed())
         casesByContinents.addAll(FeedEntity.getSouthAmericaFeed())
+        casesByContinents.sortByDescending { it.cases }
         return casesByContinents
     }
 

@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.reset.ResetPasswordActivity"></activity>
-        <activity android:name=".features.policy.ActivityReader"></activity>
-        <activity android:name=".features.statistics.StatisticActivity" />
-        <activity android:name=".features.splash.view.SplashActivity">
+        <activity android:name=".features.reset.ResetPasswordActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".features.policy.ActivityReader" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".features.statistics.StatisticActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".features.splash.view.SplashActivity" android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +24,10 @@
         </activity>
         <activity
             android:name=".features.feed.HomeActivity"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".features.sign.view.SignUpActivity" />
-        <activity android:name=".features.login.view.LoginActivity" />
+        <activity android:name=".features.sign.view.SignUpActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".features.login.view.LoginActivity" android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>

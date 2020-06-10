@@ -23,17 +23,17 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:backgroundColor="@color/colorPrimary"
-        app:textColor="@color/colorWhite"
-        app:textSize="14sp"
+        app:backgroundColor="@color/bg_gray"
         app:iconSize="30dp"
-        app:indicatorColor="#2DFFFFFF"
+        app:iconTint="@color/colorFineGray"
+        app:iconTintActive="@color/colorRed"
+        app:indicatorColor="@color/bg_gray"
         app:indicatorRadius="10dp"
-        app:sideMargins="10dp"
         app:itemPadding="10dp"
-        app:iconTint="@color/silver"
-        app:iconTintActive="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:sideMargins="10dp"
+        app:textColor="@color/colorWhite"
+        app:textSize="14sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

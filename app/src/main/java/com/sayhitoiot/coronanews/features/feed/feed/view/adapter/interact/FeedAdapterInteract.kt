@@ -1,12 +1,12 @@
-package com.sayhitoiot.coronanews.features.feed.feed.adapter.interact
+package com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.interact.contract.FeedAdapterInteractToPresenter
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.interact.contract.FeedAdapterPresenterToInteract
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterInteractToPresenter
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterPresenterToInteract
 
 class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract)
     : FeedAdapterInteractToPresenter {
@@ -31,10 +31,6 @@ class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract
             FeedEntity.update(country, favorite)
             favoriteFeedInFirebase(country, favorite)
             fetchFeedUpdated()
-            when {
-                favorite -> presenter.requestMessageToast("$country $INCLUSION_MESSAGE")
-                !favorite -> presenter.requestMessageToast("$country $REMOVAL_MESSAGE")
-            }
         }
 
     }
@@ -50,9 +46,12 @@ class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract
     }
 
     private fun fetchFeedUpdated() {
-        val filter = FilterEntity.getFilter()[0].filter
-        val feedUpdated = fetchDataWithFilter(filter)
-        presenter.didFetchDataForFeed(feedUpdated)
+        val filter = FilterEntity.getFilter()
+        if(filter != null) {
+            val feedUpdated = fetchDataWithFilter(filter.filter)
+            presenter.didFetchDataForFeed(feedUpdated)
+        }
+
     }
 
     private fun fetchDataWithFilter(filter: Int) : MutableList<FeedEntity> {
@@ -80,9 +79,12 @@ class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract
     private fun fetchDataWithFilterContinentsCases() : MutableList<FeedEntity>{
         val casesByContinents = mutableListOf<FeedEntity>()
         casesByContinents.addAll(FeedEntity.getAsiaFeed())
+        casesByContinents.addAll(FeedEntity.getAfricaFeed())
         casesByContinents.addAll(FeedEntity.getEuropeFeed())
         casesByContinents.addAll(FeedEntity.getNorthAmericaFeed())
+        casesByContinents.addAll(FeedEntity.getOceaniaFeed())
         casesByContinents.addAll(FeedEntity.getSouthAmericaFeed())
+        casesByContinents.sortByDescending { it.cases }
         return casesByContinents
     }
 

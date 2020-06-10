@@ -6,13 +6,21 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsByStatesCoronaCallback
+import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.model.Response
+import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
+import com.sayhitoiot.coronanews.commom.apicovid.model_states.ResultOfStates
 import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
 import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
+import com.sayhitoiot.coronanews.commom.extensions.toLocale
+import com.sayhitoiot.coronanews.commom.firebase.model.Feed
 import com.sayhitoiot.coronanews.commom.firebase.model.User
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
+import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
+import com.sayhitoiot.coronanews.features.feed.feed.interact.FeedInteract
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlin.coroutines.CoroutineContext
@@ -37,10 +45,6 @@ class SyncService : CoroutineScope{
     }
 
     init {
-        this.syncUser()
-    }
-
-    private fun syncUser() {
         fetchUser()
         fetchFilters()
     }
@@ -52,7 +56,7 @@ class SyncService : CoroutineScope{
     }
 
     private fun fetchFilters() {
-        if(FilterEntity.getFilter().isEmpty()) {
+        if(FilterEntity.getFilter() == null) {
             createFilterOnDB()
         }
     }
@@ -97,6 +101,89 @@ class SyncService : CoroutineScope{
             }
         })
 
+    }
+
+    fun syncApiCovid() {
+
+        repository.getStatistics(object : OnGetStatisticsCoronaCallback {
+
+            override fun onSuccess(coronaResult: ResultData) {
+                Log.d(FeedInteract.TAG, coronaResult.results.toString())
+                response.addAll(coronaResult.response)
+                saveFeedOnFirebase(response)
+            }
+
+            override fun onError() {
+                Log.e(FeedInteract.TAG, "Error on fetch data")
+            }
+        })
+
+        repository.getStatisticsByStates(object : OnGetStatisticsByStatesCoronaCallback {
+            override fun onSuccess(coronaResult: ResultOfStates) {
+
+            }
+
+            override fun onError() {
+
+            }
+
+        })
+
+    }
+
+    private fun saveFeedOnFirebase(response: MutableList<Response>) {
+        val uid = mAuth.uid
+
+        val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+
+        response.forEach {
+            feedFirebaseModel.add(
+                Feed (
+                    cases = it.cases.total,
+                    country = it.country,
+                    day = it.day.toLocale(),
+                    deaths = it.deaths.total,
+                    newCases = it.cases.new,
+                    recoveries = it.cases.recovered,
+                    favorite = false
+                )
+            )
+        }
+
+        feedFirebaseModel.forEach {
+            uid?.let { it1 ->
+                firebaseDatabase.reference.child(it1).child(FeedInteract.FEEDS).child(it.country)
+                    .setValue(it)
+            }
+        }
+
+        saveFeedOnDB(feedFirebaseModel)
+
+    }
+
+    private fun saveFeedOnDB(results: MutableList<Feed>) {
+
+        if(FeedEntity.getAll().isEmpty()) {
+            for(feed in results) {
+                Log.d(FeedInteract.TAG, feed.country)
+                FeedEntity.create (
+                    country = feed.country,
+                    day = feed.day ?: "",
+                    cases = feed.cases,
+                    recoveries = feed.recoveries,
+                    deaths = feed.deaths,
+                    newCases = feed.newCases,
+                    favorite = feed.favorite
+                )
+            }
+        } else {
+            for(feed in results) {
+                FeedEntity.update(
+                    country = feed.country,
+                    day = feed.day
+                )
+            }
+        }
     }
 
 

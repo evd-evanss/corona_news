@@ -5,11 +5,9 @@ interface FeedPresenterToView{
     fun buttonSearchTapped()
     fun buttonBackTapped()
     fun onResume()
-    fun didFinishInitializeViews()
     fun filterData(text: String)
     fun moreCasesTapped()
     fun fewerCasesTapped()
     fun continentCasesTapped()
     fun allCasesTapped()
-    fun imageMenuTapped()
 }

@@ -1,7 +1,6 @@
 package com.sayhitoiot.coronanews.commom.realm.entity
 
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
-import com.sayhitoiot.coronanews.commom.realm.model.FeedRealm
 import com.sayhitoiot.coronanews.commom.realm.model.FilterRealm
 import io.realm.Realm
 
@@ -53,22 +52,25 @@ class FilterEntity (
         }
 
 
-        fun getFilter() : MutableList<FilterEntity> {
+        fun getFilter() : FilterEntity?{
             val realm = Realm.getDefaultInstance()
 
             if(!realm.isInTransaction) {
                 realm.beginTransaction()
             }
 
-            val feedList = realm.where(FilterRealm::class.java)
-                .findAll()
-                .map {
-                    FilterEntity(it)
-                }
+            val filterModel = realm.where(FilterRealm::class.java)
+                .findFirst()
+
+            var filterEntity: FilterEntity? = null
+
+            if (filterModel != null) {
+                filterEntity = FilterEntity(filterModel)
+            }
 
             realm.close()
 
-            return feedList.toMutableList()
+            return filterEntity
         }
 
 

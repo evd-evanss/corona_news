@@ -13,12 +13,12 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.FeedAdapter
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.FeedAdapter
 import com.sayhitoiot.coronanews.features.feed.feed.presenter.FeedPresenter
 import com.sayhitoiot.coronanews.features.feed.feed.presenter.contract.FeedPresenterToView
 import com.sayhitoiot.coronanews.features.feed.feed.presenter.contract.FeedViewToPresenter
@@ -54,12 +54,13 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
     private var textTitle: TextView? = null
     private var firstContainer: LinearLayout? = null
     private var progress: DilatingDotsProgressBar? = null
+    private var textOnLoad: TextView? = null
+    private var textUpdate: TextView? = null
 
     private var buttonMoreCases: MaterialButton? = null
     private var buttonFewerCases: MaterialButton? = null
     private var buttonContinentsCases: MaterialButton? = null
     private var buttonAllCases: MaterialButton? = null
-    private var imageMenu: ImageView? = null
     private var containerMenu: LinearLayout? = null
 
     override fun onCreateView(
@@ -82,7 +83,7 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
     override fun initializeViews() {
         activity?.runOnUiThread {
             recyclerView = recyclerView_feed
-            recyclerView?.layoutManager = LinearLayoutManager(context)
+            recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerView?.setItemViewCacheSize(227)
             recyclerView?.adapter = feedAdapter
             edtSearch = fragment_feed_editText_search
@@ -98,14 +99,13 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             buttonContinentsCases?.setOnClickListener { presenter.continentCasesTapped() }
             buttonAllCases = fragment_feed_materialButton_allCases
             buttonAllCases?.setOnClickListener { presenter.allCasesTapped() }
-            imageMenu = fragment_feed_imageView_menu
-            imageMenu?.setOnClickListener { presenter.imageMenuTapped() }
-            containerMenu = fragment_feed_linearLayout_menu
             textTitle = fragment_feed_title
             firstContainer = fragment_feed_linearLayout
             progress = fragment_feed_dilatingDotsProgressBar
             progress?.show()
-            presenter.didFinishInitializeViews()
+            textOnLoad = fragment_feed_textView_onLoad
+            textUpdate = fragment_feed_textView_updateText
+            textUpdate?.visibility = GONE
         }
     }
 
@@ -115,7 +115,6 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             edtSearch?.visibility = VISIBLE
             buttonBack?.visibility = VISIBLE
             textTitle?.visibility = GONE
-            imageMenu?.visibility = GONE
             edtSearch?.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     FILTER = edtSearch?.text.toString().capitalize(Locale.ROOT)
@@ -144,15 +143,12 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
             edtSearch?.setText("")
             buttonBack?.visibility = GONE
             textTitle?.visibility = VISIBLE
-            imageMenu?.visibility = VISIBLE
+            textOnLoad?.visibility = GONE
         }
     }
 
     override fun openMenuFilters() {
         activity?.runOnUiThread {
-            containerMenu?.visibility = VISIBLE
-            edtSearch?.visibility = GONE
-            buttonSearch?.visibility = GONE
             edtSearch?.setText("")
             buttonBack?.visibility = GONE
         }
@@ -168,54 +164,61 @@ class FeedFragment : Fragment(), FeedViewToPresenter {
     override fun renderViewWithFail(fail: String) {
         activity?.runOnUiThread {
             firstContainer?.visibility = GONE
+            textOnLoad?.visibility = GONE
             progress?.hide()
             Toast.makeText(activity, fail, Toast.LENGTH_LONG).show()
         }
     }
 
-    override fun postValueInAdapter(feed: MutableList<FeedEntity>) {
+    override fun postValueInAdapter(
+        feed: MutableList<FeedEntity>,
+        animation: Boolean
+    ) {
         activity?.runOnUiThread {
+            textUpdate?.visibility = VISIBLE
+            textUpdate?.text = feed.first().day
             recyclerView?.setItemViewCacheSize(feed.size)
             firstContainer?.visibility = GONE
             progress?.hide()
+            textOnLoad?.visibility = GONE
             recyclerView?.visibility = VISIBLE
-            feedAdapter.updateList(feed)
+            feedAdapter.updateList(feed, animation)
         }
     }
 
     override fun selectMoreFilterButton() {
         activity?.runOnUiThread {
-            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
+            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorRed))
+            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
         }
     }
 
     override fun selectFewerFilterButton() {
         activity?.runOnUiThread {
-            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
+            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorRed))
+            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
         }
     }
 
     override fun selectAllFilterButton() {
         activity?.runOnUiThread {
-            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorRed))
         }
     }
 
     override fun selectContinentFilterButton() {
         activity?.runOnUiThread {
-            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
-            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.transparent))
+            buttonMoreCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonFewerCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
+            buttonContinentsCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorRed))
+            buttonAllCases?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.bg_gray))
         }
     }
 }

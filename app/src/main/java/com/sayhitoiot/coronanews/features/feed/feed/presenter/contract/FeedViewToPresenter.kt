@@ -5,7 +5,10 @@ import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 
 interface FeedViewToPresenter {
     var activity: Activity?
-    fun postValueInAdapter(feed: MutableList<FeedEntity>)
+    fun postValueInAdapter(
+        feed: MutableList<FeedEntity>,
+        animation: Boolean
+    )
     fun initializeViews()
     fun renderViewForSearch()
     fun renderViewDefault()

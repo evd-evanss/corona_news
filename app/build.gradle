@@ -32,9 +32,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
+    def work_version = "2.3.4"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -75,5 +81,10 @@ dependencies {
     //MPAndroid Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // DecoView (graph for count steps)
+    implementation 'com.github.bmarrdev:android-DecoView-charting:v1.2'
+
+    // WorkManager
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
 }

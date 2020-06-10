@@ -42,8 +42,8 @@ class StatisticsPresenter(private val view: StatisticPresenterToView) : Statisti
         "%.2f".format(rateMortality)
 
         view.updateGraph(
-            feedEntity.recovereds.toFloat()/2500,
-            feedEntity.cases.toFloat()/4000,
+            feedEntity.recovereds.toFloat()/1000,
+            feedEntity.cases.toFloat()/1000,
             feedEntity.deaths.toFloat()/1000,
             rateRecoveries,
             rateMortality)

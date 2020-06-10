@@ -1,11 +1,10 @@
-package com.sayhitoiot.coronanews.features.feed.feed.adapter.presenter.contract
+package com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract
 
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 
 interface FeedAdapterViewToPresenter {
-    fun updateGraph(recoveries: Float, total: Float, deaths: Float)
-    fun updateAdapter(feedUpdated: MutableList<FeedEntity>)
-    fun showMessage(message: String)
+    fun updateAdapter(feedUpdated: MutableList<FeedEntity>, animation: Boolean)
+    fun showMessage(fail: String)
 
     var totalRecovered : Int?
     var totalConfirmed : Int?

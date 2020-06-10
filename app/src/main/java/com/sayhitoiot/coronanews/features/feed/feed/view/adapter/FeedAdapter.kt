@@ -1,22 +1,21 @@
-package com.sayhitoiot.coronanews.features.feed.feed.adapter
+package com.sayhitoiot.coronanews.features.feed.feed.view.adapter
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.presenter.FeedAdapterPresent
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.presenter.contract.FeedAdapterPresenterToView
-import com.sayhitoiot.coronanews.features.feed.feed.adapter.presenter.contract.FeedAdapterViewToPresenter
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.FeedAdapterPresent
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
+import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
 import kotlinx.android.synthetic.main.item_feed.view.*
 
 class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEntity>):
@@ -24,6 +23,9 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
 
     companion object{
         const val TAG = "feed-adapter"
+        const val H = 200f
+        const val ALPHA = 0.3f
+        const val DURATION = 1000L
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,8 +37,13 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
     }
 
     override fun getItemCount() = feedList.size
+    private var statusAnimation = false
 
-    fun updateList(feeds: MutableList<FeedEntity>) {
+    fun updateList(
+        feeds: MutableList<FeedEntity>,
+        animation: Boolean
+    ) {
+        this.statusAnimation = animation
         this.feedList.clear()
         this.feedList.addAll(feeds)
         notifyDataSetChanged()
@@ -48,14 +55,13 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             FeedAdapterPresent(this)
         }
         private var textCountry: TextView = itemView.itemFeed_textView_Country
+        private var textCount: TextView = itemView.itemFeed_textView_count
         private var textNewCases: TextView = itemView.itemFeed_textView_newCases
         private var textRecoveries: TextView = itemView.itemFeed_textView_recovered
         private var textTotal: TextView = itemView.itemFeed_textView_Total
         private var textDeaths: TextView = itemView.itemFeed_textView_Deaths
         private var favoriteButton: ImageView = itemView.itemFeed_imageView_favorite
-        private var viewTotal: View = itemView.itemFeed_view_total
-        private var viewRecoveries: View = itemView.itemFeed_view_recovered
-        private var viewDeath: View = itemView.itemFeed_view_deaths
+        private val enterInterpolator = AnticipateOvershootInterpolator(5f)
 
         override var totalRecovered: Int? get() = textRecoveries.text.toString().toInt()
             set(value) {}
@@ -71,7 +77,8 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             set(value) {}
 
         fun bind(feed: MutableList<FeedEntity>, position: Int){
-
+            val count ="${adapterPosition+1}º"
+            textCount.text = count
             textCountry.text = feed[position].country
             textNewCases.text = feed[position].newCases
             textRecoveries.text = feed[position].recovereds.toString()
@@ -79,46 +86,34 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
             textDeaths.text = feed[position].deaths.toString()
             if(feed[position].favorite) {
                 favoriteButton.imageTintList = ColorStateList
-                    .valueOf(ContextCompat.getColor(context, R.color.colorAccent))
+                    .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
             } else {
                 favoriteButton.imageTintList = ColorStateList
                     .valueOf(ContextCompat.getColor(context, R.color.colorFineGray))
             }
             presenter.requestUpdateGraph()
             favoriteButton.setOnClickListener { presenter.favoriteButtonTapped() }
-
+            setAnimation(itemView)
         }
 
-        override fun updateGraph(recoveries: Float, total: Float, deaths: Float) {
-
-            viewRecoveries.layoutParams = LinearLayout.LayoutParams(
-                viewRecoveries.layoutParams.width,
-                viewRecoveries.layoutParams.height,
-                recoveries
-            )
-
-            viewTotal.layoutParams = LinearLayout.LayoutParams(
-                viewTotal.layoutParams.width,
-                viewTotal.layoutParams.height,
-                total
-            )
-
-            viewDeath.layoutParams = LinearLayout.LayoutParams(
-                viewDeath.layoutParams.width,
-                viewDeath.layoutParams.height,
-                deaths
-            )
+        private fun setAnimation(child: View) {
+            if(statusAnimation) {
+                child.translationY = if(adapterPosition == 0) -H else H
+                child.alpha = ALPHA
+                child.animate().translationY(0f).alpha(1f)
+                    .setInterpolator(enterInterpolator).duration = DURATION
+            }
         }
 
-        override fun updateAdapter(feedUpdated: MutableList<FeedEntity>) {
+        override fun updateAdapter(feedUpdated: MutableList<FeedEntity>, animation: Boolean) {
+            statusAnimation = animation
             feedList.clear()
             feedList.addAll(feedUpdated)
             notifyDataSetChanged()
         }
 
-        override fun showMessage(message: String) {
-//            Toast.makeText(context, message, Toast.LENGTH_SHORT)
-//                .show()
+        override fun showMessage(fail: String) {
+
         }
     }
 

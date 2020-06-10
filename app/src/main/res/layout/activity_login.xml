@@ -29,6 +29,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,14 +39,15 @@
             android:id="@+id/activityLogin_editText_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="30dp"
-            android:background="@color/transparent"
             android:fontFamily="@font/sen_regular"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,6 +55,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintBottom_toTopOf="@+id/loginActivity_materialButton_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,26 +73,28 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginActivity_materialButton_login"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeWidth="1dp"
-        android:backgroundTint="@color/colorGreen"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorGreen"
         android:fontFamily="@font/sen_regular"
         android:text="@string/login"
         android:textAllCaps="false"
-        app:cornerRadius="0dp"
         android:textColor="@color/colorWhite"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/loginActivity_materialButton_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+        app:strokeWidth="1dp" />
 
     <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
         android:id="@+id/loginActivity_dilatingDotsProgressBar"
@@ -108,14 +113,14 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginActivity_materialButton_signUp"
-        android:backgroundTint="@color/colorRed"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorRed"
         android:fontFamily="@font/sen_regular"
         android:text="@string/create_account"
         android:textAllCaps="false"
-        app:cornerRadius="0dp"
         android:textColor="@color/colorWhite"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -12,11 +12,20 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:background="@drawable/header"
-        android:backgroundTint="@color/colorRed"
+        android:background="@color/bg_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorRed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <ImageView
             android:id="@+id/activitySignUp_imageView_back"
@@ -49,10 +58,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <EditText
             android:id="@+id/activitySignUp_editText_name"
@@ -66,7 +77,8 @@
             android:imeOptions="actionNext"
             android:inputType="textPersonName"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -75,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
@@ -89,7 +102,8 @@
             android:inputType="numberDecimal"
             android:maxLength="2"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -101,6 +115,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout4"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
@@ -116,7 +131,8 @@
             android:inputType="numberDecimal"
             android:maxLength="2"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -127,6 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
@@ -141,7 +158,8 @@
             android:inputType="numberDecimal"
             android:maxLength="4"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -151,6 +169,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -167,7 +186,9 @@
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorRed"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -175,6 +196,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
@@ -192,7 +214,8 @@
             android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,6 +224,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        app:hintTextColor="@color/colorRed"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
@@ -217,20 +241,22 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activitySignUp_materialButton_terms"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
         android:backgroundTint="@color/colorRed"
         android:fontFamily="@font/sen_bold"
-        app:cornerRadius="0dp"
-        android:text="Termos e Condições \nPolítica de Privacidade"
+        android:text="@string/terms_and_privacy"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/activitySignUp_materialButton_signUp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
@@ -239,16 +265,16 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activitySignUp_materialButton_signUp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:backgroundTint="@color/colorGreen"
         android:fontFamily="@font/sen_bold"
         android:text="@string/signup"
-        app:cornerRadius="0dp"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout7" />
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
+        app:layout_constraintTop_toBottomOf="@+id/activitySignUp_materialButton_terms" />
 
     <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
         android:id="@+id/activitySignUp_dilatingDotsProgressBar"
@@ -265,19 +291,5 @@
         app:layout_constraintStart_toStartOf="@+id/activitySignUp_materialButton_signUp"
         app:layout_constraintTop_toBottomOf="@+id/activitySignUp_materialButton_terms" />
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

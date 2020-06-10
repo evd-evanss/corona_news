@@ -23,6 +23,7 @@
     <string name="message_onload_fav">Evite tocar o rosto com as mãos</string>
     <string name="forget">Resetar Senha</string>
     <string name="forget_my_password">Esqueci minha Senha</string>
+    <string name="terms_and_privacy">Termos e Condições \nPolítica de Privacidade</string>
     <item name="faqID" type="id" />
 
 
