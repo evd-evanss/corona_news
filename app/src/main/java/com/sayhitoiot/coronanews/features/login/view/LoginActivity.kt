@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.feed.HomeActivity
+import com.sayhitoiot.coronanews.features.main.HomeActivity
 import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
 import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
 import com.sayhitoiot.coronanews.features.login.presenter.LoginPresenter

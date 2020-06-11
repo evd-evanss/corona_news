@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.feed.view.adapter
+package com.sayhitoiot.coronanews.features.feed.view
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,12 +10,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.FeedAdapterPresent
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
+import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.FeedAdapterPresent
+import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
+import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
+import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModel
 import kotlinx.android.synthetic.main.item_feed.view.*
 
 class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEntity>):
@@ -27,6 +29,9 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         const val ALPHA = 0.3f
         const val DURATION = 1000L
     }
+
+    lateinit var viewModel: FeedViewModel
+    private var animation = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_feed))
@@ -41,19 +46,25 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
 
     fun updateList(
         feeds: MutableList<FeedEntity>,
-        animation: Boolean
+        animation: Boolean,
+        viewModel: FeedViewModel
     ) {
         this.statusAnimation = animation
         this.feedList.clear()
         this.feedList.addAll(feeds)
+        this.viewModel = viewModel
+        setupObserverAnimation()
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), FeedAdapterViewToPresenter{
+    private fun setupObserverAnimation() {
+        viewModel.animation.observe(context as LifecycleOwner, androidx.lifecycle.Observer {
+            animation = it
+        })
+    }
 
-        private val presenter: FeedAdapterPresenterToView by lazy {
-            FeedAdapterPresent(this)
-        }
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
         private var textCountry: TextView = itemView.itemFeed_textView_Country
         private var textCount: TextView = itemView.itemFeed_textView_count
         private var textNewCases: TextView = itemView.itemFeed_textView_newCases
@@ -61,20 +72,7 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
         private var textTotal: TextView = itemView.itemFeed_textView_Total
         private var textDeaths: TextView = itemView.itemFeed_textView_Deaths
         private var favoriteButton: ImageView = itemView.itemFeed_imageView_favorite
-        private val enterInterpolator = AnticipateOvershootInterpolator(5f)
-
-        override var totalRecovered: Int? get() = textRecoveries.text.toString().toInt()
-            set(value) {}
-        override var totalConfirmed: Int? get() = textTotal.text.toString().toInt()
-            set(value) {}
-        override var totalDeaths: Int? get() = textDeaths.text.toString().toInt()
-            set(value) {}
-        override var country: String?
-            get() = textCountry.text.toString()
-            set(value) {}
-        override var countryFavorite: Boolean
-            get() = feedList[adapterPosition].favorite
-            set(value) {}
+        private val enterInterpolator = AnticipateOvershootInterpolator(3f)
 
         fun bind(feed: MutableList<FeedEntity>, position: Int){
             val count ="${adapterPosition+1}º"
@@ -91,29 +89,18 @@ class FeedAdapter(private val context: Context, var feedList: MutableList<FeedEn
                 favoriteButton.imageTintList = ColorStateList
                     .valueOf(ContextCompat.getColor(context, R.color.colorFineGray))
             }
-            presenter.requestUpdateGraph()
-            favoriteButton.setOnClickListener { presenter.favoriteButtonTapped() }
+            favoriteButton.setOnClickListener { viewModel.favoriteFeed(feed[position].country, feed[position].favorite) }
             setAnimation(itemView)
         }
 
         private fun setAnimation(child: View) {
-            if(statusAnimation) {
+            if(animation) {
                 child.translationY = if(adapterPosition == 0) -H else H
-                child.alpha = ALPHA
+                child.alpha =
+                    ALPHA
                 child.animate().translationY(0f).alpha(1f)
                     .setInterpolator(enterInterpolator).duration = DURATION
             }
-        }
-
-        override fun updateAdapter(feedUpdated: MutableList<FeedEntity>, animation: Boolean) {
-            statusAnimation = animation
-            feedList.clear()
-            feedList.addAll(feedUpdated)
-            notifyDataSetChanged()
-        }
-
-        override fun showMessage(fail: String) {
-
         }
     }
 

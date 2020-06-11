@@ -16,11 +16,7 @@ class App: Application() {
         super.onCreate()
         configureDataBase()
         FirebaseApp.initializeApp(applicationContext)
-
-        val work =
-            PeriodicWorkRequestBuilder<WorkManagerBackgroundSync>(2,repeatIntervalTimeUnit = TimeUnit.HOURS).build()
-        val workManager = WorkManager.getInstance(this)
-        workManager.enqueue(work)
+        SyncService()
     }
 
     private fun configureDataBase() {

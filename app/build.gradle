@@ -87,4 +87,11 @@ dependencies {
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    //LifecycleScope
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    //ViewModelScope
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+
 }

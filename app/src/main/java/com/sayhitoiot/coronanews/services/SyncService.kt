@@ -20,7 +20,6 @@ import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.features.feed.feed.interact.FeedInteract
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlin.coroutines.CoroutineContext
@@ -108,13 +107,13 @@ class SyncService : CoroutineScope{
         repository.getStatistics(object : OnGetStatisticsCoronaCallback {
 
             override fun onSuccess(coronaResult: ResultData) {
-                Log.d(FeedInteract.TAG, coronaResult.results.toString())
+                Log.d(TAG, coronaResult.results.toString())
                 response.addAll(coronaResult.response)
                 saveFeedOnFirebase(response)
             }
 
             override fun onError() {
-                Log.e(FeedInteract.TAG, "Error on fetch data")
+                Log.e(TAG, "Error on fetch data")
             }
         })
 
@@ -152,7 +151,7 @@ class SyncService : CoroutineScope{
 
         feedFirebaseModel.forEach {
             uid?.let { it1 ->
-                firebaseDatabase.reference.child(it1).child(FeedInteract.FEEDS).child(it.country)
+                firebaseDatabase.reference.child(it1).child(FEEDS).child(it.country)
                     .setValue(it)
             }
         }
@@ -165,7 +164,7 @@ class SyncService : CoroutineScope{
 
         if(FeedEntity.getAll().isEmpty()) {
             for(feed in results) {
-                Log.d(FeedInteract.TAG, feed.country)
+                Log.d(TAG, feed.country)
                 FeedEntity.create (
                     country = feed.country,
                     day = feed.day ?: "",

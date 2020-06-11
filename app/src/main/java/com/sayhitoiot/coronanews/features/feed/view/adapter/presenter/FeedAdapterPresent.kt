@@ -1,11 +1,11 @@
-package com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter
+package com.sayhitoiot.coronanews.features.feed.view.adapter.presenter
 
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.FeedAdapterInteract
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterInteractToPresenter
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterPresenterToInteract
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
+import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.FeedAdapterInteract
+import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.contract.FeedAdapterInteractToPresenter
+import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.contract.FeedAdapterPresenterToInteract
+import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
+import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
 
 class FeedAdapterPresent(private val view: FeedAdapterViewToPresenter)
     : FeedAdapterPresenterToView, FeedAdapterPresenterToInteract{

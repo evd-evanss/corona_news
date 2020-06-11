@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed
+package com.sayhitoiot.coronanews.features.main
 
 import android.os.Bundle
 import android.view.Menu

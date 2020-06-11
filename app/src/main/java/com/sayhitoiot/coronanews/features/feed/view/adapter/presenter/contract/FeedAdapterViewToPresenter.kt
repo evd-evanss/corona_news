@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.feed.view.adapter.presenter.contract
+package com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract
 
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 

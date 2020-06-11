@@ -1,12 +1,12 @@
-package com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact
+package com.sayhitoiot.coronanews.features.feed.view.adapter.interact
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterInteractToPresenter
-import com.sayhitoiot.coronanews.features.feed.feed.view.adapter.interact.contract.FeedAdapterPresenterToInteract
+import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.contract.FeedAdapterInteractToPresenter
+import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.contract.FeedAdapterPresenterToInteract
 
 class FeedAdapterInteract (private val presenter: FeedAdapterPresenterToInteract)
     : FeedAdapterInteractToPresenter {

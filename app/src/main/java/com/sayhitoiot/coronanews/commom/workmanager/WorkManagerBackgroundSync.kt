@@ -19,7 +19,7 @@ class WorkManagerBackgroundSync(context: Context, params: WorkerParameters) :
     override fun doWork(): Result {
         Log.d(TAG, "workmanager = ${Date()}")
         return try {
-            SyncService().syncApiCovid()
+            SyncService()
             Result.success()
         } catch (throwable: Throwable) {
             Result.retry()
