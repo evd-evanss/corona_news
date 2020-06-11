@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/fourth_fragment"
-        android:name="com.sayhitoiot.coronanews.features.profile.view.ProfileFragment"
+        android:name="com.sayhitoiot.coronanews.features.profile.ui.ProfileFragment"
         android:label="Fourth Fragment"
         tools:layout="@layout/fragment_profile" />
 </navigation>

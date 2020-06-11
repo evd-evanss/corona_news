@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.30">
+        app:layout_constraintVertical_bias="0.35">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profile_constraintButton_name"
@@ -212,31 +212,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="10dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_materialButton_edit"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="Editar Cadastro"
-                android:visibility="gone"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
     </TableLayout>
 
     <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
@@ -253,20 +228,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableLayout" />
-
-    <LinearLayout
-        android:id="@+id/container_edit"
-        android:layout_width="404dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tableLayout">
-
-        <include layout="@layout/edit_user" />
-    </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
