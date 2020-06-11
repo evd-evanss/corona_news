@@ -292,25 +292,46 @@ class FeedEntity (
 
         }
 
-        fun findByFilter(text: String) : MutableList<FeedEntity> {
+        fun findByFilter(text: String) : FeedEntity? {
             val realm = Realm.getDefaultInstance()
 
             if(!realm.isInTransaction) {
                 realm.beginTransaction()
             }
 
+            val feedModel = realm.where(FeedRealm::class.java)
+                .contains("country", text)
+                .findFirst()
+
+            realm.close()
+
+            var feedEntity: FeedEntity? = null
+
+            if (feedModel != null) {
+                feedEntity = FeedEntity(feedModel)
+            }
+
+            return feedEntity
+        }
+
+        fun getAllByFilter(filter: String): MutableList<FeedEntity> {
+            val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val feedList = realm.where(FeedRealm::class.java)
-                .contains("country", text)
+                .contains("country", filter)
                 .findAll()
-                .mapNotNull { FeedEntity(it) }
+                .map {
+                    FeedEntity(it)
+                }
 
             realm.close()
 
             return feedList.toMutableList()
         }
-
-
 
 
     }

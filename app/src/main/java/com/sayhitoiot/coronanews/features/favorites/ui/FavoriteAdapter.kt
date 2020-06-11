@@ -1,19 +1,16 @@
-package com.sayhitoiot.coronanews.features.favorites
+package com.sayhitoiot.coronanews.features.favorites.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.statistics.StatisticActivity
 import kotlinx.android.synthetic.main.item_favorite.view.*
 
 class FavoriteAdapter(private val context: Context, var feedList: MutableList<FeedEntity>):

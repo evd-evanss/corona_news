@@ -1,25 +1,25 @@
-package com.sayhitoiot.coronanews.features.statistics
+package com.sayhitoiot.coronanews.features.favorites.ui
 
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.hookedonplay.decoviewlib.DecoView
 import com.hookedonplay.decoviewlib.events.DecoEvent
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.util.ItemColors
-import com.sayhitoiot.coronanews.features.statistics.presenter.StatisticsPresenter
-import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToPresenter
-import com.sayhitoiot.coronanews.features.statistics.presenter.contract.StatisticPresenterToView
+import com.sayhitoiot.coronanews.features.favorites.repository.RepositoryFavorites
+import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavorites
+import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavoritesFactory
 import kotlinx.android.synthetic.main.activity_statistics.*
 
 
-class StatisticActivity : AppCompatActivity(), StatisticPresenterToView {
+class StatisticActivity : AppCompatActivity() {
 
-    private val presenter: StatisticPresenterToPresenter by lazy {
-        StatisticsPresenter(this)
-    }
+
+    lateinit var viewModel: ViewModelFavorites
 
     private var textCountry: TextView? = null
     private var textTotal: TextView? = null
@@ -35,18 +35,16 @@ class StatisticActivity : AppCompatActivity(), StatisticPresenterToView {
     private var graphRecoveriesRate: DecoView? = null
     private var graphDeathsRate: DecoView? = null
 
-    override var country: String?
-        get() = intent.extras?.getString("country", "")
-        set(value) {}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
         supportActionBar?.hide()
-        presenter.onCreate()
+        initializeViews()
+        initializeListeners()
+        setupViewModel()
     }
 
-    override fun initializeViews() {
+    private fun initializeViews() {
         textCountry = activityStatistic_textView_country
         textTotal = activityStatistic_textView_total
         textRecoveries = activityStatistic_textView_recoveries
@@ -54,41 +52,61 @@ class StatisticActivity : AppCompatActivity(), StatisticPresenterToView {
         textRecoveriesRate = activityStatistic_textView_recoveriesRate
         textDeathsRate = activityStatistic_textView_mortalityRate
         imageBack = activityStatistic_imageView_back
-        imageBack?.setOnClickListener { presenter.imageBackTapped() }
         graphTotal = activityStatistic_dynamicArcView_graph
         graphRecoveries = activityStatistic_dynamicArcView_graph2
         graphDeaths = activityStatistic_dynamicArcView_graph3
         graphRecoveriesRate = activityStatistic_dynamicArcView_graph4
         graphDeathsRate = activityStatistic_dynamicArcView_graph5
-        presenter.didFinishInitializeViews()
     }
 
-    override fun showStatistics(
-        feed: FeedEntity,
-        statistics: MutableList<Float>
-    ) {
-        val recoveriesRate = "%.2f".format(statistics[0]) + "%"
-        val mortalityRate = "%.2f".format(statistics[1]) + "%"
-        textCountry?.text = feed.country
-        textTotal?.text = feed.cases.toString()
-        textRecoveries?.text = feed.recovereds.toString()
-        textDeaths?.text = feed.deaths.toString()
-        textRecoveriesRate?.text = recoveriesRate
-        textDeathsRate?.text = mortalityRate
+    private fun initializeListeners() {
+        imageBack?.setOnClickListener { onBackPressed() }
     }
 
-    override fun updateGraph(
-        recoveries: Float,
-        total: Float,
-        deaths: Float,
-        rateRecovery: Float,
-        rateDeaths: Float) {
-        setOffSetGraphs(total)
-        graphTotal?.addEvent(DecoEvent.Builder(total).setIndex(1).build())
-        graphRecoveries?.addEvent(DecoEvent.Builder(recoveries).setIndex(1).setDelay(1000).build())
-        graphDeaths?.addEvent(DecoEvent.Builder(deaths).setIndex(1).setDelay(1000).build())
-        graphRecoveriesRate?.addEvent(DecoEvent.Builder(rateRecovery).setIndex(1).setDelay(1000).build())
-        graphDeathsRate?.addEvent(DecoEvent.Builder(rateDeaths).setIndex(1).setDelay(1000).build())
+    private fun setupViewModel() {
+        val factory = ViewModelFavoritesFactory(repositoryFavorites = RepositoryFavorites())
+        viewModel = ViewModelProvider(this, factory).get(ViewModelFavorites::class.java)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val country = intent.extras?.getString("country", "")
+        viewModel.onResumeStatistics(country)
+        observerFeed()
+        observerRates()
+        observerGraphStatistics()
+    }
+
+    private fun observerFeed() {
+        viewModel.feed?.observe(this as LifecycleOwner, androidx.lifecycle.Observer {feed->
+            textCountry?.text = feed?.country
+            textTotal?.text = feed?.cases.toString()
+            textRecoveries?.text = feed?.recovereds.toString()
+            textDeaths?.text = feed?.deaths.toString()
+        })
+    }
+
+    private fun observerRates() {
+        viewModel.rates?.observe(this as LifecycleOwner, androidx.lifecycle.Observer {statistics ->
+            val recoveriesRate = statistics?.get(0)
+            val mortalityRate = statistics?.get(1)
+            textRecoveriesRate?.text = recoveriesRate
+            textDeathsRate?.text = mortalityRate
+        })
+    }
+
+    private fun observerGraphStatistics() {
+        viewModel.statistics.observe(
+            this as LifecycleOwner,
+            androidx.lifecycle.Observer {statistics ->
+                setOffSetGraphs(statistics[2])
+                graphTotal?.addEvent(DecoEvent.Builder(statistics[2]).setIndex(1).build())
+                graphRecoveries?.addEvent(DecoEvent.Builder(statistics[0]).setIndex(1).setDelay(1000).build())
+                graphDeaths?.addEvent(DecoEvent.Builder(statistics[1]).setIndex(1).setDelay(1000).build())
+                graphRecoveriesRate?.addEvent(DecoEvent.Builder(statistics[3]).setIndex(1).setDelay(1000).build())
+                graphDeathsRate?.addEvent(DecoEvent.Builder(statistics[4]).setIndex(1).setDelay(1000).build())
+            }
+        )
     }
 
     private fun setOffSetGraphs(total: Float) {
@@ -113,7 +131,4 @@ class StatisticActivity : AppCompatActivity(), StatisticPresenterToView {
         graphDeathsRate?.addSeries(seriesItemFineRed)
     }
 
-    override fun renderPreviousView() {
-        onBackPressed()
-    }
 }

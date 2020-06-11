@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.view
+package com.sayhitoiot.coronanews.features.feed.ui
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -14,9 +14,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.FeedAdapterPresent
-import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterPresenterToView
-import com.sayhitoiot.coronanews.features.feed.view.adapter.presenter.contract.FeedAdapterViewToPresenter
 import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModel
 import kotlinx.android.synthetic.main.item_feed.view.*
 

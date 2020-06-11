@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.feed.view
+package com.sayhitoiot.coronanews.features.feed.ui
 
 import android.content.res.ColorStateList
 import android.os.Bundle

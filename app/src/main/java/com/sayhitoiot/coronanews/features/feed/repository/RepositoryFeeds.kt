@@ -18,8 +18,6 @@ import com.sayhitoiot.coronanews.commom.extensions.toLocale
 import com.sayhitoiot.coronanews.commom.firebase.model.Feed
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
-import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.FeedAdapterInteract
-import com.sayhitoiot.coronanews.features.feed.view.adapter.interact.FeedAdapterInteract.Companion.FEEDS
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -43,6 +41,8 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
 
     companion object {
         const val TAG = "getDataForFeed"
+        const val FEEDS = "Feeds"
+        const val FAVORITE = "favorite"
     }
 
     init {
@@ -101,7 +101,7 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
     }
 
     private fun fetchDataWithFilterAllCases() : MutableList<FeedEntity> {
-        return FeedEntity.findByFilter("All")
+        return FeedEntity.getAllByFilter("All")
     }
 
     private fun get(): LiveData<MutableList<FeedEntity>> = liveData {
@@ -207,9 +207,9 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
 
     fun getFeedBySearch(text: String) {
         _animation.postValue(true)
-        val feedByFilter = FeedEntity.findByFilter(text)
+        val feeds = FeedEntity.getAllByFilter(text)
         _dataFilter.postValue(FilterEntity.getFilter()?.filter)
-        _dataFeed.postValue(feedByFilter)
+        _dataFeed.postValue(feeds)
     }
 
     fun getFeedByFilter(filter: Int) {
@@ -233,7 +233,7 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
             .child(uid)
             .child(FEEDS)
             .child(country)
-            .child(FeedAdapterInteract.FAVORITE)
+            .child(FAVORITE)
             .setValue(favorite)
     }
 

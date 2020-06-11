@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/first_fragment"
-        android:name="com.sayhitoiot.coronanews.features.feed.view.FeedFragment"
+        android:name="com.sayhitoiot.coronanews.features.feed.ui.FeedFragment"
         android:label="First Fragment"
         tools:layout="@layout/fragment_feed" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/second_fragment"
-        android:name="com.sayhitoiot.coronanews.features.favorites.FavoritesFragment"
+        android:name="com.sayhitoiot.coronanews.features.favorites.ui.FavoritesFragment"
         android:label="Second Fragment"
         tools:layout="@layout/fragment_favorites" >
         <action
