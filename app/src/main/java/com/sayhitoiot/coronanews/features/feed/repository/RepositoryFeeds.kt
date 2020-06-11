@@ -51,8 +51,8 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
 
     fun getFeed() {
         _animation.postValue(true)
-        val feedList = fetchDataWithFilter(FilterEntity.getFilter()?.filter)
         val filter = FilterEntity.getFilter()?.filter
+        val feedList = fetchDataWithFilter(filter)
         if(filter != null) {
             when {
                 feedList.isEmpty() -> {
@@ -60,7 +60,7 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
                         syncApiFirebase()
                     }
                 }
-                feedList.isNotEmpty() -> _dataFeed.postValue(FeedEntity.getAll())
+                feedList.isNotEmpty() -> _dataFeed.postValue(feedList)
             }
         }
 

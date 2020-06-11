@@ -56,8 +56,8 @@ class FeedFragment : Fragment(), ViewModelToView {
     private var buttonFewerCases: MaterialButton? = null
     private var buttonContinentsCases: MaterialButton? = null
     private var buttonAllCases: MaterialButton? = null
-    private val factory = FeedViewModelFactory(repositoryFeeds = RepositoryFeeds(IO))
 
+    private val factory = FeedViewModelFactory(repositoryFeeds = RepositoryFeeds(IO))
     private val viewModel: FeedViewModel by lazy {
         ViewModelProvider(this, factory).get(FeedViewModel::class.java)
     }
@@ -79,7 +79,7 @@ class FeedFragment : Fragment(), ViewModelToView {
         setupObserverForFilters()
     }
 
-    fun initializeViews() {
+    private fun initializeViews() {
         recyclerView = recyclerView_feed
         recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView?.setItemViewCacheSize(10)
