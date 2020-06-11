@@ -9,29 +9,32 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.features.main.HomeActivity
-import com.sayhitoiot.coronanews.features.login.contract.LoginPresenterToView
-import com.sayhitoiot.coronanews.features.login.contract.LoginViewToPresenter
-import com.sayhitoiot.coronanews.features.login.presenter.LoginPresenter
-import com.sayhitoiot.coronanews.features.reset.ResetPasswordActivity
+import com.sayhitoiot.coronanews.features.login.repository.RepositoryLogin
+import com.sayhitoiot.coronanews.features.login.viewmodel.DelegateToLoginActivity
+import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLogin
+import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLoginFactory
+import com.sayhitoiot.coronanews.features.reset.view.ResetPasswordActivity
 import com.sayhitoiot.coronanews.features.sign.view.SignUpActivity
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_login.*
 
-
-class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
+class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
 
     companion object {
         const val TAG = "login-activity"
     }
 
-    private val presenter: LoginPresenterToView by lazy {
-        LoginPresenter(this)
+    private val factory = ViewModelLoginFactory(this, RepositoryLogin())
+    private val viewModel: ViewModelLogin by lazy {
+        ViewModelProvider(this, factory).get(ViewModelLogin::class.java)
     }
 
-    override val activity: Activity? get() = this
+    val activity: Activity? get() = this
     override val email: String? get() = edtEmail?.text.toString()
     override val password: String? get() = edtPassword?.text.toString()
 
@@ -46,10 +49,15 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
-        presenter.onCreate()
+        initializeViews()
     }
 
-    override fun initializeViews() {
+    override fun onResume() {
+        super.onResume()
+        observerLogin()
+    }
+
+    private fun initializeViews() {
         activity?.runOnUiThread {
             edtEmail = activityLogin_editText_email
             edtPassword = activityLogin_editText_password
@@ -57,10 +65,23 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
             btnSignUp = loginActivity_materialButton_signUp
             progressBar = loginActivity_dilatingDotsProgressBar
             textForgetPassword = loginActivity_textView_resetPassword
-            btnLogin?.setOnClickListener { presenter.btnLoginTapped() }
-            btnSignUp?.setOnClickListener { presenter.btnSignUpTapped() }
-            textForgetPassword?.setOnClickListener { presenter.forgetPasswordTapped() }
+            btnLogin?.setOnClickListener {
+                viewModel.btnLoginTapped()
+            }
+            btnSignUp?.setOnClickListener { viewModel.btnSignUpTapped() }
+            textForgetPassword?.setOnClickListener { viewModel.forgetPasswordTapped() }
         }
+    }
+
+    private fun observerLogin() {
+        viewModel.login.observe(this as LifecycleOwner, androidx.lifecycle.Observer {
+            if(it) {
+                loginSuccess()
+            }
+        })
+        viewModel.message?.observe(this as LifecycleOwner, androidx.lifecycle.Observer {
+            it?.let { it1 -> loginFail(it1) }
+        })
     }
 
     override fun renderViewForLogin() {
@@ -81,19 +102,19 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         }
     }
 
-    override fun showErrorInEmail(messageError: String) {
+    override fun showErrorInEmail(error: String) {
         activity?.runOnUiThread {
-            edtEmail?.error = messageError
+            edtEmail?.error = error
         }
     }
 
-    override fun showErrorInPassword(messageError: String) {
+    override fun showErrorInPassword(error: String) {
         activity?.runOnUiThread {
-            edtPassword?.error = messageError
+            edtPassword?.error = error
         }
     }
 
-    override fun loginSuccess() {
+    private fun loginSuccess() {
         activity?.runOnUiThread {
             progressBar?.hide()
             startActivity(Intent(this, HomeActivity::class.java))
@@ -101,12 +122,12 @@ class LoginActivity : AppCompatActivity(), LoginViewToPresenter {
         }
     }
 
-    override fun loginFail(messageError: String) {
+    private fun loginFail(fail: String) {
         activity?.runOnUiThread {
             progressBar?.hide()
             btnLogin?.visibility = VISIBLE
             Toast.makeText(
-                this@LoginActivity, messageError,
+                this@LoginActivity, fail,
                 Toast.LENGTH_SHORT
             ).show()
         }

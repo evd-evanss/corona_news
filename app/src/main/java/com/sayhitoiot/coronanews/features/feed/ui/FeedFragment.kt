@@ -22,6 +22,7 @@ import com.sayhitoiot.coronanews.features.feed.repository.RepositoryFeeds
 import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModel
 import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModelFactory
 import com.sayhitoiot.coronanews.features.feed.viewmodel.ViewModelToView
+import com.sayhitoiot.coronanews.features.profile.viewmodel.ViewModelProfile
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -31,14 +32,12 @@ class FeedFragment : Fragment(), ViewModelToView {
 
     companion object {
         var edtSearch: EditText? = null
-        var FILTER = ""
         const val MORE = 0
         const val FEWER = 1
         const val CONTINENTS = 2
         const val ALL = 3
     }
 
-    lateinit var viewModel: FeedViewModel
     private val feedAdapter: FeedAdapter by lazy {
         FeedAdapter(
             requireContext(),
@@ -57,16 +56,10 @@ class FeedFragment : Fragment(), ViewModelToView {
     private var buttonFewerCases: MaterialButton? = null
     private var buttonContinentsCases: MaterialButton? = null
     private var buttonAllCases: MaterialButton? = null
+    private val factory = FeedViewModelFactory(repositoryFeeds = RepositoryFeeds(IO))
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupViewModel()
-    }
-
-    private fun setupViewModel() {
-        val factory =
-            FeedViewModelFactory(repositoryFeeds = RepositoryFeeds(IO))
-        viewModel = ViewModelProvider(this, factory).get(FeedViewModel::class.java)
+    private val viewModel: FeedViewModel by lazy {
+        ViewModelProvider(this, factory).get(FeedViewModel::class.java)
     }
 
     override fun onCreateView(

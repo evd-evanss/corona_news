@@ -104,34 +104,32 @@ class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : Coroutine
         return FeedEntity.getAllByFilter("All")
     }
 
-    private fun get(): LiveData<MutableList<FeedEntity>> = liveData {
-        emit(FeedEntity.getAll())
-    }
-
     private fun syncApiFirebase() {
-        val uid = mAuth.uid!!
-        firebaseDatabase.reference.child(uid).child(FEEDS)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(databaseError: DatabaseError) {
-                    _dataMessages.postValue("Falha ao buscar Feed, verifique sua internet e tente novamente.")
-                }
+        val uid = mAuth.uid
+        uid?.let {
+            firebaseDatabase.reference.child(it).child(FEEDS)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        _dataMessages.postValue("Falha ao buscar Feed, verifique sua internet e tente novamente.")
+                    }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val feedFirebaseModel: MutableList<Feed> = mutableListOf()
-                    snapshot.children.forEach {
-                        val feed = it.getValue(Feed::class.java)
-                        feed?.let { it1 ->
-                            feedFirebaseModel.add(it1)
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val feedFirebaseModel: MutableList<Feed> = mutableListOf()
+                        snapshot.children.forEach {
+                            val feed = it.getValue(Feed::class.java)
+                            feed?.let { it1 ->
+                                feedFirebaseModel.add(it1)
+                            }
+                        }
+                        if(feedFirebaseModel.isNotEmpty()) {
+                            saveFeedOnDB(feedFirebaseModel)
+                        } else {
+                            syncApiCovid()
                         }
                     }
-                    if(feedFirebaseModel.isNotEmpty()) {
-                        saveFeedOnDB(feedFirebaseModel)
-                    } else {
-                        syncApiCovid()
-                    }
-                }
 
-            })
+                })
+        }
     }
 
     private fun syncApiCovid() {

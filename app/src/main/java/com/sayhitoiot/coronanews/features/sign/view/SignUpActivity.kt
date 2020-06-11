@@ -10,18 +10,20 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseAuth
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.features.policy.ActivityReader
-import com.sayhitoiot.coronanews.features.sign.presenter.SignUpPresenter
-import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpPresenterToView
-import com.sayhitoiot.coronanews.features.sign.presenter.contract.SignUpViewToPresenter
+import com.sayhitoiot.coronanews.features.sign.repository.RepositorySign
+import com.sayhitoiot.coronanews.features.sign.viewmodel.DelegateToSignActivity
+import com.sayhitoiot.coronanews.features.sign.viewmodel.ViewModelSign
+import com.sayhitoiot.coronanews.features.sign.viewmodel.ViewModelSignFactory
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
-class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
+class SignUpActivity : AppCompatActivity(), DelegateToSignActivity{
 
     companion object {
         const val TAG = "sign-activity"
@@ -29,8 +31,10 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
         var ACCEPT: Boolean = false
     }
 
-    private val presenter: SignUpPresenterToView by lazy {
-        SignUpPresenter(this)
+    private val factory = ViewModelSignFactory(this, RepositorySign())
+
+    private val viewModel: ViewModelSign by lazy {
+        ViewModelProvider(this, factory).get(ViewModelSign::class.java)
     }
 
     private var edtNome: EditText? = null
@@ -45,8 +49,6 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
     private var buttonTerms: MaterialButton? = null
     private var progress: DilatingDotsProgressBar? = null
 
-    override val activity: Activity?
-        get() = this
     override var name: String?
         get() = edtNome?.text?.toString()
         set(value) {}
@@ -75,17 +77,15 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
         get() = edtConfirm?.text?.toString()
         set(value) {}
 
-    override var mAuth: FirebaseAuth? = null
-        get() = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         supportActionBar?.hide()
-        presenter.onCreate()
+        initializeViews()
     }
 
-    override fun initializeViews() {
+    private fun initializeViews() {
         this.runOnUiThread {
             progress = activitySignUp_dilatingDotsProgressBar
             edtNome = activitySignUp_editText_name
@@ -96,21 +96,18 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
             edtPassword = activitySignUp_editText_password
             edtConfirm = activitySignUp_editText_confirm
             buttonBack = activitySignUp_imageView_back
-            buttonBack?.setOnClickListener { presenter.buttonBackTapped() }
+            buttonBack?.setOnClickListener { onBackPressed() }
             buttonSign = activitySignUp_materialButton_signUp
-            buttonSign?.setOnClickListener { presenter.buttonSignTapped() }
+            buttonSign?.setOnClickListener { viewModel.buttonSignTapped() }
             buttonTerms = activitySignUp_materialButton_terms
-            buttonTerms?.setOnClickListener { presenter.buttonTermsTapped() }
+            buttonTerms?.setOnClickListener { viewModel.buttonTermsTapped() }
         }
     }
 
-    override fun showAlertInTermsAnConditions() {
-        buttonTerms?.requestFocus()
-        Toast.makeText(
-            activity,
-            "Para se cadastrar e usar o aplicativo você precisa aceitar os termos",
-            Toast.LENGTH_LONG
-        ).show()
+    override fun onResume() {
+        super.onResume()
+        observerOnSuccess()
+        observerOnFail()
     }
 
     override fun startActivityTerms() {
@@ -121,12 +118,7 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             if(data != null) {
-                ACCEPT = data.getBooleanExtra("accept", false)
-                Toast.makeText(
-                    activity,
-                    "Usuario aceitou os termos $ACCEPT",
-                    Toast.LENGTH_LONG
-                ).show()
+                viewModel.accept = data.getBooleanExtra("accept", false)
             }
         }
     }
@@ -141,81 +133,78 @@ class SignUpActivity : AppCompatActivity(), SignUpViewToPresenter{
         buttonSign?.visibility = VISIBLE
     }
 
-    override fun showErrorInName(messageError: String) {
-        activity?.runOnUiThread {
-            edtNome?.error = messageError
-        }
+    override fun showErrorInName(error: String) {
+        edtNome?.error = error
     }
 
-    override fun showErrorInDay(messageError: String) {
-        activity?.runOnUiThread {
-            edtDay?.error = messageError
-        }
+    override fun showErrorInDay(error: String) {
+        edtDay?.error = error
     }
 
-    override fun showErrorInMonth(messageError: String) {
-        activity?.runOnUiThread {
-            edtMonth?.error = messageError
-        }
+    override fun showErrorInMonth(error: String) {
+        edtMonth?.error = error
     }
 
-    override fun showErrorInYear(messageError: String) {
-        activity?.runOnUiThread {
-            edtYear?.error = messageError
-        }
+    override fun showErrorInYear(error: String) {
+        edtYear?.error = error
     }
 
-    override fun showErrorInEmail(messageError: String) {
-        activity?.runOnUiThread {
-            edtEmail?.error = messageError
-        }
+    override fun showErrorInEmail(error: String) {
+        edtEmail?.error = error
     }
 
-    override fun showErrorInPassword(messageError: String) {
-        activity?.runOnUiThread {
-            edtPassword?.error = messageError
-        }
+    override fun showErrorInPassword(error: String) {
+        edtPassword?.error = error
     }
 
-    override fun showErrorInConfirmPassword(messageError: String) {
-        activity?.runOnUiThread {
-            edtConfirm?.error = messageError
-        }
+    override fun showErrorInConfirmPassword(error: String) {
+        edtConfirm?.error = error
     }
 
-    override fun showMessageOnSuccess(messageSuccess: String) {
-        progress?.hide()
-        buttonSign?.visibility = VISIBLE
-        activity?.runOnUiThread {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Sua conta foi criada com sucesso")
-            builder.setMessage(messageSuccess)
-            builder.setPositiveButton(
-                "Voltar e fazer login"
-            ) { _, _ ->
-                finish()
+    private fun observerOnSuccess() {
+        viewModel.messageSuccess?.observe(
+            this as LifecycleOwner,
+            androidx.lifecycle.Observer {messageSuccess ->
+                progress?.hide()
+                buttonSign?.visibility = VISIBLE
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Sua conta foi criada com sucesso")
+                builder.setMessage(messageSuccess)
+                builder.setPositiveButton(
+                    "Voltar e fazer login"
+                ) { _, _ ->
+                    finish()
+                }
+                builder.show()
             }
-            builder.show()
-        }
+        )
     }
 
-    override fun showMessageOnFail(messageError: String) {
-        activity?.runOnUiThread {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Falha ao criar conta")
-            builder.setMessage(messageError)
-            builder.setPositiveButton(
-                "Voltar"
-            ) { _, _ ->
-                finish()
+    private fun observerOnFail() {
+        viewModel.messageFail?.observe(
+            this as LifecycleOwner,
+            androidx.lifecycle.Observer {messageError ->
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Falha ao criar conta")
+                builder.setMessage(messageError)
+                builder.setPositiveButton(
+                    "Voltar"
+                ) { _, _ ->
+                    finish()
+                }
+                builder.show()
             }
-            builder.show()
-        }
+        )
+
     }
 
-    override fun callPreviousActivity() {
-        this.runOnUiThread {
-            onBackPressed()
-        }
+    override fun showAlertInTermsAnConditions() {
+        buttonTerms?.requestFocus()
+        Toast.makeText(
+            this,
+            "Para se cadastrar e usar o aplicativo você precisa aceitar os termos",
+            Toast.LENGTH_LONG
+        ).show()
     }
+
 }

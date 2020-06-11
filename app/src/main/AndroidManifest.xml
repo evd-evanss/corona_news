@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.reset.ResetPasswordActivity" />
+        <activity android:name=".features.reset.view.ResetPasswordActivity" />
         <activity android:name=".features.policy.ActivityReader" />
         <activity android:name="com.sayhitoiot.coronanews.features.favorites.ui.StatisticActivity" />
-        <activity android:name=".features.splash.view.SplashActivity" >
+        <activity android:name=".features.splash.ui.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
         <activity
             android:name=".features.main.HomeActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".features.sign.view.SignUpActivity" />
+        <activity android:name="com.sayhitoiot.coronanews.features.sign.view.SignUpActivity" />
         <activity android:name=".features.login.view.LoginActivity" />
     </application>
 
