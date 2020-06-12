@@ -117,9 +117,7 @@
             android:id="@+id/profile_constraintButton_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
+            android:clickable="false"
             android:paddingHorizontal="20dp"
             android:paddingTop="30dp"
             android:paddingBottom="10dp">

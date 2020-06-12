@@ -26,6 +26,7 @@ class ViewModelFavorites(private val repositoryFavorites: RepositoryFavorites) :
 
     fun onResumeStatistics(country: String?) {
         viewModelScope.launch {
+            fetchDataForFavorites()
             country?.let { repositoryFavorites.getFeed(it) }
         }
     }

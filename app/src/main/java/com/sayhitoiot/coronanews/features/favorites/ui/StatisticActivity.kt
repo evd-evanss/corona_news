@@ -18,8 +18,10 @@ import kotlinx.android.synthetic.main.activity_statistics.*
 
 class StatisticActivity : AppCompatActivity() {
 
-
-    lateinit var viewModel: ViewModelFavorites
+    private val factory = ViewModelFavoritesFactory(RepositoryFavorites())
+    private val viewModel: ViewModelFavorites by lazy {
+        ViewModelProvider(this, factory).get(ViewModelFavorites::class.java)
+    }
 
     private var textCountry: TextView? = null
     private var textTotal: TextView? = null
@@ -41,7 +43,6 @@ class StatisticActivity : AppCompatActivity() {
         supportActionBar?.hide()
         initializeViews()
         initializeListeners()
-        setupViewModel()
     }
 
     private fun initializeViews() {
@@ -61,11 +62,6 @@ class StatisticActivity : AppCompatActivity() {
 
     private fun initializeListeners() {
         imageBack?.setOnClickListener { onBackPressed() }
-    }
-
-    private fun setupViewModel() {
-        val factory = ViewModelFavoritesFactory(repositoryFavorites = RepositoryFavorites())
-        viewModel = ViewModelProvider(this, factory).get(ViewModelFavorites::class.java)
     }
 
     override fun onResume() {

@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.button.MaterialButton
@@ -81,7 +82,7 @@ class FeedFragment : Fragment(), ViewModelToView {
 
     private fun initializeViews() {
         recyclerView = recyclerView_feed
-        recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.setItemViewCacheSize(10)
         recyclerView?.adapter = feedAdapter
         edtSearch = fragment_feed_editText_search

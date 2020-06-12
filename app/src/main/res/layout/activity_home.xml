@@ -19,6 +19,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph='@navigation/nav_graph' />
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/colorRed"
+        app:layout_constraintBottom_toBottomOf="@+id/main_fragment" />
+
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
