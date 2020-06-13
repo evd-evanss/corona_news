@@ -1,9 +1,8 @@
-package com.sayhitoiot.coronanews.features.feed.repository
+package com.sayhitoiot.coronanews.features.feed.cases
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -12,7 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.model.Response
 import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
-import com.sayhitoiot.coronanews.commom.apicovid.repository.ApiDataManager
+import com.sayhitoiot.coronanews.commom.apicovid.repository.Repository
 import com.sayhitoiot.coronanews.commom.apicovid.repository.InteractToApi
 import com.sayhitoiot.coronanews.commom.extensions.toLocale
 import com.sayhitoiot.coronanews.commom.firebase.model.Feed
@@ -21,12 +20,12 @@ import com.sayhitoiot.coronanews.commom.realm.entity.FilterEntity
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class RepositoryFeeds(private val ioDispatcher: CoroutineDispatcher) : CoroutineScope {
+class FeedsUseCase(private val ioDispatcher: CoroutineDispatcher) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext get() = ioDispatcher + Job()
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var firebaseDatabase = FirebaseDatabase.getInstance()
-    private val repository: InteractToApi = ApiDataManager()
+    private val repository: InteractToApi = Repository()
     private val response: MutableList<Response> = mutableListOf()
 
     private val _dataFeed = MutableLiveData<MutableList<FeedEntity>>()

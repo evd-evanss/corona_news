@@ -1,15 +1,11 @@
-package com.sayhitoiot.coronanews.features.login.repository
+package com.sayhitoiot.coronanews.features.login.cases
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import kotlinx.coroutines.delay
 
-class RepositoryLogin {
+class LoginUseCase {
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _message = MutableLiveData<String?>()

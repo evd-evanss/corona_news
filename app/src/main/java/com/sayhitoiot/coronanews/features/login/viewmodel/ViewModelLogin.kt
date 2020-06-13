@@ -1,16 +1,15 @@
 package com.sayhitoiot.coronanews.features.login.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sayhitoiot.coronanews.features.login.repository.RepositoryLogin
+import com.sayhitoiot.coronanews.features.login.cases.LoginUseCase
 import kotlinx.coroutines.launch
 
-class ViewModelLogin(private val delegate: DelegateToLoginActivity, private val repositoryLogin: RepositoryLogin) : ViewModel() {
+class ViewModelLogin(private val delegate: DelegateToLoginActivity, private val loginUseCase: LoginUseCase) : ViewModel() {
 
-    val message: LiveData<String?>? = repositoryLogin.getFail()
-    val login: LiveData<Boolean> = repositoryLogin.login
+    val message: LiveData<String?>? = loginUseCase.getFail()
+    val login: LiveData<Boolean> = loginUseCase.login
 
     fun btnLoginTapped() {
         viewModelScope.launch {
@@ -18,7 +17,7 @@ class ViewModelLogin(private val delegate: DelegateToLoginActivity, private val 
                 delegate.renderViewForLogin()
                 delegate.email?.let { email->
                     delegate.password?.let { password->
-                        repositoryLogin.login(email, password)
+                        loginUseCase.login(email, password)
                     }
                 }
             }

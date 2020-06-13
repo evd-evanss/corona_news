@@ -10,7 +10,7 @@ import com.hookedonplay.decoviewlib.DecoView
 import com.hookedonplay.decoviewlib.events.DecoEvent
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.commom.util.ItemColors
-import com.sayhitoiot.coronanews.features.favorites.repository.RepositoryFavorites
+import com.sayhitoiot.coronanews.features.favorites.cases.FavoritesUseCase
 import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavorites
 import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavoritesFactory
 import kotlinx.android.synthetic.main.activity_statistics.*
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_statistics.*
 
 class StatisticActivity : AppCompatActivity() {
 
-    private val factory = ViewModelFavoritesFactory(RepositoryFavorites())
+    private val factory = ViewModelFavoritesFactory(FavoritesUseCase())
     private val viewModel: ViewModelFavorites by lazy {
         ViewModelProvider(this, factory).get(ViewModelFavorites::class.java)
     }
@@ -41,11 +41,11 @@ class StatisticActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
         supportActionBar?.hide()
-        initializeViews()
+        initUi()
         initializeListeners()
     }
 
-    private fun initializeViews() {
+    private fun initUi() {
         textCountry = activityStatistic_textView_country
         textTotal = activityStatistic_textView_total
         textRecoveries = activityStatistic_textView_recoveries
@@ -114,6 +114,12 @@ class StatisticActivity : AppCompatActivity() {
         val seriesItemRed = ItemColors().getSeriesItemRed(this, total)
         val seriesItemFineGreen = ItemColors().getSeriesItemFineGreen(this)
         val seriesItemFineRed = ItemColors().getSeriesItemFineRed(this)
+
+        graphTotal?.deleteAll()
+        graphRecoveries?.deleteAll()
+        graphDeaths?.deleteAll()
+        graphRecoveriesRate?.deleteAll()
+        graphDeathsRate?.deleteAll()
 
         graphTotal?.addSeries(seriesItemTotal)
         graphTotal?.addSeries(seriesItemYellow)

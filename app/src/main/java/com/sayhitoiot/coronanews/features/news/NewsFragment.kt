@@ -1,22 +1,26 @@
 package com.sayhitoiot.coronanews.features.news
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.SslErrorHandler
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.commom.util.Constants.Companion.URL_NEWS
+import com.sayhitoiot.coronanews.commom.util.Constants
+import kotlinx.android.synthetic.main.dialog_ssl_error.view.*
 import kotlinx.android.synthetic.main.fragment_news.*
 
+
 class NewsFragment : Fragment() {
+
+    private var buttonCancel: MaterialButton? = null
+    private var buttonConfirm: MaterialButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,15 +62,41 @@ class NewsFragment : Fragment() {
         fragmentNews_webview.isSoundEffectsEnabled = true;
         fragmentNews_webview.settings.setAppCacheEnabled(true);
         fragmentNews_webview.setLayerType(WebView.LAYER_TYPE_NONE, null)
-        fragmentNews_webview.loadUrl(URL_NEWS)
+        fragmentNews_webview.loadUrl(Constants.URL_NEWS)
         fragmentNews_webview.webViewClient = object : WebViewClient() {
             override
             fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-                handler?.proceed()
+                val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_ssl_error, null)
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView)
+                val dialog = builder.show()
+
+                buttonCancel = dialogView.dialogError_Button_cancel
+                buttonConfirm = dialogView.dialogError_Button_confirm
+
+                buttonConfirm?.setOnClickListener {
+                    handler?.proceed()
+                    dialog?.dismiss()
+                }
+
+                buttonCancel?.setOnClickListener {
+                    handler?.cancel()
+                    dialog?.dismiss()
+                }
+            }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+
+                super.shouldOverrideUrlLoading(view, request)
+                if (Uri.parse(Constants.URL_NEWS).host.equals(Constants.URL_NEWS)) {
+                    return false;
+                }
+                return true;
             }
         }
 
     }
-
 
 }

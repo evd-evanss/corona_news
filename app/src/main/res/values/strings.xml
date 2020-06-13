@@ -20,10 +20,14 @@
     <string name="date_fake">20/03/1985</string>
     <string name="logout">Encerrar Seção</string>
     <string name="message_on_load">Lave sempre as mãos e se puder fique em casa 😉</string>
-    <string name="message_onload_fav">Evite tocar o rosto com as mãos</string>
+    <string name="message_onload_fav">Você pode monitar as estatisticas incluindo itens no seu Feed</string>
     <string name="forget">Resetar Senha</string>
     <string name="forget_my_password">Esqueci minha Senha</string>
     <string name="terms_and_privacy">Termos e Condições \nPolítica de Privacidade</string>
+    <string name="notification_error_ssl_cert_invalid">Este site não pode fornecer uma conexão segura</string>
+    <string name="confirm">Prosseguir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select_title">Selecione uma opção*</string>
     <item name="faqID" type="id" />
 
 

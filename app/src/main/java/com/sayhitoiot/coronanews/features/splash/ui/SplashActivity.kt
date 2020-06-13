@@ -7,9 +7,9 @@ import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.main.HomeActivity
-import com.sayhitoiot.coronanews.features.login.view.LoginActivity
-import com.sayhitoiot.coronanews.features.splash.repository.RepositorySplash
+import com.sayhitoiot.coronanews.features.HomeActivity
+import com.sayhitoiot.coronanews.features.login.ui.LoginActivity
+import com.sayhitoiot.coronanews.features.splash.cases.RepositorySplash
 import com.sayhitoiot.coronanews.features.splash.viewmodel.ViewModelSplash
 import com.sayhitoiot.coronanews.features.splash.viewmodel.ViewModelSplashFactory
 
@@ -57,4 +57,5 @@ class SplashActivity : AppCompatActivity() {
              },2000
         )
     }
+
 }

@@ -2,7 +2,7 @@ package com.sayhitoiot.coronanews.features.splash.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sayhitoiot.coronanews.features.splash.repository.RepositorySplash
+import com.sayhitoiot.coronanews.features.splash.cases.RepositorySplash
 
 
 class ViewModelSplashFactory(private val repositorySplash: RepositorySplash) : ViewModelProvider.Factory {

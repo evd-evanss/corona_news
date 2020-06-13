@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
-import com.sayhitoiot.coronanews.features.favorites.repository.RepositoryFavorites
+import com.sayhitoiot.coronanews.features.favorites.cases.FavoritesUseCase
 import kotlinx.coroutines.launch
 
-class ViewModelFavorites(private val repositoryFavorites: RepositoryFavorites) : ViewModel() {
+class ViewModelFavorites(private val favoritesUseCase: FavoritesUseCase) : ViewModel() {
 
-    val favoritesFeed: LiveData<MutableList<FeedEntity>?>? = repositoryFavorites.favoritesFeed
-    val rates: LiveData<MutableList<String>?>? = repositoryFavorites.rates
-    val statistics: LiveData<MutableList<Float>> = repositoryFavorites.statistics
-    val feed: LiveData<FeedEntity?>? = repositoryFavorites.feed
+    val favoritesFeed: LiveData<MutableList<FeedEntity>?>? = favoritesUseCase.favoritesFeed
+    val rates: LiveData<MutableList<String>?>? = favoritesUseCase.rates
+    val statistics: LiveData<MutableList<Float>> = favoritesUseCase.statistics
+    val feed: LiveData<FeedEntity?>? = favoritesUseCase.feed
 
   init {
       fetchDataForFavorites()
@@ -20,14 +20,14 @@ class ViewModelFavorites(private val repositoryFavorites: RepositoryFavorites) :
 
     private fun fetchDataForFavorites() {
         viewModelScope.launch {
-            repositoryFavorites.getFavorites()
+            favoritesUseCase.getFavorites()
         }
     }
 
     fun onResumeStatistics(country: String?) {
         viewModelScope.launch {
             fetchDataForFavorites()
-            country?.let { repositoryFavorites.getFeed(it) }
+            country?.let { favoritesUseCase.getFeed(it) }
         }
     }
 

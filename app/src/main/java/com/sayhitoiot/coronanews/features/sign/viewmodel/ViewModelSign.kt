@@ -3,15 +3,15 @@ package com.sayhitoiot.coronanews.features.sign.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.sayhitoiot.coronanews.features.sign.repository.RepositorySign
+import com.sayhitoiot.coronanews.features.sign.cases.SignUseCase
 
 class ViewModelSign(
     private val delegate: DelegateToSignActivity,
-    private val repositorySign: RepositorySign) : ViewModel() {
+    private val signUseCase: SignUseCase) : ViewModel() {
 
     var accept: Boolean = false
-    val messageSuccess: LiveData<String?>? = repositorySign.getSuccessMessage()
-    val messageFail: LiveData<String?>? = repositorySign.getFailMessage()
+    val messageSuccess: LiveData<String?>? = signUseCase.getSuccessMessage()
+    val messageFail: LiveData<String?>? = signUseCase.getFailMessage()
 
     fun buttonTermsTapped() {
         delegate.startActivityTerms()
@@ -24,7 +24,7 @@ class ViewModelSign(
             checkPasswordValidity() && checkConfirmPasswordValidity() && checkAcceptTerms()) {
             delegate.renderViewsForProgress()
             val birthdate = "${delegate.day}/${delegate.month}/${delegate.year}"
-            repositorySign.requestCreateUserOnFirebase(
+            signUseCase.requestCreateUserOnFirebase(
                 delegate.name!!,
                 delegate.email!!,
                 delegate.password!!,

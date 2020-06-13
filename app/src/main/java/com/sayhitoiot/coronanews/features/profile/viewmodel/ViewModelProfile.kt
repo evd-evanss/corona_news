@@ -4,26 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.features.profile.repository.RepositoryProfile
+import com.sayhitoiot.coronanews.features.profile.cases.ProfileUseCase
 import kotlinx.coroutines.launch
 
-class ViewModelProfile(private val repositoryProfile: RepositoryProfile) : ViewModel() {
+class ViewModelProfile(private val profileUseCase: ProfileUseCase) : ViewModel() {
 
-    val user: LiveData<UserEntity?>? = repositoryProfile.user
-    val logout: LiveData<Boolean> = repositoryProfile.logout
+    val user: LiveData<UserEntity?>? = profileUseCase.user
+    val logout: LiveData<Boolean> = profileUseCase.logout
+    val delete: LiveData<Boolean> = profileUseCase.delete
+    val failure: LiveData<Boolean> = profileUseCase.failure
 
     private fun fetchDataForUser() {
         viewModelScope.launch {
-            repositoryProfile.getUser()
+            profileUseCase.getUser()
         }
     }
 
     fun buttonLogoutTapped() {
-        repositoryProfile.logout()
+        profileUseCase.logout()
     }
 
     fun onResume() {
         fetchDataForUser()
+    }
+
+    fun buttonDeleteTapped() {
+        profileUseCase.deleteAccount()
     }
 
 }

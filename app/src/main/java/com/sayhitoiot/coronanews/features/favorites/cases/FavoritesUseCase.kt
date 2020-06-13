@@ -1,10 +1,10 @@
-package com.sayhitoiot.coronanews.features.favorites.repository
+package com.sayhitoiot.coronanews.features.favorites.cases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 
-class RepositoryFavorites {
+class FavoritesUseCase {
 
     private val _favoritesFeed = MutableLiveData<MutableList<FeedEntity>>()
     private val _feed = MutableLiveData<FeedEntity>()

@@ -11,11 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.favorites.repository.RepositoryFavorites
+import com.sayhitoiot.coronanews.features.favorites.cases.FavoritesUseCase
 import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavorites
 import com.sayhitoiot.coronanews.features.favorites.viewmodel.ViewModelFavoritesFactory
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import kotlinx.coroutines.Dispatchers.IO
 
 class FavoritesFragment : Fragment() {
 
@@ -36,7 +35,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        val factory = ViewModelFavoritesFactory(repositoryFavorites = RepositoryFavorites())
+        val factory = ViewModelFavoritesFactory(favoritesUseCase = FavoritesUseCase())
         viewModel = ViewModelProvider(this, factory).get(ViewModelFavorites::class.java)
     }
 
@@ -49,14 +48,14 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeViews()
+        initUi()
     }
 
-    fun initializeViews() {
+    private fun initUi() {
         activity?.runOnUiThread {
-            firstContainer?.visibility = View.VISIBLE
             recyclerView?.visibility = View.GONE
             firstContainer = fragment_favorites_linearLayout
+            firstContainer?.visibility = View.VISIBLE
             recyclerView = recyclerView_favorites
             recyclerView?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerView?.adapter = favoriteAdapter
@@ -70,10 +69,12 @@ class FavoritesFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.favoritesFeed?.observe(this as LifecycleOwner, androidx.lifecycle.Observer { feedFavorites ->
-            feedFavorites?.size?.let { recyclerView?.setItemViewCacheSize(it) }
-            firstContainer?.visibility = View.GONE
-            recyclerView?.visibility = View.VISIBLE
-            feedFavorites?.let { favoriteAdapter.updateList(it) }
+            if(!feedFavorites.isNullOrEmpty()) {
+                feedFavorites.size.let { recyclerView?.setItemViewCacheSize(it) }
+                firstContainer?.visibility = View.GONE
+                recyclerView?.visibility = View.VISIBLE
+                feedFavorites.let { favoriteAdapter.updateList(it) }
+            }
         })
     }
 

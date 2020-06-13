@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.splash.repository
+package com.sayhitoiot.coronanews.features.splash.cases
 
 import android.util.Log
 import androidx.lifecycle.LiveData

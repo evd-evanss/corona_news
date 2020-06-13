@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.login.view
+package com.sayhitoiot.coronanews.features.login.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -13,13 +13,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.main.HomeActivity
-import com.sayhitoiot.coronanews.features.login.repository.RepositoryLogin
+import com.sayhitoiot.coronanews.features.HomeActivity
+import com.sayhitoiot.coronanews.features.login.cases.LoginUseCase
 import com.sayhitoiot.coronanews.features.login.viewmodel.DelegateToLoginActivity
 import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLogin
 import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLoginFactory
-import com.sayhitoiot.coronanews.features.reset.view.ResetPasswordActivity
-import com.sayhitoiot.coronanews.features.sign.view.SignUpActivity
+import com.sayhitoiot.coronanews.features.reset.ui.ResetPasswordActivity
+import com.sayhitoiot.coronanews.features.sign.ui.SignUpActivity
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -29,12 +29,12 @@ class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
         const val TAG = "login-activity"
     }
 
-    private val factory = ViewModelLoginFactory(this, RepositoryLogin())
+    private val factory = ViewModelLoginFactory(this, LoginUseCase())
     private val viewModel: ViewModelLogin by lazy {
         ViewModelProvider(this, factory).get(ViewModelLogin::class.java)
     }
 
-    val activity: Activity? get() = this
+    private val activity: Activity? get() = this
     override val email: String? get() = edtEmail?.text.toString()
     override val password: String? get() = edtPassword?.text.toString()
 
@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
-        initializeViews()
+        initUi()
     }
 
     override fun onResume() {
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
         observerLogin()
     }
 
-    private fun initializeViews() {
+    private fun initUi() {
         activity?.runOnUiThread {
             edtEmail = activityLogin_editText_email
             edtPassword = activityLogin_editText_password

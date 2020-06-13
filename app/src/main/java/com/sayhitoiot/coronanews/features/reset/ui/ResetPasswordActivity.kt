@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.reset.view
+package com.sayhitoiot.coronanews.features.reset.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.reset.repository.RepositoryReset
+import com.sayhitoiot.coronanews.features.reset.cases.ResetUseCase
 import com.sayhitoiot.coronanews.features.reset.viewmodel.DelegateToResetActivity
 import com.sayhitoiot.coronanews.features.reset.viewmodel.ViewModelReset
 import com.sayhitoiot.coronanews.features.reset.viewmodel.ViewModelResetFactory
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_reset_password.*
 class ResetPasswordActivity : AppCompatActivity(), DelegateToResetActivity {
 
 
-    private val factory = ViewModelResetFactory(this, RepositoryReset())
+    private val factory = ViewModelResetFactory(this, ResetUseCase())
     private val viewModel: ViewModelReset by lazy {
         ViewModelProvider(this, factory).get(ViewModelReset::class.java)
     }
@@ -37,7 +37,7 @@ class ResetPasswordActivity : AppCompatActivity(), DelegateToResetActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
         supportActionBar?.hide()
-        initializeViews()
+        initUi()
     }
 
     override fun onResume() {
@@ -45,7 +45,7 @@ class ResetPasswordActivity : AppCompatActivity(), DelegateToResetActivity {
         observerOnComplete()
     }
 
-    private fun initializeViews() {
+    private fun initUi() {
         editTextEmail = activityReset_editText_email
         progress = activityReset_dilatingDotsProgressBar
         resetButton = activityReset_materialButton_reset

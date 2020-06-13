@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.sign.repository
+package com.sayhitoiot.coronanews.features.sign.cases
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -9,12 +9,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.sayhitoiot.coronanews.commom.realm.RealmDB
 import com.sayhitoiot.coronanews.commom.realm.entity.FeedEntity
 import com.sayhitoiot.coronanews.commom.realm.entity.UserEntity
-import com.sayhitoiot.coronanews.services.SyncService
+import com.sayhitoiot.coronanews.services.SyncUser
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlin.coroutines.CoroutineContext
 
-class RepositorySign() : CoroutineScope {
+class SignUseCase() : CoroutineScope {
 
 
     override val coroutineContext: CoroutineContext get() = IO + Job()
@@ -86,7 +86,7 @@ class RepositorySign() : CoroutineScope {
     private fun createFeedOnFirebase() {
         val feedList = FeedEntity.getAll()
         val uid = mAuth.uid ?: return
-        val feedReference = firebaseDatabase.reference.child(uid).child(SyncService.FEEDS)
+        val feedReference = firebaseDatabase.reference.child(uid).child(SyncUser.FEEDS)
 
         launch {
             feedList.forEach {

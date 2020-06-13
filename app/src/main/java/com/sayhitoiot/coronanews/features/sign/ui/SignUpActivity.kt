@@ -1,4 +1,4 @@
-package com.sayhitoiot.coronanews.features.sign.view
+package com.sayhitoiot.coronanews.features.sign.ui
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.features.policy.ActivityReader
-import com.sayhitoiot.coronanews.features.sign.repository.RepositorySign
+import com.sayhitoiot.coronanews.features.sign.cases.SignUseCase
 import com.sayhitoiot.coronanews.features.sign.viewmodel.DelegateToSignActivity
 import com.sayhitoiot.coronanews.features.sign.viewmodel.ViewModelSign
 import com.sayhitoiot.coronanews.features.sign.viewmodel.ViewModelSignFactory
@@ -31,7 +31,7 @@ class SignUpActivity : AppCompatActivity(), DelegateToSignActivity{
         var ACCEPT: Boolean = false
     }
 
-    private val factory = ViewModelSignFactory(this, RepositorySign())
+    private val factory = ViewModelSignFactory(this, SignUseCase())
 
     private val viewModel: ViewModelSign by lazy {
         ViewModelProvider(this, factory).get(ViewModelSign::class.java)
@@ -82,10 +82,10 @@ class SignUpActivity : AppCompatActivity(), DelegateToSignActivity{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         supportActionBar?.hide()
-        initializeViews()
+        initUi()
     }
 
-    private fun initializeViews() {
+    private fun initUi() {
         this.runOnUiThread {
             progress = activitySignUp_dilatingDotsProgressBar
             edtNome = activitySignUp_editText_name

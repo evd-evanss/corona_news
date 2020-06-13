@@ -16,14 +16,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.features.feed.repository.RepositoryFeeds
+import com.sayhitoiot.coronanews.features.feed.cases.FeedsUseCase
 import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModel
 import com.sayhitoiot.coronanews.features.feed.viewmodel.FeedViewModelFactory
 import com.sayhitoiot.coronanews.features.feed.viewmodel.ViewModelToView
-import com.sayhitoiot.coronanews.features.profile.viewmodel.ViewModelProfile
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -58,7 +56,7 @@ class FeedFragment : Fragment(), ViewModelToView {
     private var buttonContinentsCases: MaterialButton? = null
     private var buttonAllCases: MaterialButton? = null
 
-    private val factory = FeedViewModelFactory(repositoryFeeds = RepositoryFeeds(IO))
+    private val factory = FeedViewModelFactory(feedsUseCase = FeedsUseCase(IO))
     private val viewModel: FeedViewModel by lazy {
         ViewModelProvider(this, factory).get(FeedViewModel::class.java)
     }
@@ -73,14 +71,14 @@ class FeedFragment : Fragment(), ViewModelToView {
     @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeViews()
+        initUi()
         setupListeners()
         setupObserversForMessages()
         setupObserverForAdapter()
         setupObserverForFilters()
     }
 
-    private fun initializeViews() {
+    private fun initUi() {
         recyclerView = recyclerView_feed
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.setItemViewCacheSize(10)

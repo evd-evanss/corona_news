@@ -1,11 +1,11 @@
-package com.sayhitoiot.coronanews.features.reset.repository
+package com.sayhitoiot.coronanews.features.reset.cases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 
-class RepositoryReset {
+class ResetUseCase {
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 

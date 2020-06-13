@@ -2,17 +2,17 @@ package com.sayhitoiot.coronanews.features.reset.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.sayhitoiot.coronanews.features.reset.repository.RepositoryReset
+import com.sayhitoiot.coronanews.features.reset.cases.ResetUseCase
 
 class ViewModelReset(
     private val delegate: DelegateToResetActivity,
-    private val repositoryReset: RepositoryReset) : ViewModel() {
+    private val resetUseCase: ResetUseCase) : ViewModel() {
 
     companion object {
         const val FAIL = "Insira o e-mail cadastrado"
     }
 
-    val messageSuccess: LiveData<String?>? = repositoryReset.getSuccessMessage()
+    val messageSuccess: LiveData<String?>? = resetUseCase.getSuccessMessage()
 
     fun resetButtonTapped() {
         resetEmail()
@@ -23,7 +23,7 @@ class ViewModelReset(
         if(email.isNullOrEmpty()) {
             delegate.renderMessageOnError(FAIL)
         } else {
-            repositoryReset.requestForgetPassword(email)
+            resetUseCase.requestForgetPassword(email)
         }
     }
 
