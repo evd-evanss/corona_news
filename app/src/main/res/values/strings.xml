@@ -28,6 +28,7 @@
     <string name="confirm">Prosseguir</string>
     <string name="cancel">Cancelar</string>
     <string name="select_title">Selecione uma opção*</string>
+    <string name="delete_account_title">Tem certeza que quer excluir sua conta?</string>
     <item name="faqID" type="id" />
 
 

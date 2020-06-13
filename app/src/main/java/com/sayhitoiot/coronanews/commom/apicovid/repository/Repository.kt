@@ -9,7 +9,6 @@ import com.sayhitoiot.coronanews.commom.apicovid.OnGetStatisticsCoronaCallback
 import com.sayhitoiot.coronanews.commom.apicovid.model.ResultData
 import com.sayhitoiot.coronanews.commom.apicovid.model_states.ResultOfStates
 import com.sayhitoiot.coronanews.commom.apicovid.model_states.State
-import com.sayhitoiot.coronanews.commom.util.Constants.Companion.URL_STATES
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +21,7 @@ class Repository : InteractToApi {
         const val HOST = BuildConfig.HOST
         const val KEY = BuildConfig.API_KEY
         const val URL_BASE = BuildConfig.URL_BASE
+        const val URL_STATES = BuildConfig.URL_STATES
     }
 
     private var serviceCountry: ApiCovid

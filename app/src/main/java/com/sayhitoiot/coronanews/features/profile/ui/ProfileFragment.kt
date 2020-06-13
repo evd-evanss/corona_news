@@ -10,12 +10,16 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.button.MaterialButton
 import com.sayhitoiot.coronanews.R
 import com.sayhitoiot.coronanews.features.login.ui.LoginActivity
 import com.sayhitoiot.coronanews.features.profile.cases.ProfileUseCase
 import com.sayhitoiot.coronanews.features.profile.viewmodel.ViewModelProfile
 import com.sayhitoiot.coronanews.features.profile.viewmodel.ViewModelProfileFactory
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+import kotlinx.android.synthetic.main.dialog_delete.view.*
+import kotlinx.android.synthetic.main.dialog_delete.view.dialogCustom_Button_confirm
+import kotlinx.android.synthetic.main.dialog_logout.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.Dispatchers.IO
 
@@ -28,6 +32,8 @@ class ProfileFragment : Fragment() {
     private var buttonLogout: ImageView? = null
     private var progress: DilatingDotsProgressBar? = null
     private var firstContainer: TableLayout? = null
+    private var buttonCancel: MaterialButton? = null
+    private var buttonConfirm: MaterialButton? = null
 
     private val factory = ViewModelProfileFactory(profileUseCase = ProfileUseCase(IO))
 
@@ -64,7 +70,22 @@ class ProfileFragment : Fragment() {
 
     private fun initializeListeners() {
         buttonLogout?.setOnClickListener { viewModel.buttonLogoutTapped() }
-        textDelete?.setOnClickListener { viewModel.buttonDeleteTapped() }
+        textDelete?.setOnClickListener {
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete, null)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView)
+            val dialog = builder.show()
+
+            buttonCancel = dialogView.dialogCustom_Button_cancel
+            buttonConfirm = dialogView.dialogCustom_Button_confirm
+
+            buttonConfirm?.setOnClickListener {
+                viewModel.buttonDeleteTapped()
+            }
+
+            buttonCancel?.setOnClickListener {
+                dialog?.dismiss()
+            }
+        }
     }
 
     override fun onResume() {
@@ -95,9 +116,7 @@ class ProfileFragment : Fragment() {
             this as LifecycleOwner,
             androidx.lifecycle.Observer {logout ->
                 if(logout) {
-                    requireActivity().viewModelStore.clear()
-                    activity?.startActivity(Intent(activity, LoginActivity::class.java))
-                    activity?.finish()
+                    logout()
                 }
             }
         )
@@ -107,9 +126,7 @@ class ProfileFragment : Fragment() {
         viewModel.delete.observe(
             this as LifecycleOwner,
             androidx.lifecycle.Observer {
-                requireActivity().viewModelStore.clear()
-                activity?.startActivity(Intent(activity, LoginActivity::class.java))
-                activity?.finish()
+                logout()
             }
         )
     }
@@ -119,12 +136,27 @@ class ProfileFragment : Fragment() {
             this as LifecycleOwner,
             androidx.lifecycle.Observer {failure ->
                 if(failure) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Efetue logout e tente excluir novamente.",
-                        Toast.LENGTH_SHORT).show()
+                    val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_logout, null)
+                    val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView)
+                    val dialog = builder.show()
+
+                    buttonConfirm = dialogView.dialogLogout_Button_confirm
+
+                    buttonConfirm?.setOnClickListener {
+                        logout()
+                        dialog?.dismiss()
+                    }
+
                 }
             }
         )
+
+
+    }
+
+    private fun logout() {
+        requireActivity().viewModelStore.clear()
+        activity?.startActivity(Intent(activity, LoginActivity::class.java))
+        activity?.finish()
     }
 }
