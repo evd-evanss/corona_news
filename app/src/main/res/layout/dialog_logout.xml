@@ -15,59 +15,31 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/sen_regular"
-        android:text="@string/delete_account_title"
+        android:text="Não foi possível deletar sua conta, encerre a sessão e tente excluir novamente."
         android:textAlignment="center"
-        android:textColor="@color/colorRed"
+        android:textColor="@color/yellowSepia"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dialogError_TextView_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sen_regular"
-        android:text="@string/select_title"
-        android:textColor="@color/colorWhite"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/dialogError_TextView_title"
-        app:layout_constraintStart_toStartOf="@+id/dialogError_TextView_title"
-        app:layout_constraintTop_toBottomOf="@+id/dialogError_TextView_title" />
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogCustom_Button_cancel"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/colorGreen"
-        android:fontFamily="@font/sen_regular"
-        android:text="@string/cancel"
-        android:textColor="@color/colorWhite"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialogCustom_Button_confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialogCustom_Button_confirm"
-        app:layout_constraintTop_toTopOf="@+id/dialogCustom_Button_confirm" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogCustom_Button_confirm"
+        android:id="@+id/dialogLogout_Button_confirm"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorRed"
         android:fontFamily="@font/sen_regular"
-        android:text="@string/confirm"
-        android:textAllCaps="true"
+        android:text="@string/logout"
+        android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dialogCustom_Button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialogError_TextView_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/dialogError_TextView_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

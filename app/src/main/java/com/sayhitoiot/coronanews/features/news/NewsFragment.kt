@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.webkit.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
+import com.sayhitoiot.coronanews.BuildConfig.URL_NEWS
 import com.sayhitoiot.coronanews.R
-import com.sayhitoiot.coronanews.commom.util.Constants
 import kotlinx.android.synthetic.main.dialog_ssl_error.view.*
 import kotlinx.android.synthetic.main.fragment_news.*
 
@@ -62,7 +62,7 @@ class NewsFragment : Fragment() {
         fragmentNews_webview.isSoundEffectsEnabled = true;
         fragmentNews_webview.settings.setAppCacheEnabled(true);
         fragmentNews_webview.setLayerType(WebView.LAYER_TYPE_NONE, null)
-        fragmentNews_webview.loadUrl(Constants.URL_NEWS)
+        fragmentNews_webview.loadUrl(URL_NEWS)
         fragmentNews_webview.webViewClient = object : WebViewClient() {
             override
             fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
@@ -70,8 +70,8 @@ class NewsFragment : Fragment() {
                 val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext()).setView(dialogView)
                 val dialog = builder.show()
 
-                buttonCancel = dialogView.dialogError_Button_cancel
-                buttonConfirm = dialogView.dialogError_Button_confirm
+                buttonCancel = dialogView.dialogCustom_Button_cancel
+                buttonConfirm = dialogView.dialogCustom_Button_confirm
 
                 buttonConfirm?.setOnClickListener {
                     handler?.proceed()
@@ -90,10 +90,10 @@ class NewsFragment : Fragment() {
             ): Boolean {
 
                 super.shouldOverrideUrlLoading(view, request)
-                if (Uri.parse(Constants.URL_NEWS).host.equals(Constants.URL_NEWS)) {
-                    return false;
+                if (Uri.parse(URL_NEWS).host.equals(URL_NEWS)) {
+                    return false
                 }
-                return true;
+                return true
             }
         }
 

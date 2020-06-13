@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dialogError_TextView_title" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogError_Button_cancel"
+        android:id="@+id/dialogCustom_Button_cancel"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="2dp"
@@ -46,13 +46,13 @@
         android:text="@string/cancel"
         android:textColor="@color/colorWhite"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialogError_Button_confirm"
+        app:layout_constraintBottom_toBottomOf="@+id/dialogCustom_Button_confirm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialogError_Button_confirm"
-        app:layout_constraintTop_toTopOf="@+id/dialogError_Button_confirm" />
+        app:layout_constraintStart_toEndOf="@+id/dialogCustom_Button_confirm"
+        app:layout_constraintTop_toTopOf="@+id/dialogCustom_Button_confirm" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogError_Button_confirm"
+        android:id="@+id/dialogCustom_Button_confirm"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -65,7 +65,7 @@
         android:textColor="@color/colorWhite"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dialogError_Button_cancel"
+        app:layout_constraintEnd_toStartOf="@+id/dialogCustom_Button_cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialogError_TextView_subtitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
