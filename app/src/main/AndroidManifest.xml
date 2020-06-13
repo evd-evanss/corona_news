@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sayhitoiot.coronanews">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".support.App"
@@ -12,16 +13,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.splash.view.SplashActivity">
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            android:enabled="false"
+            android:exported="false"
+            tools:node="remove" />
+
+
+        <activity android:name=".features.reset.ui.ResetPasswordActivity" />
+        <activity android:name=".features.policy.ActivityReader" />
+        <activity android:name="com.sayhitoiot.coronanews.features.favorites.ui.StatisticActivity" />
+        <activity android:name=".features.splash.ui.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".features.home.HomeActivity" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".features.sign.view.SignUpActivity" />
-        <activity android:name=".features.login.view.LoginActivity"/>
+        <activity
+            android:name=".features.HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.sayhitoiot.coronanews.features.sign.ui.SignUpActivity" />
+        <activity android:name=".features.login.ui.LoginActivity" />
     </application>
 
 </manifest>

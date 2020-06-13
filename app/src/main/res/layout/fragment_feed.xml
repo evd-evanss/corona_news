@@ -1,126 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="@drawable/header"
-        android:backgroundTint="@color/colorRed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/fragment_feed_imageView_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_search_black_24dp"
-            android:tint="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fragment_feed_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sen_regular"
-            android:text="@string/menu_feed"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/fragment_feed_editText_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:drawableTint="@color/colorWhite"
-            android:ems="10"
-            android:fontFamily="@font/sen_bold"
-            android:hint="@string/search_country"
-            android:imeOptions="actionDone"
-            android:inputType="textPersonName"
-            android:paddingLeft="20dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_feed_imageView_search"
-            app:layout_constraintStart_toEndOf="@+id/fragment_feed_imageView_back"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/fragment_feed_imageView_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:tint="@color/colorWhite"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_feed"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_feed" />
-
     <LinearLayout
         android:id="@+id/fragment_feed_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <TextView
-            android:text="@string/message_on_load"
-            android:textColor="@color/colorGreen"
-            android:fontFamily="@font/sen_regular"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:layout_margin="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
-            android:id="@+id/fragment_feed_dilatingDotsProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:color="@color/colorGreen"
-            android:radius="3.5sp"
-            app:dd_animationDuration="500"
-            app:dd_horizontalSpacing="10dp"
-            app:dd_numDots="3"
-            app:dd_scaleMultiplier="1.5" />
+            android:layout_margin="30dp"
+            android:fontFamily="@font/sen_regular"
+            android:text="@string/message_on_load"
+            android:textAlignment="center"
+            android:textColor="@color/colorGreen"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detailsActiviy_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorRed"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/detailsActivity_collapsingToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRed"
+            app:contentScrim="@color/colorRed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_feed_linearLayout_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="clip_horizontal|center|center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/bg_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorRed"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fragment_feed_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen_regular"
+                        android:text="@string/menu_feed"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/fragment_feed_imageView_search"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_search_black_24dp"
+                        android:tint="@color/colorRed"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/fragment_feed_editText_search"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:drawableTint="@color/colorWhite"
+                        android:ems="10"
+                        android:fontFamily="@font/sen_bold"
+                        android:hint="@string/search_country"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="20dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_feed_imageView_search"
+                        app:layout_constraintStart_toEndOf="@+id/fragment_feed_imageView_back"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/fragment_feed_imageView_back"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="16dp"
+                        android:tint="@color/colorRed"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_close_white_24dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="0.1dp"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_login"
+                    app:layout_collapseMode="parallax"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_feed_materialButton_moreCases"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/bg_gray"
+                        android:fontFamily="@font/sen_regular"
+                        android:text="Países mais afetados"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_feed_materialButton_fewerCases"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/bg_gray"
+                        android:fontFamily="@font/sen_regular"
+                        android:text="Países menos afetados"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_feed_mateerialButton_continentsCases"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/bg_gray"
+                        android:fontFamily="@font/sen_regular"
+                        android:text="Continentes"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_feed_materialButton_allCases"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/bg_gray"
+                        android:fontFamily="@font/sen_regular"
+                        android:text="Total de casos"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|bottom"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView4"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/fragment_feed_textView_onLoad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen_bold"
+                        android:text="Sincronizando"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/colorRed"
+                        android:textSize="18sp" />
+
+                    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+                        android:id="@+id/fragment_feed_dilatingDotsProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginBottom="4dp"
+                        android:color="@color/colorRed"
+                        android:radius="2sp"
+                        app:dd_animationDuration="500"
+                        app:dd_horizontalSpacing="5sp"
+                        app:dd_numDots="3"
+                        app:dd_scaleMultiplier="1.5" />
+                </LinearLayout>
 
 
+                <TextView
+                    android:id="@+id/fragment_feed_textView_updateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Dados atualizados em: "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

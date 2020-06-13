@@ -12,6 +12,8 @@ class UserEntity (
     var token: String
 ) {
 
+    var terms: Boolean = false
+
     constructor(userRealm: UserRealm) : this(
         id = userRealm.id,
         name = userRealm.name,
@@ -26,6 +28,10 @@ class UserEntity (
 
         fun getUser() : UserEntity? {
             val realm = Realm.getDefaultInstance()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val userModel = realm.where(UserRealm::class.java)
                 .findFirst()
@@ -49,7 +55,10 @@ class UserEntity (
             token: String
         ) {
             val realm = Realm.getDefaultInstance()
-            realm.beginTransaction()
+
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val userModel = realm.createObject(UserRealm::class.java)
 
@@ -66,7 +75,9 @@ class UserEntity (
         fun delete() {
             val realm = Realm.getDefaultInstance()
 
-            realm.beginTransaction()
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             realm.delete(UserRealm::class.java)
 
@@ -77,7 +88,9 @@ class UserEntity (
         fun update(name: String, birthdate: String) {
             val realm = Realm.getDefaultInstance()
 
-            realm.beginTransaction()
+            if(!realm.isInTransaction) {
+                realm.beginTransaction()
+            }
 
             val userModel = realm.where(UserRealm::class.java)
                 .equalTo("id", RealmDB.DEFAULT_INTEGER)
@@ -91,30 +104,5 @@ class UserEntity (
         }
 
     }
-
-    fun update(
-        name: String? = null,
-        email: String? = null,
-        birth: String? = null,
-        token: String? = null
-    ) {
-        val realm = Realm.getDefaultInstance()
-
-        realm.beginTransaction()
-
-        val userModel = realm.where(UserRealm::class.java)
-            .equalTo("id", this.id)
-            .findFirst()
-
-        userModel?.name = name ?: this.name
-        userModel?.email = email ?: this.email
-        userModel?.birthdate = birth ?: this.birth
-        userModel?.token = token ?: this.token
-
-
-        realm.commitTransaction()
-        realm.close()
-    }
-
 
 }

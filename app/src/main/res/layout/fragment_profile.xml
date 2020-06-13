@@ -9,11 +9,19 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:background="@drawable/header"
-        android:backgroundTint="@color/colorRed"
+        android:background="@color/bg_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorRed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/fragment_feed_title"
@@ -38,10 +46,10 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:src="@drawable/ic_logout"
             android:contentDescription="@string/logout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_logout" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,12 +58,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="1"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.30">
+        app:layout_constraintVertical_bias="0.35">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profile_constraintButton_name"
@@ -97,7 +105,7 @@
             <View
                 android:id="@+id/view_name"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/colorRed"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,13 +117,10 @@
             android:id="@+id/profile_constraintButton_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
+            android:clickable="false"
             android:paddingHorizontal="20dp"
             android:paddingTop="30dp"
-            android:paddingBottom="10dp"
-            android:visibility="gone">
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/profile_textView_email_hint"
@@ -149,7 +154,7 @@
             <View
                 android:id="@+id/view_email"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/colorRed"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -197,35 +202,11 @@
             <View
                 android:id="@+id/view_birthdate"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/colorRed"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="10dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_materialButton_edit"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:fontFamily="@font/sen_regular"
-                android:text="Editar Cadastro"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -246,19 +227,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableLayout" />
 
-    <LinearLayout
-        android:id="@+id/container_edit"
-        android:layout_width="404dp"
+    <TextView
+        android:id="@+id/profile_textView_exclude"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tableLayout"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/sen_regular"
+        android:text="Excluir Conta"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tableLayout">
-
-        <include layout="@layout/edit_user" />
-    </LinearLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
