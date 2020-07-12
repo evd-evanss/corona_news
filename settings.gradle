@@ -1,2 +1,4 @@
+include ':Sugar-Spoon'
 rootProject.name='Corona News'
 include ':app'
+project(':Sugar-Spoon').projectDir = new File(rootDir, 'sugar-spoon/app/')
