@@ -20,6 +20,8 @@ import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLogin
 import com.sayhitoiot.coronanews.features.login.viewmodel.ViewModelLoginFactory
 import com.sayhitoiot.coronanews.features.reset.ui.ResetPasswordActivity
 import com.sayhitoiot.coronanews.features.sign.ui.SignUpActivity
+import com.sugarspoon.extensions.navigateTo
+import com.sugarspoon.extensions.navigateToWithFinish
 import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -92,14 +94,11 @@ class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
     }
 
     override fun renderViewForResetPassword() {
-        startActivity(Intent(this, ResetPasswordActivity::class.java))
+        this.navigateTo<ResetPasswordActivity>()
     }
 
     override fun startSignUpActivity() {
-        activity?.runOnUiThread {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
+        this.navigateTo<SignUpActivity>()
     }
 
     override fun showErrorInEmail(error: String) {
@@ -117,8 +116,7 @@ class LoginActivity : AppCompatActivity(), DelegateToLoginActivity {
     private fun loginSuccess() {
         activity?.runOnUiThread {
             progressBar?.hide()
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            this.navigateToWithFinish<HomeActivity>()
         }
     }
 

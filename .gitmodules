@@ -1,0 +1,3 @@
+[submodule "sugar-spoon"]
+	path = sugar-spoon
+	url = https://github.com/evd-evanss/sugar-spoon.git
